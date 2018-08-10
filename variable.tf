@@ -60,3 +60,28 @@ variable "ssh_pubkey" {
 variable "ssh_pvtkey" {
   default = "~/.ssh/id_rsa"
 }
+
+# Database Variables
+variable "sql" {
+  type = "map"
+
+  default = {
+    name    = "utb-sql"
+    version = "MYSQL_5_6"
+    region  = "us-central"
+    tier    = "D0"
+  }
+}
+
+variable "sqldb_name" {
+  default = "devopsdb"
+}
+
+variable "sqluser" {
+  type = "map"
+
+  default = {
+    name     = "root"
+    password = "utb456"
+  }
+}

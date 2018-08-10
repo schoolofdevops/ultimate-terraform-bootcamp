@@ -5,11 +5,14 @@ UTB supporting code repository
  * AWS/GCP/Azure Accounts are already present
  * GCP Project is already present
  * Terraform backend bucket is already present
+ * CloudSQL Admin api is enabled
 
 ## Commands Used
 ```
  export GOOGLE_CREDENTIALS=PATH_TO_CREDS_JSON
  terraform init
+ terraform fmt
+ terraform destroy --target=google_compute_instance.instance_01
 ```
 
 ## Tips
@@ -20,6 +23,7 @@ UTB supporting code repository
    ```
     The syntax is data.TYPE.NAME.ATTRIBUTE. For example. ${data.aws_ami.ubuntu.id} will interpolate the id attribute from the aws_ami data source named ubuntu. If the data source has a count attribute set, you can access individual attributes with a zero-based index, such as ${data.aws_subnet.example.0.cidr_block}. You can also use the splat syntax to get a list of all the attributes: ${data.aws_subnet.example.*.cidr_block}.
    ```
+ * [SQL import is still not supported](https://github.com/terraform-providers/terraform-provider-google/issues/203)
 
 ## Reference Articles
   * https://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739b
