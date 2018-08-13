@@ -1,8 +1,8 @@
 # Backend Definition
 terraform {
   backend "gcs" {
-    bucket  = "utb-terraform"
+    bucket  = "utb-tfstate"
     prefix  = "terraform/devstate"
-    project = "831165999464"
+    project = "schoolofdevops-01"
   }
 }

@@ -1,5 +1,5 @@
 // Configure the Google Cloud provider
 provider "google" {
-  project = "vijay-devops"
+  project = "schoolofdevops-01"
   region  = "us-central1"
 }

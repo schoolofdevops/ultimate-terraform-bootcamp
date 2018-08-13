@@ -66,7 +66,7 @@ variable "sql" {
   type = "map"
 
   default = {
-    name    = "utb-sql"
+    name    = "ultimate-terraform322-cloudsql"
     version = "MYSQL_5_6"
     region  = "us-central"
     tier    = "D0"
