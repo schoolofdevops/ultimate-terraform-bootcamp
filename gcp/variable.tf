@@ -66,7 +66,7 @@ variable "sql" {
   type = "map"
 
   default = {
-    name    = "ultimate-terraform-cloudsql"
+    name    = "ultimate-terraform-bootcamp"
     version = "MYSQL_5_6"
     region  = "us-central"
     tier    = "D0"
