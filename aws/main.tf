@@ -3,10 +3,11 @@ provider "aws" {
 }
 
 resource "aws_instance" "web" {
-  ami           = "ami-fa150e85" #ubuntu 16.04 ami
+  ami = "ami-ef140f90"
   instance_type = "t1.micro"
-
+  key_name = "initcron"
+  
   tags {
-    Name = "my-first-terraform-instance"
+    Name = "terraform-second-machine"
   }
 }
