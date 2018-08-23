@@ -3,10 +3,10 @@ provider "aws" {
 }
 
 resource "aws_instance" "web" {
-  ami = "ami-ef140f90"
-  instance_type = "t1.micro"
-  key_name = "initcron"
-  
+  ami           = "ami-04169656fea786776"
+  instance_type = "t2.micro"
+  key_name      = "schoolofdevops"
+
   tags {
     Name = "terraform-second-machine"
   }
