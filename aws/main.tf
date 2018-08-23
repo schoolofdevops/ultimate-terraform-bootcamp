@@ -3,17 +3,18 @@ provider "aws" {
 }
 
 resource "aws_instance" "web" {
-  ami = "ami-ef140f90"
+  ami           = "ami-04169656fea786776"
   instance_type = "t2.micro"
-  key_name = "initcron"
+  key_name      = "schoolofdevops"
+  subnet_id     = "${aws_subnet.subnet_01.id}"
   
   tags {
-    Name = "terraform-second-machine"
+    Name = "terraform-vars"
   }
 }
 
 data "aws_vpc" "demo_vpc" {
-  id = "vpc-05ef5bbd5cf61b8a8"
+  id = "vpc-0a4308580583335b1"
 }
 
 resource "aws_subnet" "subnet_01" {
