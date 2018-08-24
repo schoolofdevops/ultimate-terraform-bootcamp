@@ -1,0 +1,69 @@
+{
+    "docs": [
+        {
+            "location": "/", 
+            "text": "Welcome to MkDocs\n\n\nFor full documentation visit \nmkdocs.org\n.\n\n\nCommands\n\n\n\n\nmkdocs new [dir-name]\n - Create a new project.\n\n\nmkdocs serve\n - Start the live-reloading docs server.\n\n\nmkdocs build\n - Build the documentation site.\n\n\nmkdocs help\n - Print this help message.\n\n\n\n\nProject layout\n\n\nmkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.", 
+            "title": "Home"
+        }, 
+        {
+            "location": "/#welcome-to-mkdocs", 
+            "text": "For full documentation visit  mkdocs.org .", 
+            "title": "Welcome to MkDocs"
+        }, 
+        {
+            "location": "/#commands", 
+            "text": "mkdocs new [dir-name]  - Create a new project.  mkdocs serve  - Start the live-reloading docs server.  mkdocs build  - Build the documentation site.  mkdocs help  - Print this help message.", 
+            "title": "Commands"
+        }, 
+        {
+            "location": "/#project-layout", 
+            "text": "mkdocs.yml    # The configuration file.\ndocs/\n    index.md  # The documentation homepage.\n    ...       # Other markdown pages, images and other files.", 
+            "title": "Project layout"
+        }, 
+        {
+            "location": "/00-environment-setup/", 
+            "text": "", 
+            "title": "Setting up the environment"
+        }, 
+        {
+            "location": "/01-getting-started/", 
+            "text": "Getting started with Terraform\n\n\nTerraform Commands\n\n\nYou can check the list of commands for Terraform by running, \n\n\nterrform -h\n\n\nbash-root$ terraform -h\nsage: terraform [--version] [--help] \ncommand\n [args]\n\nThe available commands for execution are listed below.\nThe most common, useful commands are shown first, followed by\nless common or more advanced commands. If you're just getting\nstarted with Terraform, stick with the common commands. For the\nother commands, please read the help and docs before usage.\n\nCommon commands:\n    apply              Builds or changes infrastructure\n    console            Interactive console for Terraform interpolations\n    destroy            Destroy Terraform-managed infrastructure\n    env                Workspace management\n    fmt                Rewrites config files to canonical format\n    get                Download and install modules for the configuration\n    graph              Create a visual graph of Terraform resources\n    import             Import existing infrastructure into Terraform\n    init               Initialize a Terraform working directory\n    output             Read an output from a state file\n    plan               Generate and show an execution plan\n    providers          Prints a tree of the providers used in the configuration\n    push               Upload this Terraform module to Atlas to run\n    refresh            Update local state file against real resources\n    show               Inspect Terraform state or plan\n    taint              Manually mark a resource for recreation\n    untaint            Manually unmark a resource as tainted\n    validate           Validates the Terraform files\n    version            Prints the Terraform version\n    workspace          Workspace management\n\nAll other commands:\n    debug              Debug output management (experimental)\n    force-unlock       Manually unlock the terraform state\n    state              Advanced state management\n\n\n\n\nFrom those commands, the following are important.\n\n\nterraform plan\nterraform apply\nterraform destroy\nterraform init\nterraform fmt\n\n\n\n\nProviders\n\n\nProviders are a way to define where you want to create your infrastructure. Usually Providers are,\n\n\n\n\nIaaS\n\n\nPaaS\n\n\nSaaS\n\n\n\n\nMostly we will be using IaaS providers(Ex: AWS, Azure, GCP, etc.,)\n\n\nEx: AWS Provider\n\n\nprovider \naws\n {\n  region = \nus-east-1\n\n}\n\n\n\n\nResources\n\n\nResources are the different entities you want to create on given provider. As an example, for AWS provider, if you want to create an EC2 machine, you have to create the following resource.\n\n\nEx: EC2 Resource\n\n\nresource \naws_instance\n \nweb\n {\n  ami           = \nami-04169656fea786776\n\n  instance_type = \nt2.micro\n\n  key_name      = \nschoolofdevops\n\n\n  tags {\n    Name = \nterraform-second-machine\n\n  }\n}", 
+            "title": "Getting Started"
+        }, 
+        {
+            "location": "/01-getting-started/#getting-started-with-terraform", 
+            "text": "", 
+            "title": "Getting started with Terraform"
+        }, 
+        {
+            "location": "/01-getting-started/#terraform-commands", 
+            "text": "You can check the list of commands for Terraform by running,   terrform -h  bash-root$ terraform -h\nsage: terraform [--version] [--help]  command  [args]\n\nThe available commands for execution are listed below.\nThe most common, useful commands are shown first, followed by\nless common or more advanced commands. If you're just getting\nstarted with Terraform, stick with the common commands. For the\nother commands, please read the help and docs before usage.\n\nCommon commands:\n    apply              Builds or changes infrastructure\n    console            Interactive console for Terraform interpolations\n    destroy            Destroy Terraform-managed infrastructure\n    env                Workspace management\n    fmt                Rewrites config files to canonical format\n    get                Download and install modules for the configuration\n    graph              Create a visual graph of Terraform resources\n    import             Import existing infrastructure into Terraform\n    init               Initialize a Terraform working directory\n    output             Read an output from a state file\n    plan               Generate and show an execution plan\n    providers          Prints a tree of the providers used in the configuration\n    push               Upload this Terraform module to Atlas to run\n    refresh            Update local state file against real resources\n    show               Inspect Terraform state or plan\n    taint              Manually mark a resource for recreation\n    untaint            Manually unmark a resource as tainted\n    validate           Validates the Terraform files\n    version            Prints the Terraform version\n    workspace          Workspace management\n\nAll other commands:\n    debug              Debug output management (experimental)\n    force-unlock       Manually unlock the terraform state\n    state              Advanced state management  From those commands, the following are important.  terraform plan\nterraform apply\nterraform destroy\nterraform init\nterraform fmt", 
+            "title": "Terraform Commands"
+        }, 
+        {
+            "location": "/01-getting-started/#providers", 
+            "text": "Providers are a way to define where you want to create your infrastructure. Usually Providers are,   IaaS  PaaS  SaaS   Mostly we will be using IaaS providers(Ex: AWS, Azure, GCP, etc.,)  Ex: AWS Provider  provider  aws  {\n  region =  us-east-1 \n}", 
+            "title": "Providers"
+        }, 
+        {
+            "location": "/01-getting-started/#resources", 
+            "text": "Resources are the different entities you want to create on given provider. As an example, for AWS provider, if you want to create an EC2 machine, you have to create the following resource.  Ex: EC2 Resource  resource  aws_instance   web  {\n  ami           =  ami-04169656fea786776 \n  instance_type =  t2.micro \n  key_name      =  schoolofdevops \n\n  tags {\n    Name =  terraform-second-machine \n  }\n}", 
+            "title": "Resources"
+        }, 
+        {
+            "location": "/02-terraform-important-commands/", 
+            "text": "Important Terraform Commands\n\n\nTerraform Plan\n\n\nWhen you run \nterraform plan\n it will present you with the \nexecution plan", 
+            "title": "Important Commands"
+        }, 
+        {
+            "location": "/02-terraform-important-commands/#important-terraform-commands", 
+            "text": "", 
+            "title": "Important Terraform Commands"
+        }, 
+        {
+            "location": "/02-terraform-important-commands/#terraform-plan", 
+            "text": "When you run  terraform plan  it will present you with the  execution plan", 
+            "title": "Terraform Plan"
+        }
+    ]
+}
