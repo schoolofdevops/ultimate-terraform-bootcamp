@@ -1,0 +1,13 @@
+site_name: Ultimate Terraform Bootcamp
+docs_dir: chapters
+plugins: 
+  - search
+pages:
+  - Home: index.md
+  - Setup:
+    - Setting up the environment: "00-environment-setup.md"
+  - Getting Started with Terraform:
+    - Getting Started: "01-getting-started.md"
+    - Important Commands: "02-terraform-important-commands.md"
+theme: readthedocs
+
