@@ -110,3 +110,5 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 ```
 
 We have successfully created our first reosource on AWS. Please check your AWS console to check the properties(AMI and instance type) of the machine.
+
+![terraform apply](images/04-resources-apply.png)
