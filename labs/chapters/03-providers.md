@@ -74,3 +74,6 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ``` 
 This should initialize the environment for our course.
+
+## Reference
+If you want to learn more about providers, you can visit [this link](https://www.terraform.io/docs/providers/).
