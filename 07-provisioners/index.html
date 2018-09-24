@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Provisioners in detail - Ultimate Terraform Bootcamp</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Provisioners in detail";
+    var mkdocs_page_input_path = "07-provisioners.md";
+    var mkdocs_page_url = "/07-provisioners/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Ultimate Terraform Bootcamp</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Setup</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../00-environment-setup/">Setting up the environment</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting Started with Terraform</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../01-getting-started/">Getting Started</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../02-terraform-important-commands/">Important Commands</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../03-providers/">Terraform Providers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../04-resources-part1/">Terraform Building Blocks - Part 1</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../05-resources-part2/">Terraform Building Blocks - Part 2</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Provisioners in detail</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#provisioners">Provisioners</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#devops-demo-application">Devops Demo Application</a></li>
+        
+            <li><a class="toctree-l4" href="#file-provisioner">File Provisioner</a></li>
+        
+        </ul>
+    
+
+    <li class="toctree-l3"><a href="#remote-exec-provisioner">Remote-Exec Provisioner</a></li>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../08-datasources/">Data Source</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../09-terraform-state/">State Management in Terraform</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../10-backends/">Backend and Statelocking</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Ultimate Terraform Bootcamp</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Getting Started with Terraform &raquo;</li>
+        
+      
+    
+    <li>Provisioners in detail</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="provisioners">Provisioners</h2>
+<p>Provisioners are used to execute scripts either on local machines or on remote machines. 
+Provisioners will run at either
+  1. Resource creation time , hence called <code>Creation-Time provisioner</code> or<br />
+  2. Resource destruction time, hence called <code>Destroy-Time provisioner</code>  </p>
+<p>Most generally used provisioners are,<br />
+  * file        =&gt; copy file from local to remote
+  * local-exec  =&gt; execute on the machine where you run Terraform commands
+  * remote-exec =&gt; execute on the machine created/modified by Terrform</p>
+<h3 id="devops-demo-application">Devops Demo Application</h3>
+<p>We will set up <a href="https://github.com/devopsdemoapps/devops-demo">this application</a> using creation-time provisioner. </p>
+<h3 id="file-provisioner">File Provisioner</h3>
+<p>Create a new file with the name <code>user-data.sh</code></p>
+<pre><code>touch user-data.sh
+</code></pre>
+
+<p><code>file: user-data.sh</code></p>
+<pre><code>#!/bin/bash
+sudo apt update
+sudo apt install -y software-properties-common language-pack-en-base dialog apt-utils
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+sudo cp /usr/share/zoneinfo/America/New_York /etc/localtime
+sudo LC_ALL=en_US.UTF-8 add-apt-repository -y ppa:ondrej/php
+sudo apt update
+sudo apt install -yq apache2 php5.6 php5.6-mysql mysql-client
+sudo rm -rf /var/www/html/*
+sudo wget https://github.com/devopsdemoapps/devops-demo/raw/master/devops-demo.tar.gz
+sudo tar -xvzf devops-demo.tar.gz -C /var/www/html/
+sudo wget https://raw.githubusercontent.com/devopsdemoapps/devops-demo/master/devops-demo.sql
+sudo service apache2 restart
+</code></pre>
+
+<p><code>file: main.tf</code></p>
+<pre><code>[...]
+resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami                    = &quot;${var.ami}&quot;
+  instance_type          = &quot;${var.instance[&quot;type&quot;]}&quot;
+  key_name               = &quot;web-admin-key&quot;
+  vpc_security_group_ids = [&quot;${aws_security_group.webserver_sg.id}&quot;]
+  depends_on             = [&quot;aws_key_pair.webserver_key&quot;]
+
+  tags {
+    Name = &quot;${var.instance[&quot;name&quot;]}&quot;
+  }
+
+  provisioner &quot;file&quot; {
+    source      = &quot;user-data.sh&quot;
+    destination = &quot;/tmp/user-data.sh&quot;
+
+    connection {
+      type        = &quot;ssh&quot;
+      user        = &quot;${var.ssh_user}&quot;
+      private_key = &quot;${file(var.ssh_pvtkey)}&quot;
+    }
+  }
+}
+[...]
+</code></pre>
+
+<p>This <code>file</code> type provisioner copies the user-data from our local machine to the remote instance on <code>/tmp/user-data.sh</code> path. It requires authentication details to scp the file to the machine. Let us set the credentials in our <code>variables.tf</code> file.</p>
+<p><code>file: variables.tf</code></p>
+<pre><code>[...]
+variable &quot;ssh_user&quot; {
+  default = &quot;ubuntu&quot;
+}
+
+variable &quot;ssh_pvtkey&quot; {
+  default = &quot;~/.ssh/id_rsa&quot;
+}
+[...]
+</code></pre>
+
+<p>We will need to destroy and recreate the resources to apply this provisioner</p>
+<pre><code>terraform destroy
+
+[output]
+Destroy complete! Resources: 3 destroyed.
+</code></pre>
+
+<pre><code>terraform apply
+
+[output]
+aws_instance.webserver: Still creating... (10s elapsed)
+aws_instance.webserver: Still creating... (20s elapsed)
+aws_instance.webserver: Still creating... (30s elapsed)
+aws_instance.webserver: Provisioning with 'file'...
+aws_instance.webserver: Still creating... (40s elapsed)
+aws_instance.webserver: Still creating... (50s elapsed)
+aws_instance.webserver: Still creating... (1m0s elapsed)
+aws_instance.webserver: Still creating... (1m10s elapsed)
+aws_instance.webserver: Creation complete after 1m11s (ID: i-02888bbc102c4d0ed)
+
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+webserver_ip = 35.173.254.26
+</code></pre>
+
+<h2 id="remote-exec-provisioner">Remote-Exec Provisioner</h2>
+<p>Now we will execute the script that we have just copied over.</p>
+<p><code>file: main.tf</code></p>
+<pre><code>resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami                    = &quot;${var.ami}&quot;
+  instance_type          = &quot;${var.instance[&quot;type&quot;]}&quot;
+  key_name               = &quot;web-admin-key&quot;
+  vpc_security_group_ids = [&quot;${aws_security_group.webserver_sg.id}&quot;]
+  depends_on             = [&quot;aws_key_pair.webserver_key&quot;]
+
+  tags {
+    Name = &quot;${var.instance[&quot;name&quot;]}&quot;
+  }
+
+  provisioner &quot;file&quot; {
+    source      = &quot;user-data.sh&quot;
+    destination = &quot;/tmp/user-data.sh&quot;
+
+    connection {
+      type        = &quot;ssh&quot;
+      user        = &quot;${var.ssh_user}&quot;
+      private_key = &quot;${file(var.ssh_pvtkey)}&quot;
+    }
+  }
+  provisioner &quot;remote-exec&quot; {
+    inline = [
+      &quot;chmod +x /tmp/user-data.sh&quot;,
+      &quot;/tmp/user-data.sh&quot;,
+    ]
+
+    connection {
+      type        = &quot;ssh&quot;
+      user        = &quot;${var.ssh_user}&quot;
+      private_key = &quot;${file(var.ssh_pvtkey)}&quot;
+    }
+  }
+}
+</code></pre>
+
+<p>We will also add the ingress policy port <code>80</code> and egress policy for allo traffic in our security group.</p>
+<p><code>file: main.tf</code></p>
+<pre><code>[...]
+resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
+  name = &quot;webserver-sg&quot;
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = &quot;tcp&quot;
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+  }
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = &quot;tcp&quot;
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = &quot;-1&quot;
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+  }
+}
+[...]
+</code></pre>
+
+<p>For this <code>remote-exec</code> provisioner to take effect, we need to recreate the resources(since these are creation-time provisoners).</p>
+<pre><code>terraform destroy
+
+[output]
+aws_instance.webserver: Still destroying... (ID: i-02888bbc102c4d0ed, 30s elapsed)
+aws_instance.webserver: Still destroying... (ID: i-02888bbc102c4d0ed, 40s elapsed)
+aws_instance.webserver: Destruction complete after 48s
+aws_key_pair.webserver_key: Destroying... (ID: web-admin-key)
+aws_security_group.webserver_sg: Destroying... (ID: sg-097c880ffd1c9f6c3)
+aws_key_pair.webserver_key: Destruction complete after 1s
+aws_security_group.webserver_sg: Destruction complete after 3s
+
+Destroy complete! Resources: 3 destroyed.
+</code></pre>
+
+<pre><code>terrform apply
+
+[output]
+aws_instance.webserver (remote-exec): Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|151.101.200.133|:443... connected.
+aws_instance.webserver (remote-exec): HTTP request sent, awaiting response... 200 OK
+aws_instance.webserver (remote-exec): Length: 233 [text/plain]
+aws_instance.webserver (remote-exec): Saving to: ‘devops-demo.sql’
+
+aws_instance.webserver (remote-exec):  0%  0           --.-K/s
+aws_instance.webserver (remote-exec): 100% 233         --.-K/s   in 0s
+
+aws_instance.webserver (remote-exec): 2018-09-24 12:36:02 (9.54 MB/s) - ‘devops-demo.sql’ saved [233/233]
+aws_instance.webserver: Creation complete after 5m11s (ID: i-02848bbc106c45ced)
+
+Apply complete! Resources: 3 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+webserver_ip = 35.173.130.100
+</code></pre>
+
+<p>Once the creation is complete, you should be able to access the application by visiting the instance's public IP.</p>
+<p><img alt="demoapp" src="../images/07-demoapp.png" /></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../08-datasources/" class="btn btn-neutral float-right" title="Data Source">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../06-variables-and-outputs/" class="btn btn-neutral" title="Input and Output Variables"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../06-variables-and-outputs/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../08-datasources/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>
