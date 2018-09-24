@@ -2,7 +2,7 @@
 
 Resources are the building block in Terraform. These the actual cloud entities that you are either creating/deleting or modifying. To do so, you will have to define them in a terraform manifest and apply them. 
 
-## Creating our first Resource
+### Creating our first Resource
 
 Let us create an EC2 instance, which is going to be our first resource on AWS using Terraform. 
 
@@ -50,6 +50,8 @@ resource "aws_instance" "webserver" {
 }
 ```
 
+### Terraform Plan
+
 Then run `terraform plan` to see what will happen if we apply the manifest.
 
 ```
@@ -93,6 +95,8 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 ```
 
+### Terraform Apply
+
 Then run, `terraform apply` to actually create the resource on AWS.
 
 ```
@@ -112,3 +116,8 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 We have successfully created our first reosource on AWS. Please check your AWS console to check the properties(AMI and instance type) of the machine.
 
 ![terraform apply](./images/04-resources-apply.png)
+
+## Reference
+If you need further details about resources, please visit this [link](https://www.terraform.io/docs/configuration/resources.html)
+
+

@@ -93,3 +93,57 @@ This file contains the metadata of our ec2 instance that we have created in the 
 
 ### Usecase 2
 What happens when someone manually changes(which is not desirable) the properties of the instance created by Terraform? We can undo the manual changes just by running `terraform apply` again. One point to keep in mind though is, some property changes forces resource recreation which might result in data loss.
+
+### Changes in Terrfaform state
+
+Let us see what happens to tfstate file when we destroy the ec2 instance
+```
+terraform destroy
+
+[output]
+aws_instance.webserver: Refreshing state... (ID: i-02489cdf638f05bbd)
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  - aws_instance.webserver
+
+
+Plan: 0 to add, 0 to change, 1 to destroy.
+
+Do you really want to destroy?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+  [...]
+aws_instance.webserver: Still destroying... (ID: i-02489cdf638f05bbd, 1m0s elapsed)
+aws_instance.webserver: Destruction complete after 1m0s
+
+Destroy complete! Resources: 1 destroyed.
+```
+
+`file: terraform.tfstate`
+```
+{
+    "version": 3,
+    "terraform_version": "0.11.7",
+    "serial": 2,
+    "lineage": "138bb0c6-ca69-0d39-aa90-5e08f29c8efb",
+    "modules": [
+        {
+            "path": [
+                "root"
+            ],
+            "outputs": {},
+            "resources": {},
+            "depends_on": []
+        }
+    ]
+}
+```
+
+Once the machine is destroyed, all metadata about that machine is also gone.
