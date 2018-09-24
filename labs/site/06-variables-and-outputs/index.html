@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Input and Output Variables - Ultimate Terraform Bootcamp</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Input and Output Variables";
+    var mkdocs_page_input_path = "06-variables-and-outputs.md";
+    var mkdocs_page_url = "/06-variables-and-outputs/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Ultimate Terraform Bootcamp</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Setup</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../00-environment-setup/">Setting up the environment</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting Started with Terraform</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../01-getting-started/">Getting Started</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../02-terraform-important-commands/">Important Commands</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../03-providers/">Terraform Providers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../04-resources-part1/">Terraform Building Blocks - Part 1</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../05-resources-part2/">Terraform Building Blocks - Part 2</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Input and Output Variables</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#variables">Variables</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#type-1-attribute-of-a-resource">Type 1: Attribute of a Resource</a></li>
+        
+            <li><a class="toctree-l4" href="#type-2-user-definedinput-variables">Type 2: User Defined(Input) Variables</a></li>
+        
+            <li><a class="toctree-l4" href="#type-3-output-variables">Type 3: Output Variables</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../07-datasources/">Data Source</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../0x-terraform-state/">State Management in Terraform</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Ultimate Terraform Bootcamp</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Getting Started with Terraform &raquo;</li>
+        
+      
+    
+    <li>Input and Output Variables</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="variables">Variables</h2>
+<p>Let us try to ssh into the machine that we've just created. Get the public IP from the AWS console.</p>
+<pre><code>ssh ubuntu@34.203.194.201
+
+[output]
+ssh: connect to host 34.203.194.201 port 22: Operation timed out
+</code></pre>
+
+<p>You will not be able to SSH. The reason is we have not associated the security group that we have created with this instance. The instance is still using the default security group which doesn't allow ssh. </p>
+<p><img alt="default-sg" src="../images/06-default-sg.png" /></p>
+<p>We need to fix this issue. Let us associate our security group with this machine.</p>
+<p><code>file: main.tf</code></p>
+<p><strong>Bad Practice</strong></p>
+<pre><code>resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami                    = &quot;ami-408c7f28&quot;
+  instance_type          = &quot;t1.micro&quot;
+  key_name               = &quot;web-admin-key&quot;
+  vpc_security_group_ids = &quot;sg-0c22a3497351d1caa&quot;
+  depends_on             = [&quot;aws_key_pair.webserver_key&quot;]
+
+  tags {
+    Name = &quot;weberserver&quot;
+  }
+}
+</code></pre>
+
+<p>We can manually copy the ID of the security group and apply the manifest. This would work but this is an ugly fix. We should let Terraform to find the these kind of mutable data. Thats where <code>Variables</code> come into picture.</p>
+<h3 id="type-1-attribute-of-a-resource">Type 1: Attribute of a Resource</h3>
+<p><code>file: main.tf</code><br />
+<strong>Good Practice</strong></p>
+<pre><code>resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami                    = &quot;ami-408c7f28&quot;
+  instance_type          = &quot;t1.micro&quot;
+  key_name               = &quot;web-admin-key&quot;
+  vpc_security_group_ids = [&quot;${aws_security_group.webserver_sg.id}&quot;]
+  depends_on             = [&quot;aws_key_pair.webserver_key&quot;]
+
+  tags {
+    Name = &quot;weberserver&quot;
+  }
+}
+</code></pre>
+
+<p>This is how variable interpolation works in Terraform. </p>
+<p><code>Syntax: ${TYPE.NAME.ATTRIBUTE}</code></p>
+<p>In our case, it is, <code>${aws_security_group.webserver_sg.id}</code>.
+Here,
+  aws_security_group =&gt; TYPE
+  webserver_sg       =&gt; NAME
+  id                 =&gt; ATTRIBUTE</p>
+<p>Every resource has set of attribute that can be referred as a variable. <code>aws_security_group</code> resource has the following attributes which can be referred.<br />
+  * id - The ID of the security group<br />
+  * arn - The ARN of the security group<br />
+  * vpc_id - The VPC ID.<br />
+  * owner_id - The owner ID.<br />
+  * name - The name of the security group<br />
+  * description - The description of the security group<br />
+  * ingress - The ingress rules. See above for more.<br />
+  * egress - The egress rules. See above for more.  </p>
+<p>This also creates an <code>Implicit Dependency</code>. Terraform will know that this security group has to be created before the EC2 instance since the later refers to it. Let us apply the given manifest.  </p>
+<p>Let us apply the manifest.</p>
+<pre><code>terraform apply 
+
+[output]
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  ~ aws_instance.webserver
+      vpc_security_group_ids.118229083:  &quot;&quot; =&gt; &quot;sg-0c22a3497351d1caa&quot;
+      vpc_security_group_ids.3314100969: &quot;sg-a42b7ae9&quot; =&gt; &quot;&quot;
+
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_instance.webserver: Modifying... (ID: i-0a7d259b3126e16b8)
+  vpc_security_group_ids.118229083:  &quot;&quot; =&gt; &quot;sg-0c22a3497351d1caa&quot;
+  vpc_security_group_ids.3314100969: &quot;sg-a42b7ae9&quot; =&gt; &quot;&quot;
+aws_instance.webserver: Still modifying... (ID: i-0a7d259b3126e16b8, 10s elapsed)
+aws_instance.webserver: Modifications complete after 13s (ID: i-0a7d259b3126e16b8)
+
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+</code></pre>
+
+<p>Check in your AWS console to check the same.</p>
+<p><img alt="custom-sg" src="../images/06-custom-sg.png" /></p>
+<p>Now you should be able to SSH into the machine.</p>
+<pre><code>ssh ubuntu@34.203.194.201
+
+[output]
+Warning: Permanently added '34.203.194.201' (ECDSA) to the list of known hosts.
+Welcome to Ubuntu 14.04 LTS (GNU/Linux 3.13.0-29-generic x86_64)
+
+ubuntu@ip-172-31-40-32:~$
+</code></pre>
+
+<p><code>Exercise: Remove the explicit dependecy by using the key_pair with above given attribute reference method</code> </p>
+<h3 id="type-2-user-definedinput-variables">Type 2: User Defined(Input) Variables</h3>
+<p>It is always a good practice to remove data from code. In our manifest, we are hardcoding all the values. Instead we should use variables to define the values and reference them in the manifest. </p>
+<p>Create a new file with the name <code>variables.tf</code></p>
+<pre><code>touch variables.tf
+</code></pre>
+
+<p><code>Syntax</code>:</p>
+<pre><code>variable &quot;name&quot; {
+  description = &quot;describe your variable&quot;
+  default     = &quot;default value&quot;
+}
+</code></pre>
+
+<p>Let us define our first variable in this file.</p>
+<p><code>file: variables.tf</code></p>
+<pre><code>variable &quot;ami&quot; {
+  description = &quot;ami for the instance&quot;
+  default     = &quot;ami-408c7f28&quot;
+}
+</code></pre>
+
+<p>This variable can be referenced in the main manifest like the following.</p>
+<pre><code>[...]
+resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami                    = &quot;${var.ami}&quot;
+  instance_type          = &quot;t1.micro&quot;
+  key_name               = &quot;web-admin-key&quot;
+  vpc_security_group_ids = [&quot;${aws_security_group.webserver_sg.id}&quot;]
+  depends_on             = [&quot;aws_key_pair.webserver_key&quot;]
+
+  tags {
+    Name = &quot;weberserver&quot;
+  }
+}
+[...]
+</code></pre>
+
+<p>Let us apply the manifest to see if this works. Terraform automatically loads all the files with <code>.tf</code> extension from the working directory. So we do not need to implicitly mention about the variable file.</p>
+<pre><code>terraform apply
+
+[output]
+aws_key_pair.webserver_key: Refreshing state... (ID: web-admin-key)
+aws_security_group.webserver_sg: Refreshing state... (ID: sg-0c22a3497351d1caa)
+aws_instance.webserver: Refreshing state... (ID: i-0a7d259b3126e16b8)
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+</code></pre>
+
+<p>Let us parameterize some properties from our main manifest.</p>
+<p><code>file: variables.tf</code></p>
+<pre><code># default type is string
+variable &quot;ami&quot; {
+  description = &quot;ami for the instance&quot;
+  default     = &quot;ami-408c7f28&quot;
+}
+
+# map type variable definition
+variable &quot;instance&quot; {
+  description = &quot;instance parameters&quot;
+  type        = map
+  default     = {
+    &quot;type&quot; = &quot;t1.micro&quot;
+    &quot;name&quot; = &quot;demo-server&quot;
+  }
+}
+
+variable &quot;key_name&quot; {
+  description = &quot;name of the key&quot;
+  default     = &quot;web-admin-key&quot;
+}
+
+variable &quot;key_pub&quot; {
+  description = &quot;content of public key&quot;
+  default     = &quot;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local&quot;
+}
+</code></pre>
+
+<p>Here is fully parameterized main manifest.
+<code>file: main.tf</code></p>
+<pre><code>provider &quot;aws&quot; {
+  region = &quot;us-east-1&quot;
+}
+
+resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami                    = &quot;${var.ami}&quot;
+  instance_type          = &quot;${var.instance[&quot;type&quot;]}&quot;
+  key_name               = &quot;web-admin-key&quot;
+  vpc_security_group_ids = [&quot;${aws_security_group.webserver_sg.id}&quot;]
+  depends_on             = [&quot;aws_key_pair.webserver_key&quot;]
+
+  tags {
+    Name = &quot;${var.instance[&quot;name&quot;]}&quot;
+  }
+}
+
+resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
+  name = &quot;webserver-sg&quot;
+
+  ingress {
+    from_port   = 22
+    to_port     = 22
+    protocol    = &quot;tcp&quot;
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+  }
+}
+
+resource &quot;aws_key_pair&quot; &quot;webserver_key&quot; {
+  key_name   = &quot;${var.key_name}&quot;
+  public_key = &quot;${var.key_pub}&quot;
+}
+</code></pre>
+
+<p>I've intentionally set the variable <code>instance.name</code> to <code>demo-server</code>. Let us apply the manifest.</p>
+<pre><code>terraform apply
+
+[output]
+aws_security_group.webserver_sg: Refreshing state... (ID: sg-0c22a3497351d1caa)
+aws_key_pair.webserver_key: Refreshing state... (ID: web-admin-key)
+aws_instance.webserver: Refreshing state... (ID: i-0a7d259b3126e16b8)
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  ~ aws_instance.webserver
+      tags.Name: &quot;weberserver&quot; =&gt; &quot;demo-server&quot;
+
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_instance.webserver: Modifying... (ID: i-0a7d259b3126e16b8)
+  tags.Name: &quot;weberserver&quot; =&gt; &quot;demo-server&quot;
+aws_instance.webserver: Still modifying... (ID: i-0a7d259b3126e16b8, 10s elapsed)
+aws_instance.webserver: Modifications complete after 14s (ID: i-0a7d259b3126e16b8)
+
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+</code></pre>
+
+<p>Terraform has substituted the value of <code>instance name</code> from variables, thus it has changed the resource as well.</p>
+<h3 id="type-3-output-variables">Type 3: Output Variables</h3>
+<p>Output variables help us to refer the metadata of resources after they are applied. This saves a lot of time, because we don't have to find go to AWS web console to find the details.</p>
+<p>Let us get the public ip of the instance we've created by using output variable.</p>
+<p><code>file: main.tf</code></p>
+<pre><code>[...]
+output &quot;webserver_ip&quot; {
+    value = &quot;${aws_instance.webserver.public_ip}&quot;
+}
+[...]
+</code></pre>
+
+<p>Output variables also uses variable interpolation. </p>
+<p>Run <em>terraform apply</em> to see output variables in action.</p>
+<pre><code>terraform apply
+
+[output]
+aws_security_group.webserver_sg: Refreshing state... (ID: sg-0c22a3497351d1caa)
+aws_key_pair.webserver_key: Refreshing state... (ID: web-admin-key)
+aws_instance.webserver: Refreshing state... (ID: i-0a7d259b3126e16b8)
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+webserver_ip = 34.203.194.201
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../07-datasources/" class="btn btn-neutral float-right" title="Data Source">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../05-resources-part2/" class="btn btn-neutral" title="Terraform Building Blocks - Part 2"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../05-resources-part2/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../07-datasources/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>

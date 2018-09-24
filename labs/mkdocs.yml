@@ -12,6 +12,11 @@ pages:
     - Terraform Providers: "03-providers.md"
     - Terraform Building Blocks - Part 1: "04-resources-part1.md"
     - Terraform Building Blocks - Part 2: "05-resources-part2.md"
-    - State Management in Terraform: "06-terraform-state.md"
+    - Input and Output Variables: "06-variables-and-outputs.md"
+    - Provisioners in detail: "07-provisioners.md"
+    - Data Source: "07-datasources.md"
+    - Terrafrom State: "09-terraform-state.md"
+    - Backend and Statelocking: "10-backends.md"
+    - State Management in Terraform: "0x-terraform-state.md"
 theme: readthedocs
 

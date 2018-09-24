@@ -200,7 +200,7 @@ variable "instance" {
   type        = map
   default     = {
   	"type" = "t1.micro"
-  	"name" = "demo-server"
+  	"name" = "devops-server"
   }
 }
 
@@ -268,7 +268,7 @@ Resource actions are indicated with the following symbols:
 Terraform will perform the following actions:
 
   ~ aws_instance.webserver
-      tags.Name: "weberserver" => "demo-server"
+      tags.Name: "weberserver" => "devops-server"
 
 
 Plan: 0 to add, 1 to change, 0 to destroy.
@@ -280,7 +280,7 @@ Do you want to perform these actions?
   Enter a value: yes
 
 aws_instance.webserver: Modifying... (ID: i-0a7d259b3126e16b8)
-  tags.Name: "weberserver" => "demo-server"
+  tags.Name: "weberserver" => "devops-server"
 aws_instance.webserver: Still modifying... (ID: i-0a7d259b3126e16b8, 10s elapsed)
 aws_instance.webserver: Modifications complete after 14s (ID: i-0a7d259b3126e16b8)
 
