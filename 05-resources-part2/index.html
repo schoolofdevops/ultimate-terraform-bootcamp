@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Terraform Building Blocks - Part 2 - Ultimate Terraform Bootcamp</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Terraform Building Blocks - Part 2";
+    var mkdocs_page_input_path = "05-resources-part2.md";
+    var mkdocs_page_url = "/05-resources-part2/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Ultimate Terraform Bootcamp</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Setup</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../00-environment-setup/">Setting up the environment</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting Started with Terraform</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../01-getting-started/">Getting Started</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../02-terraform-important-commands/">Important Commands</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../03-providers/">Terraform Providers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../04-resources-part1/">Terraform Building Blocks - Part 1</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Terraform Building Blocks - Part 2</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#variables-and-outputs">Variables and Outputs</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#explicit-dependency">Explicit Dependency</a></li>
+        
+            <li><a class="toctree-l4" href="#idempotency">Idempotency</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../06-terraform-state/">State Management in Terraform</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Ultimate Terraform Bootcamp</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Getting Started with Terraform &raquo;</li>
+        
+      
+    
+    <li>Terraform Building Blocks - Part 2</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="variables-and-outputs">Variables and Outputs</h2>
+<p>The ec2 instance that we have created is not that useful when we don't have access to it. So let us delete it and  we shall set up this again with additional resources. </p>
+<p>Let us create a security group, which allows us to ssh(port 22) into the machine.</p>
+<p><code>file: main.tf</code></p>
+<pre><code>provider &quot;aws&quot; {
+  region = &quot;us-east-1&quot;
+}
+
+resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami           = &quot;ami-408c7f28&quot;
+  instance_type = &quot;t1.micro&quot;
+}
+
+resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
+
+    name = &quot;webserver-sg&quot;
+
+    ingress {
+        from_port   = 22
+        to_port     = 22
+        protocol    = &quot;tcp&quot;
+        cidr_blocks = [&quot;0.0.0.0/0&quot;]
+    }
+}
+</code></pre>
+
+<p>Here,
+  Resource type = aws_security_group,
+  Resource name = webserver_sg</p>
+<p>This <code>aws_security_group</code> resource allows us to ssh into the instance.</p>
+<p>We need to create the EC2 instance with this security group. To do that, </p>
+<p>The final requirement is a <code>key pair</code> using which we can login to the machine. Let us use <a href="https://www.terraform.io/docs/providers/aws/r/key_pair.html">aws_key_pair</a> to register the key with AWS and then use in our ec2 instance.</p>
+<p>To do this, you will need to create a key pair in your local machine. Run the following commands. This will create one public key and a private key.</p>
+<pre><code>root@vibe$ ssh-keygen -t rsa
+
+[output]
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/vibe/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/vibe/.ssh/id_rsa.
+Your public key has been saved in /home/vibe/.ssh/id_rsa.pub.
+The key fingerprint is:
+SHA256:nSnSLKDvnLv22LFX+wKYMa0TvSt3AL406z+Asj/GSak vibe@vibes-MacBook-Air.local
+The key's randomart image is:
++---[RSA 2048]----+
+|                 |
+|                 |
+|    .  o         |
+|   . .=oo. o     |
+|  .  +oOS.+      |
+|  ..+ Xo+..      |
+|   *.o.* = .     |
+|  Eo*++o= +      |
+|   +O*==.o o.    |
++----[SHA256]-----+
+</code></pre>
+
+<p>Copy the content of your public key</p>
+<pre><code>cat ~/.ssh/id_rsa.pub
+
+[output]
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local
+</code></pre>
+
+<p>Paste the content of public key in the public_key</p>
+<p><code>file: main.tf</code></p>
+<pre><code>[...]
+
+resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
+
+    name = &quot;webserver-sg&quot;
+
+    ingress {
+        from_port   = 22
+        to_port     = 22
+        protocol    = &quot;tcp&quot;
+        cidr_blocks = [&quot;0.0.0.0/0&quot;]
+    }
+}
+
+resource &quot;aws_key_pair&quot; &quot;webserver_key&quot; {
+  key_name   = &quot;web-admin-key&quot;
+  public_key = &quot;ssh-rsa sh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local
+}
+</code></pre>
+
+<p>We need to make sure our instance uses this key. To do that, we should add one more attribute to our <code>aws_instance</code> module. We will also tag the instace with a name.</p>
+<p><code>file: main.tf</code></p>
+<pre><code>provider &quot;aws&quot; {
+  region = &quot;us-east-1&quot;
+}
+
+resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami           = &quot;ami-408c7f28&quot;
+  instance_type = &quot;t1.micro&quot;
+  key_name      = &quot;web-admin-key&quot;
+
+  tags {
+    Name = &quot;weberserver&quot;
+  }
+}
+
+[...]
+</code></pre>
+
+<p>The final file shoudl look like the following.</p>
+<pre><code>provider &quot;aws&quot; {
+  region = &quot;us-east-1&quot;
+}
+
+resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami           = &quot;ami-408c7f28&quot;
+  instance_type = &quot;t1.micro&quot;
+  key_name      = &quot;web-admin-key&quot;
+
+  tags {
+    Name = &quot;weberserver&quot;
+  }
+}
+
+resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
+
+        name = &quot;webserver-sg&quot;
+
+        ingress {
+                from_port   = 22
+                to_port     = 22
+                protocol    = &quot;tcp&quot;
+                cidr_blocks = [&quot;0.0.0.0/0&quot;]
+        }
+}
+
+resource &quot;aws_key_pair&quot; &quot;webserver_key&quot; {
+  key_name   = &quot;web-admin-key&quot;
+  public_key = &quot;ssh-rsa sh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local&quot;
+}
+</code></pre>
+
+<h3 id="explicit-dependency">Explicit Dependency</h3>
+<p>When we apply the manifest, we will get the following error.</p>
+<pre><code>terraform apply
+
+[output]
+aws_security_group.webserver_sg: Still creating... (10s elapsed)
+aws_security_group.webserver_sg: Creation complete after 11s (ID: sg-0c22a3497351d1caa)
+
+Error: Error applying plan:
+
+2 error(s) occurred:
+
+* aws_instance.webserver: 1 error(s) occurred:
+
+* aws_instance.webserver: Error launching source instance: InvalidKeyPair.NotFound: The key pair 'web-admin-key' does not exist
+    status code: 400, request id: 36af6c0c-9016-4dc4-bd3a-7b94fc3dfade
+* aws_key_pair.webserver_key: 1 error(s) occurred:
+
+* aws_key_pair.webserver_key: Error import KeyPair: InvalidKey.Format: Key is not in valid OpenSSH public key format
+    status code: 400, request id: 8a3697d2-4450-4150-86e0-3b75c0d43b80
+
+Terraform does not automatically rollback in the face of errors.
+Instead, your Terraform state file has been partially updated with
+any resources that successfully completed. Please address the error
+above and apply again to incrementally change your infrastructure.
+</code></pre>
+
+<p>This is because, the ec2 resource tries to use the key even before it is created. We can control the order of execution in two ways.
+  1. Implicit Dependecy (Automatic Dependency)
+  2. Explicit Dependency (Manual Dependency)</p>
+<p>We will learn more about <code>Implicit Dependency</code> in the next chapter. Now we will focus on adding <code>Explicit Dependency</code> to <em>aws_instance</em> resource to depend on <em>aws_key_pair</em> resource.</p>
+<p>This will guarantee the creation of key pair before the instance get's created. In your instance block add the following,</p>
+<p><code>file: main.tf</code></p>
+<pre><code>[...]
+resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami           = &quot;ami-408c7f28&quot;
+  instance_type = &quot;t1.micro&quot;
+  key_name      = &quot;web-admin-key&quot;
+
+  depends_on = [&quot;aws_key_pair.webserver_key&quot;]
+  tags {
+    Name = &quot;weberserver&quot;
+  }
+}
+[...]
+</code></pre>
+
+<p>Syntax: <code>depends_on = ["resource_type.resource_name"]</code></p>
+<h3 id="idempotency">Idempotency</h3>
+<p>Finally apply the manifest by running,</p>
+<pre><code>terraform apply
+
+[output]
+Plan: 2 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_key_pair.webserver_key: Creating...
+  fingerprint: &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  key_name:    &quot;&quot; =&gt; &quot;web-admin-key&quot;
+  public_key:  &quot;&quot; =&gt; &quot;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local&quot;
+aws_key_pair.webserver_key: Creation complete after 3s (ID: web-admin-key)
+aws_instance.webserver: Creating...
+  ami:                          &quot;&quot; =&gt; &quot;ami-408c7f28&quot;
+  arn:                          &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  associate_public_ip_address:  &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  availability_zone:            &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  cpu_core_count:               &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  cpu_threads_per_core:         &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  ebs_block_device.#:           &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  ephemeral_block_device.#:     &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  get_password_data:            &quot;&quot; =&gt; &quot;false&quot;
+  instance_state:               &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  instance_type:                &quot;&quot; =&gt; &quot;t1.micro&quot;
+  ipv6_address_count:           &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  ipv6_addresses.#:             &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  key_name:                     &quot;&quot; =&gt; &quot;web-admin-key&quot;
+  network_interface.#:          &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  network_interface_id:         &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  password_data:                &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  placement_group:              &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  primary_network_interface_id: &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  private_dns:                  &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  private_ip:                   &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  public_dns:                   &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  public_ip:                    &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  root_block_device.#:          &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  security_groups.#:            &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  source_dest_check:            &quot;&quot; =&gt; &quot;true&quot;
+  subnet_id:                    &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  tags.%:                       &quot;&quot; =&gt; &quot;1&quot;
+  tags.Name:                    &quot;&quot; =&gt; &quot;weberserver&quot;
+  tenancy:                      &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  volume_tags.%:                &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+  vpc_security_group_ids.#:     &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
+aws_instance.webserver: Still creating... (10s elapsed)
+aws_instance.webserver: Still creating... (20s elapsed)
+aws_instance.webserver: Still creating... (30s elapsed)
+aws_instance.webserver: Creation complete after 37s (ID: i-0a7d259b3126e16b8)
+
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+</code></pre>
+
+<p>If you have noticed, Terraform did not create the security group this time around. The reason for this behaviour is, it had created the security group resource in the first run itself. So it did not create the same resource again when we applied the second time. This behaviour is called <code>Idempotency</code>.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../06-terraform-state/" class="btn btn-neutral float-right" title="State Management in Terraform">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../04-resources-part1/" class="btn btn-neutral" title="Terraform Building Blocks - Part 1"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../04-resources-part1/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../06-terraform-state/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>

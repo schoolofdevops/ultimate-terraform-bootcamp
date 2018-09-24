@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Important Commands - Ultimate Terraform Bootcamp</title>
+  <title>Terraform Providers - Ultimate Terraform Bootcamp</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Important Commands";
-    var mkdocs_page_input_path = "02-terraform-important-commands.md";
-    var mkdocs_page_url = "/02-terraform-important-commands/";
+    var mkdocs_page_name = "Terraform Providers";
+    var mkdocs_page_input_path = "03-providers.md";
+    var mkdocs_page_url = "/03-providers/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -71,25 +71,29 @@
                     
     <a class="" href="../01-getting-started/">Getting Started</a>
                 </li>
+                <li class="">
+                    
+    <a class="" href="../02-terraform-important-commands/">Important Commands</a>
+                </li>
                 <li class=" current">
                     
-    <a class="current" href="./">Important Commands</a>
+    <a class="current" href="./">Terraform Providers</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#important-terraform-commands">Important Terraform Commands</a></li>
+    <li class="toctree-l3"><a href="#providers">Providers</a></li>
     
         <ul>
         
-            <li><a class="toctree-l4" href="#terraform-plan">Terraform Plan</a></li>
+            <li><a class="toctree-l4" href="#example-provider">Example Provider</a></li>
+        
+            <li><a class="toctree-l4" href="#setting-up-our-environment-for-aws">Setting up our environment for AWS</a></li>
+        
+            <li><a class="toctree-l4" href="#reference">Reference</a></li>
         
         </ul>
     
 
     </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../03-providers/">Terraform Providers</a>
                 </li>
                 <li class="">
                     
@@ -132,7 +136,7 @@
         
       
     
-    <li>Important Commands</li>
+    <li>Terraform Providers</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -142,9 +146,71 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="important-terraform-commands">Important Terraform Commands</h1>
-<h2 id="terraform-plan">Terraform Plan</h2>
-<p>When you run <code>terraform plan</code> it will present you with the <code>execution plan</code></p>
+                <h1 id="providers">Providers</h1>
+<p>In Terraform, Providers are responsible for understanding API interactions from IaaS(AWS, Azure, etc.,), PaaS(Heroku) or SaaS(CloudFlare, DNSSimple, DNSMadeEasy, etc.,). </p>
+<h2 id="example-provider">Example Provider</h2>
+<p>Let's look at AWS Provider as an example.</p>
+<pre><code>provider &quot;aws&quot; {
+  access_key = &quot;${var.aws_access_key}&quot;
+  secret_key = &quot;${var.aws_secret_key}&quot;
+  region     = &quot;us-east-1&quot;
+}
+</code></pre>
+
+<p>As seen in the above given example, Provider is a way to instruct Terraform to interact with AWS API. Every provider needs some kind of credentials to get authenticated with the API. In our example, we have porvided AWS access key and secret key to perform the same. </p>
+<h2 id="setting-up-our-environment-for-aws">Setting up our environment for AWS</h2>
+<p>Let us set up our environment by creating a directory called <code>aws</code>.</p>
+<pre><code>mkdir aws
+cd aws
+</code></pre>
+
+<p>After changing directory into <code>aws</code>, we need to create a file named <code>main.tf</code>.</p>
+<pre><code>touch main.tf
+</code></pre>
+
+<p>Define your Provider details in this main manifest. Change the region if you want to create the resources elsewhere.</p>
+<pre><code>provider &quot;aws&quot; {
+  region = &quot;us-east-1&quot;
+}
+</code></pre>
+
+<p>Export your AWS access and secret keys as environment variables.</p>
+<pre><code>export AWS_ACCESS_KEY_ID=&quot;AKIAI3NYUWMNORYTDYBC&quot;
+export AWS_SECRET_ACCESS_KEY=&quot;toOh/ejVKe44wx3ujr7scaehdy4&quot;
+</code></pre>
+
+<p>Finally run the following command to initialize your environment.</p>
+<pre><code>terraform init
+
+[output]
+Initializing provider plugins...
+- Checking for available provider plugins on https://releases.hashicorp.com...
+- Downloading plugin for provider &quot;aws&quot; (1.37.0)...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = &quot;...&quot; constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.aws: version = &quot;~&gt; 1.37&quot;
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running &quot;terraform plan&quot; to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+</code></pre>
+
+<p>This should initialize the environment for our course.</p>
+<h2 id="reference">Reference</h2>
+<p>If you want to learn more about providers, you can visit <a href="https://www.terraform.io/docs/providers/">this link</a>.</p>
               
             </div>
           </div>
@@ -152,10 +218,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../03-providers/" class="btn btn-neutral float-right" title="Terraform Providers">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../04-resources-part1/" class="btn btn-neutral float-right" title="Terraform Building Blocks - Part 1">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../01-getting-started/" class="btn btn-neutral" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../02-terraform-important-commands/" class="btn btn-neutral" title="Important Commands"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -181,10 +247,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../01-getting-started/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../02-terraform-important-commands/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../03-providers/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../04-resources-part1/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

@@ -33,6 +33,30 @@
      <changefreq>daily</changefreq>
     </url>
         
+    <url>
+     <loc>/03-providers/</loc>
+     <lastmod>2018-09-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/04-resources-part1/</loc>
+     <lastmod>2018-09-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/05-resources-part2/</loc>
+     <lastmod>2018-09-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/06-terraform-state/</loc>
+     <lastmod>2018-09-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
 </urlset>

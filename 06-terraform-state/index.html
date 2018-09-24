@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>State Management in Terraform - Ultimate Terraform Bootcamp</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "State Management in Terraform";
+    var mkdocs_page_input_path = "06-terraform-state.md";
+    var mkdocs_page_url = "/06-terraform-state/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Ultimate Terraform Bootcamp</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Setup</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../00-environment-setup/">Setting up the environment</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting Started with Terraform</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../01-getting-started/">Getting Started</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../02-terraform-important-commands/">Important Commands</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../03-providers/">Terraform Providers</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../04-resources-part1/">Terraform Building Blocks - Part 1</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../05-resources-part2/">Terraform Building Blocks - Part 2</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">State Management in Terraform</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#terraform-state">Terraform State</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#usecase-1">Usecase 1</a></li>
+        
+            <li><a class="toctree-l4" href="#usecase-2">Usecase 2</a></li>
+        
+            <li><a class="toctree-l4" href="#changes-in-terrfaform-state">Changes in Terrfaform state</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Ultimate Terraform Bootcamp</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Getting Started with Terraform &raquo;</li>
+        
+      
+    
+    <li>State Management in Terraform</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h2 id="terraform-state">Terraform State</h2>
+<p>One advantage, Terraform has over other configuration management tools like Ansible and Chef is State management. Terraform stores all our infrastructure information(that we have created using Terraform) in a file with the name <code>terraform.tfstate</code>. </p>
+<p>In the last chapter, we have ran <code>terraform apply</code>. This command would create the above mentioned JSON flavoured statefile. Let us look at its the content.</p>
+<p><code>terraform.tfstate</code></p>
+<pre><code>{
+    &quot;version&quot;: 3,
+    &quot;terraform_version&quot;: &quot;0.11.7&quot;,
+    &quot;serial&quot;: 1,
+    &quot;lineage&quot;: &quot;138bb0c6-ca69-0d39-aa90-5e08f29c8efb&quot;,
+    &quot;modules&quot;: [
+        {
+            &quot;path&quot;: [
+                &quot;root&quot;
+            ],
+            &quot;outputs&quot;: {},
+            &quot;resources&quot;: {
+                &quot;aws_instance.webserver&quot;: {
+                    &quot;type&quot;: &quot;aws_instance&quot;,
+                    &quot;depends_on&quot;: [],
+                    &quot;primary&quot;: {
+                        &quot;id&quot;: &quot;i-02489cdf638f05bbd&quot;,
+                        &quot;attributes&quot;: {
+                            &quot;ami&quot;: &quot;ami-408c7f28&quot;,
+                            &quot;arn&quot;: &quot;arn:aws:ec2:us-east-1:822941572458:instance/i-02489cdf638f05bbd&quot;,
+                            &quot;associate_public_ip_address&quot;: &quot;true&quot;,
+                            &quot;availability_zone&quot;: &quot;us-east-1d&quot;,
+                            &quot;cpu_core_count&quot;: &quot;1&quot;,
+                            &quot;cpu_threads_per_core&quot;: &quot;1&quot;,
+                            &quot;credit_specification.#&quot;: &quot;1&quot;,
+                            &quot;credit_specification.0.cpu_credits&quot;: &quot;standard&quot;,
+                            &quot;disable_api_termination&quot;: &quot;false&quot;,
+                            &quot;ebs_block_device.#&quot;: &quot;0&quot;,
+                            &quot;ebs_optimized&quot;: &quot;false&quot;,
+                            &quot;ephemeral_block_device.#&quot;: &quot;0&quot;,
+                            &quot;get_password_data&quot;: &quot;false&quot;,
+                            &quot;iam_instance_profile&quot;: &quot;&quot;,
+                            &quot;id&quot;: &quot;i-02489cdf638f05bbd&quot;,
+                            &quot;instance_state&quot;: &quot;running&quot;,
+                            &quot;instance_type&quot;: &quot;t1.micro&quot;,
+                            &quot;ipv6_addresses.#&quot;: &quot;0&quot;,
+                            &quot;key_name&quot;: &quot;&quot;,
+                            &quot;monitoring&quot;: &quot;false&quot;,
+                            &quot;network_interface.#&quot;: &quot;0&quot;,
+                            &quot;network_interface_id&quot;: &quot;eni-00fbc08209349bb38&quot;,
+                            &quot;password_data&quot;: &quot;&quot;,
+                            &quot;placement_group&quot;: &quot;&quot;,
+                            &quot;primary_network_interface_id&quot;: &quot;eni-00fbc08209349bb38&quot;,
+                            &quot;private_dns&quot;: &quot;ip-172-31-24-184.ec2.internal&quot;,
+                            &quot;private_ip&quot;: &quot;172.31.24.184&quot;,
+                            &quot;public_dns&quot;: &quot;ec2-34-230-78-138.compute-1.amazonaws.com&quot;,
+                            &quot;public_ip&quot;: &quot;34.230.78.138&quot;,
+                            &quot;root_block_device.#&quot;: &quot;1&quot;,
+                            &quot;root_block_device.0.delete_on_termination&quot;: &quot;true&quot;,
+                            &quot;root_block_device.0.iops&quot;: &quot;0&quot;,
+                            &quot;root_block_device.0.volume_id&quot;: &quot;vol-0cc495c189e5c8dd2&quot;,
+                            &quot;root_block_device.0.volume_size&quot;: &quot;8&quot;,
+                            &quot;root_block_device.0.volume_type&quot;: &quot;standard&quot;,
+                            &quot;security_groups.#&quot;: &quot;1&quot;,
+                            &quot;security_groups.3814588639&quot;: &quot;default&quot;,
+                            &quot;source_dest_check&quot;: &quot;true&quot;,
+                            &quot;subnet_id&quot;: &quot;subnet-e8b3e6a2&quot;,
+                            &quot;tags.%&quot;: &quot;0&quot;,
+                            &quot;tenancy&quot;: &quot;default&quot;,
+                            &quot;volume_tags.%&quot;: &quot;0&quot;,
+                            &quot;vpc_security_group_ids.#&quot;: &quot;1&quot;,
+                            &quot;vpc_security_group_ids.3314100969&quot;: &quot;sg-a42b7ae9&quot;
+                        },
+                        &quot;meta&quot;: {
+                            &quot;e2bfb730-ecaa-11e6-8f88-34363bc7c4c0&quot;: {
+                                &quot;create&quot;: 600000000000,
+                                &quot;delete&quot;: 1200000000000,
+                                &quot;update&quot;: 600000000000
+                            },
+                            &quot;schema_version&quot;: &quot;1&quot;
+                        },
+                        &quot;tainted&quot;: false
+                    },
+                    &quot;deposed&quot;: [],
+                    &quot;provider&quot;: &quot;provider.aws&quot;
+                }
+            },
+            &quot;depends_on&quot;: []
+        }
+    ]
+}
+</code></pre>
+
+<h3 id="usecase-1">Usecase 1</h3>
+<p>This file contains the metadata of our ec2 instance that we have created in the last chapter. This information will be critical when we have to create <code>other resources which references this</code> ec2 instance. As we add more resources to the terrform template, this file will get populated with more metadata about each resource.</p>
+<h3 id="usecase-2">Usecase 2</h3>
+<p>What happens when someone manually changes(which is not desirable) the properties of the instance created by Terraform? We can undo the manual changes just by running <code>terraform apply</code> again. One point to keep in mind though is, some property changes forces resource recreation which might result in data loss.</p>
+<h3 id="changes-in-terrfaform-state">Changes in Terrfaform state</h3>
+<p>Let us see what happens to tfstate file when we destroy the ec2 instance</p>
+<pre><code>terraform destroy
+
+[output]
+aws_instance.webserver: Refreshing state... (ID: i-02489cdf638f05bbd)
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  - aws_instance.webserver
+
+
+Plan: 0 to add, 0 to change, 1 to destroy.
+
+Do you really want to destroy?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+  [...]
+aws_instance.webserver: Still destroying... (ID: i-02489cdf638f05bbd, 1m0s elapsed)
+aws_instance.webserver: Destruction complete after 1m0s
+
+Destroy complete! Resources: 1 destroyed.
+</code></pre>
+
+<p><code>file: terraform.tfstate</code></p>
+<pre><code>{
+    &quot;version&quot;: 3,
+    &quot;terraform_version&quot;: &quot;0.11.7&quot;,
+    &quot;serial&quot;: 2,
+    &quot;lineage&quot;: &quot;138bb0c6-ca69-0d39-aa90-5e08f29c8efb&quot;,
+    &quot;modules&quot;: [
+        {
+            &quot;path&quot;: [
+                &quot;root&quot;
+            ],
+            &quot;outputs&quot;: {},
+            &quot;resources&quot;: {},
+            &quot;depends_on&quot;: []
+        }
+    ]
+}
+</code></pre>
+
+<p>Once the machine is destroyed, all metadata about that machine is also gone.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../05-resources-part2/" class="btn btn-neutral" title="Terraform Building Blocks - Part 2"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../05-resources-part2/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>
