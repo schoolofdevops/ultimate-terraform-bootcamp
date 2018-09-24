@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Terraform Building Blocks - Part 1 - Ultimate Terraform Bootcamp</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Terraform Building Blocks - Part 1";
+    var mkdocs_page_input_path = "04-resources-part1.md";
+    var mkdocs_page_url = "/04-resources-part1/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Ultimate Terraform Bootcamp</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1">
+		
+    <a class="" href="..">Home</a>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Setup</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../00-environment-setup/">Setting up the environment</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Getting Started with Terraform</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../01-getting-started/">Getting Started</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../02-terraform-important-commands/">Important Commands</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../03-providers/">Terraform Providers</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Terraform Building Blocks - Part 1</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#resources">Resources</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#creating-our-first-resource">Creating our first Resource</a></li>
+        
+            <li><a class="toctree-l4" href="#terraform-plan">Terraform Plan</a></li>
+        
+            <li><a class="toctree-l4" href="#terraform-apply">Terraform Apply</a></li>
+        
+            <li><a class="toctree-l4" href="#reference">Reference</a></li>
+        
+        </ul>
+    
+
+    </ul>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../05-resources-part2/">Terraform Building Blocks - Part 2</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../06-terraform-state/">State Management in Terraform</a>
+                </li>
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Ultimate Terraform Bootcamp</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Getting Started with Terraform &raquo;</li>
+        
+      
+    
+    <li>Terraform Building Blocks - Part 1</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="resources">Resources</h1>
+<p>Resources are the building block in Terraform. These the actual cloud entities that you are either creating/deleting or modifying. To do so, you will have to define them in a terraform manifest and apply them. </p>
+<h3 id="creating-our-first-resource">Creating our first Resource</h3>
+<p>Let us create an EC2 instance, which is going to be our first resource on AWS using Terraform. </p>
+<p>Every resorce has the following syntax.</p>
+<p><code>resource syntax</code></p>
+<pre><code>resource &quot;resource_type&quot; &quot;resource_name&quot; {
+  config1 = value1
+  config2 = value2
+}
+</code></pre>
+
+<p>Here, 
+  resource_type = The type of the resouce that we create/delete/modfiy
+  resource_name = Give the resource a name for Terraform internal references.
+  config(1-n)   = The properties of the reosurce your manipulating.</p>
+<p>In your main.tf, add this block next to your Provider definition. </p>
+<p><code>an ec2 resource</code></p>
+<pre><code>resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami           = &quot;ami-408c7f28&quot;
+  instance_type = &quot;t1.micro&quot;
+}
+</code></pre>
+
+<p>Here, to compare it with the syntax,
+  resource_type = aws_instance
+  resource_name = webserver
+  config1       = ami
+  value1        = ami-408c7f28(ubuntu-14.04)
+  config2       = instance_type
+  value2        = t1.micro</p>
+<p>Your <code>main.tf</code> file should look like the following. </p>
+<pre><code>provider &quot;aws&quot; {
+  region = &quot;us-east-1&quot;
+}
+
+resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami           = &quot;ami-408c7f28&quot;
+  instance_type = &quot;t1.micro&quot;
+}
+</code></pre>
+
+<h3 id="terraform-plan">Terraform Plan</h3>
+<p>Then run <code>terraform plan</code> to see what will happen if we apply the manifest.</p>
+<pre><code>terraform plan
+
+[output]
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+
+------------------------------------------------------------------------
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  + aws_instance.webserver
+      id:                           &lt;computed&gt;
+      ami:                          &quot;ami-408c7f28&quot;
+      arn:                          &lt;computed&gt;
+      associate_public_ip_address:  &lt;computed&gt;
+      availability_zone:            &lt;computed&gt;
+      cpu_core_count:               &lt;computed&gt;
+      cpu_threads_per_core:         &lt;computed&gt;
+      ebs_block_device.#:           &lt;computed&gt;
+      ephemeral_block_device.#:     &lt;computed&gt;
+      get_password_data:            &quot;false&quot;
+      instance_state:               &lt;computed&gt;
+      instance_type:                &quot;t1.micro&quot;
+[...]
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+------------------------------------------------------------------------
+
+Note: You didn't specify an &quot;-out&quot; parameter to save this plan, so Terraform
+can't guarantee that exactly these actions will be performed if
+&quot;terraform apply&quot; is subsequently run.
+</code></pre>
+
+<h3 id="terraform-apply">Terraform Apply</h3>
+<p>Then run, <code>terraform apply</code> to actually create the resource on AWS.</p>
+<pre><code>terraform apply
+
+[output]
+[...]
+aws_instance.webserver: Still creating... (10s elapsed)
+aws_instance.webserver: Still creating... (20s elapsed)
+aws_instance.webserver: Still creating... (30s elapsed)
+aws_instance.webserver: Still creating... (40s elapsed)
+aws_instance.webserver: Creation complete after 49s (ID: i-02489cdf638f05bbd)
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+</code></pre>
+
+<p>We have successfully created our first reosource on AWS. Please check your AWS console to check the properties(AMI and instance type) of the machine.</p>
+<p><img alt="terraform apply" src="../images/04-resources-apply.png" /></p>
+<h2 id="reference">Reference</h2>
+<p>If you need further details about resources, please visit this <a href="https://www.terraform.io/docs/configuration/resources.html">link</a></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../05-resources-part2/" class="btn btn-neutral float-right" title="Terraform Building Blocks - Part 2">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../03-providers/" class="btn btn-neutral" title="Terraform Providers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../03-providers/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../05-resources-part2/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/require.js"></script>
+      <script src="../search/search.js"></script>
+
+</body>
+</html>

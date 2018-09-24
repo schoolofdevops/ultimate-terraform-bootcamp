@@ -1,4 +1,4 @@
-## Variables and Outputs
+## Resources - Part 2
 
 The ec2 instance that we have created is not that useful when we don't have access to it. So let us delete it and  we shall set up this again with additional resources. 
 
@@ -184,8 +184,8 @@ above and apply again to incrementally change your infrastructure.
 ```
 
 This is because, the ec2 resource tries to use the key even before it is created. We can control the order of execution in two ways.
-  1. Implicit Dependecy (Automatic Dependency)
-  2. Explicit Dependency (Manual Dependency)
+  1. Implicit Dependecy (Automatic Dependency)  
+  2. Explicit Dependency (Manual Dependency)  
 
 We will learn more about `Implicit Dependency` in the next chapter. Now we will focus on adding `Explicit Dependency` to *aws_instance* resource to depend on *aws_key_pair* resource.
 

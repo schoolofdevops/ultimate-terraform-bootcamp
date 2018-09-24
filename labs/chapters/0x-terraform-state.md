@@ -1,5 +1,5 @@
 ## Terraform State
-One advantage, Terraform has over other configuration management tools like Ansible and Chef is State management. Terraform stores all our infrastructure information(that we have created using Terraform) in a file with the name `terraform.tfstate`. 
+One advantage, Terraform has over other configuration management tools like Ansible and Chef is State management. Terraform stores/tracks all our infrastructure information(that we have created using Terraform) in a file with the name `terraform.tfstate`. 
 
 In the last chapter, we have ran `terraform apply`. This command would create the above mentioned JSON flavoured statefile. Let us look at its the content.
 
