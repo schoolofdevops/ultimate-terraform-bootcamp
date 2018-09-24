@@ -52,7 +52,19 @@
     </url>
         
     <url>
-     <loc>/06-terraform-state/</loc>
+     <loc>/06-variables-and-outputs/</loc>
+     <lastmod>2018-09-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/07-datasources/</loc>
+     <lastmod>2018-09-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/0x-terraform-state/</loc>
      <lastmod>2018-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
