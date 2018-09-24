@@ -9,5 +9,9 @@ pages:
   - Getting Started with Terraform:
     - Getting Started: "01-getting-started.md"
     - Important Commands: "02-terraform-important-commands.md"
+    - Terraform Providers: "03-providers.md"
+    - Terraform Building Blocks - Part 1: "04-resources-part1.md"
+    - Terraform Building Blocks - Part 2: "05-resources-part2.md"
+    - State Management in Terraform: "06-terraform-state.md"
 theme: readthedocs
 

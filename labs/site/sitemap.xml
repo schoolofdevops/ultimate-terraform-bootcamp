@@ -4,7 +4,7 @@
     
     <url>
      <loc>/</loc>
-     <lastmod>2018-08-24</lastmod>
+     <lastmod>2018-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,7 +13,7 @@
         
     <url>
      <loc>/00-environment-setup/</loc>
-     <lastmod>2018-08-24</lastmod>
+     <lastmod>2018-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -23,13 +23,13 @@
         
     <url>
      <loc>/01-getting-started/</loc>
-     <lastmod>2018-08-24</lastmod>
+     <lastmod>2018-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>/02-terraform-important-commands/</loc>
-     <lastmod>2018-08-24</lastmod>
+     <lastmod>2018-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
