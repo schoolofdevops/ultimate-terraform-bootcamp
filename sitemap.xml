@@ -22,16 +22,6 @@
     
         
     <url>
-     <loc>/01-getting-started/</loc>
-     <lastmod>2018-09-25</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
-    
-        
-    <url>
      <loc>/02-terraform-important-commands/</loc>
      <lastmod>2018-09-25</lastmod>
      <changefreq>daily</changefreq>
