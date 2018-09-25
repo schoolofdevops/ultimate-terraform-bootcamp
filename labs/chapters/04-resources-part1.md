@@ -119,5 +119,3 @@ We have successfully created our first reosource on AWS. Please check your AWS c
 
 ## Reference
 If you need further details about resources, please visit this [link](https://www.terraform.io/docs/configuration/resources.html)
-
-

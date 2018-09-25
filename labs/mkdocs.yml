@@ -14,9 +14,8 @@ pages:
     - Terraform Building Blocks - Part 2: "05-resources-part2.md"
     - Input and Output Variables: "06-variables-and-outputs.md"
     - Provisioners in detail: "07-provisioners.md"
-    - Data Source: "07-datasources.md"
-    - Terrafrom State: "09-terraform-state.md"
+    - Data Source: "08-datasources.md"
+    - State Management in Terraform: "09-terraform-state.md"
     - Backend and Statelocking: "10-backends.md"
-    - State Management in Terraform: "0x-terraform-state.md"
 theme: readthedocs
 

@@ -58,13 +58,25 @@
     </url>
         
     <url>
-     <loc>/07-datasources/</loc>
+     <loc>/07-provisioners/</loc>
      <lastmod>2018-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>/0x-terraform-state/</loc>
+     <loc>/08-datasources/</loc>
+     <lastmod>2018-09-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/09-terraform-state/</loc>
+     <lastmod>2018-09-24</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>/10-backends/</loc>
      <lastmod>2018-09-24</lastmod>
      <changefreq>daily</changefreq>
     </url>

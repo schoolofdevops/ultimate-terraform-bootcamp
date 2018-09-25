@@ -147,3 +147,7 @@ Destroy complete! Resources: 1 destroyed.
 ```
 
 Once the machine is destroyed, all metadata about that machine is also gone.
+
+## References
+
+For more information about state management in Terraform, please visit [this link](https://www.terraform.io/docs/state/).

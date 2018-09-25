@@ -52,7 +52,7 @@ terraform destroy
 terraform init
 terraform fmt
 ```
-### Providers
+### Providers  
 Providers are a way to define where you want to create your infrastructure. Usually Providers are,
 
   * IaaS
@@ -69,7 +69,7 @@ provider "aws" {
 }
 ```
 
-### Resources
+### Resources  
 Resources are the different entities you want to create on given provider. As an example, for AWS provider, if you want to create an EC2 machine, you have to create the following resource.
 
 `Ex: EC2 Resource`

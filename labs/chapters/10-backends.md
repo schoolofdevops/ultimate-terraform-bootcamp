@@ -1,6 +1,5 @@
 ## Backends
 
-
 ### Create S3 Bucket
 
 First create a S3 bucket which is going store the state file. Enable `versioning` to enable state recovery if something goes wrong.
@@ -39,7 +38,7 @@ terraform {
     bucket         = "devopsdemo-tf-backend"
     key            = "dev"
     region         = "us-east-1"
-    dynamodb_table = "devops-demo-lock"
+    dynamodb_table = "devops-demo-table"
   }
 }
 ```
@@ -84,3 +83,6 @@ If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 ```
+
+## Reference
+If you want read more about AWS Remote Backends, follow [this link](https://www.terraform.io/docs/backends/types/s3.html).

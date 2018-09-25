@@ -272,3 +272,6 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 ```
 
 If you have noticed, Terraform did not create the security group this time around. The reason for this behaviour is, it had created the security group resource in the first run itself. So it did not create the same resource again when we applied the second time. This behaviour is called `Idempotency`.
+
+## Reference
+If you want to know more about, resource dependencies then please refer [this link](https://www.terraform.io/intro/getting-started/dependencies.html).

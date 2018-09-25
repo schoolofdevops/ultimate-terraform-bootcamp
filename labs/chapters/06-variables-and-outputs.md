@@ -321,3 +321,6 @@ Outputs:
 
 webserver_ip = 34.203.194.201
 ```
+
+## Reference
+If you want know more about variables, please visit the [official documentation](https://www.terraform.io/intro/getting-started/variables.html).

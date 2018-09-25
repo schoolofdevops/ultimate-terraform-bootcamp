@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Data Source - Ultimate Terraform Bootcamp</title>
+  <title>Backend and Statelocking - Ultimate Terraform Bootcamp</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Data Source";
-    var mkdocs_page_input_path = "07-datasources.md";
-    var mkdocs_page_url = "/07-datasources/";
+    var mkdocs_page_name = "Backend and Statelocking";
+    var mkdocs_page_input_path = "10-backends.md";
+    var mkdocs_page_url = "/10-backends/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -91,19 +91,37 @@
                     
     <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
                 </li>
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Data Source</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#data-source">Data Source</a></li>
-    
-
-    </ul>
+    <a class="" href="../07-provisioners/">Provisioners in detail</a>
                 </li>
                 <li class="">
                     
-    <a class="" href="../0x-terraform-state/">State Management in Terraform</a>
+    <a class="" href="../08-datasources/">Data Source</a>
+                </li>
+                <li class="">
+                    
+    <a class="" href="../09-terraform-state/">State Management in Terraform</a>
+                </li>
+                <li class=" current">
+                    
+    <a class="current" href="./">Backend and Statelocking</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l3"><a href="#backends">Backends</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#create-s3-bucket">Create S3 Bucket</a></li>
+        
+            <li><a class="toctree-l4" href="#create-dynamodb-table-for-state-locking">Create DynamoDB Table for State Locking</a></li>
+        
+            <li><a class="toctree-l4" href="#initialize-the-backend">Initialize the Backend</a></li>
+        
+        </ul>
+    
+
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -134,7 +152,7 @@
         
       
     
-    <li>Data Source</li>
+    <li>Backend and Statelocking</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -144,8 +162,78 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="data-source">Data Source</h2>
-<p>Data sources are read only information that Terraform can get from Provider's API. When we use data source, Terraform doesn't create/modify anything. It just queries the API, so that the data can be used by other resources.</p>
+                <h2 id="backends">Backends</h2>
+<h3 id="create-s3-bucket">Create S3 Bucket</h3>
+<p>First create a S3 bucket which is going store the state file. Enable <code>versioning</code> to enable state recovery if something goes wrong.</p>
+<p><img alt="s3-bucket" src="../images/10-s3-bucket.png" /></p>
+<p>Create a directory called <code>dev</code> in that bucket.</p>
+<p><img alt="s3-dir" src="../images/10-s3-dir.png" /></p>
+<pre><code>touch backend.tf
+</code></pre>
+
+<p><code>file: backend.tf</code></p>
+<pre><code>terraform {
+  backend &quot;s3&quot; {
+    bucket = &quot;devopsdemo-tf-backend&quot;
+    key    = &quot;/dev&quot;
+    region = &quot;us-east-1&quot;
+  }
+}
+</code></pre>
+
+<h3 id="create-dynamodb-table-for-state-locking">Create DynamoDB Table for State Locking</h3>
+<p><img alt="dynamo-db" src="../images/10-ddb-create.png" /></p>
+<p>Update our backend file accordingly.</p>
+<p><code>file: backend.tf</code></p>
+<pre><code>terraform {
+  backend &quot;s3&quot; {
+    bucket         = &quot;devopsdemo-tf-backend&quot;
+    key            = &quot;dev&quot;
+    region         = &quot;us-east-1&quot;
+    dynamodb_table = &quot;devops-demo-lock&quot;
+  }
+}
+</code></pre>
+
+<h3 id="initialize-the-backend">Initialize the Backend</h3>
+<pre><code>terraform init
+
+[output]
+Initializing the backend...
+Do you want to copy existing state to the new backend?
+  Pre-existing state was found while migrating the previous &quot;local&quot; backend to the
+  newly configured &quot;s3&quot; backend. No existing state was found in the newly
+  configured &quot;s3&quot; backend. Do you want to copy this state to the new &quot;s3&quot;
+  backend? Enter &quot;yes&quot; to copy and &quot;no&quot; to start with an empty state.
+
+  Enter a value: yes
+
+
+Successfully configured the backend &quot;s3&quot;! Terraform will automatically
+use this backend unless the backend configuration changes.
+
+Initializing provider plugins...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = &quot;...&quot; constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.aws: version = &quot;~&gt; 1.37&quot;
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running &quot;terraform plan&quot; to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+</code></pre>
               
             </div>
           </div>
@@ -153,10 +241,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../0x-terraform-state/" class="btn btn-neutral float-right" title="State Management in Terraform">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href="../06-variables-and-outputs/" class="btn btn-neutral" title="Input and Output Variables"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../09-terraform-state/" class="btn btn-neutral" title="State Management in Terraform"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -182,10 +268,8 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../06-variables-and-outputs/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../09-terraform-state/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../0x-terraform-state/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
