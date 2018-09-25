@@ -118,7 +118,7 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../04-resources-part1/">Terraform Building Blocks - Part 1</a>
+    <a class="" href="../04-resources/">Terraform Building Blocks - Part 1</a>
                 </li>
     </ul>
 	    </li>
@@ -129,7 +129,7 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../05-resources-part2/">Terraform Building Blocks - Part 2</a>
+    <a class="" href="../05-resource-dependencies/">Terraform Building Blocks - Part 2</a>
                 </li>
     </ul>
 	    </li>
@@ -341,7 +341,10 @@ aws_instance.webserver: Destruction complete after 49s
 <h2 id="terraform-destroy">Terraform Destroy</h2>
 <p>This command will delete everything that terraform manages for you. So we need to be really careful when we run this command and only run it when you know what you are doing. </p>
 <p><code>Example</code></p>
-<pre><code>Acquiring state lock. This may take a few moments...
+<pre><code>terraform destroy
+
+[output]
+Acquiring state lock. This may take a few moments...
 aws_security_group.webserver_sg: Refreshing state... (ID: sg-04b81bcdfa7f287b0)
 aws_key_pair.webserver_key: Refreshing state... (ID: web-admin-key)
 aws_instance.webserver: Refreshing state... (ID: i-04264d266661e096d)

@@ -18,8 +18,8 @@
   <script>
     // Current page data
     var mkdocs_page_name = "Terraform Building Blocks - Part 2";
-    var mkdocs_page_input_path = "05-resources-part2.md";
-    var mkdocs_page_url = "/05-resources-part2/";
+    var mkdocs_page_input_path = "05-resource-dependencies.md";
+    var mkdocs_page_url = "/05-resource-dependencies/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -102,7 +102,7 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../04-resources-part1/">Terraform Building Blocks - Part 1</a>
+    <a class="" href="../04-resources/">Terraform Building Blocks - Part 1</a>
                 </li>
     </ul>
 	    </li>
@@ -116,7 +116,7 @@
     <a class="current" href="./">Terraform Building Blocks - Part 2</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#resources-part-2">Resources - Part 2</a></li>
+    <li class="toctree-l3"><a href="#resource-dependency">Resource Dependency</a></li>
     
         <ul>
         
@@ -230,7 +230,7 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="resources-part-2">Resources - Part 2</h2>
+                <h2 id="resource-dependency">Resource Dependency</h2>
 <p>The ec2 instance that we have created is not that useful when we don't have access to it. So let us delete it and  we shall set up this again with additional resources. </p>
 <p>Let us create a security group, which allows us to ssh(port 22) into the machine.</p>
 <p><code>file: main.tf</code></p>
@@ -489,7 +489,7 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
         <a href="../06-variables-and-outputs/" class="btn btn-neutral float-right" title="Input and Output Variables">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../04-resources-part1/" class="btn btn-neutral" title="Terraform Building Blocks - Part 1"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../04-resources/" class="btn btn-neutral" title="Terraform Building Blocks - Part 1"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -515,7 +515,7 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../04-resources-part1/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../04-resources/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../06-variables-and-outputs/" style="color: #fcfcfc">Next &raquo;</a></span>

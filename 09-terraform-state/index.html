@@ -102,7 +102,7 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../04-resources-part1/">Terraform Building Blocks - Part 1</a>
+    <a class="" href="../04-resources/">Terraform Building Blocks - Part 1</a>
                 </li>
     </ul>
 	    </li>
@@ -113,7 +113,7 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../05-resources-part2/">Terraform Building Blocks - Part 2</a>
+    <a class="" href="../05-resource-dependencies/">Terraform Building Blocks - Part 2</a>
                 </li>
     </ul>
 	    </li>
@@ -326,8 +326,9 @@
 <h3 id="changes-in-terrfaform-state">Changes in Terrfaform state</h3>
 <p>Let us see what happens to tfstate file when we destroy the ec2 instance</p>
 <pre><code>terraform destroy
+</code></pre>
 
-[output]
+<pre><code>[output]
 aws_instance.webserver: Refreshing state... (ID: i-02489cdf638f05bbd)
 
 An execution plan has been generated and is shown below.

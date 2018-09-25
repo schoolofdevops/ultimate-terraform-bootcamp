@@ -61,6 +61,17 @@
     <a class="current" href="./">Setting up the environment</a>
     <ul class="subnav">
             
+    <li class="toctree-l3"><a href="#environement-setup">Environement Setup</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#terraform-installation">Terraform Installation</a></li>
+        
+            <li><a class="toctree-l4" href="#validate-the-installation">Validate the Installation</a></li>
+        
+        </ul>
+    
+
     </ul>
                 </li>
     </ul>
@@ -105,7 +116,7 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../04-resources-part1/">Terraform Building Blocks - Part 1</a>
+    <a class="" href="../04-resources/">Terraform Building Blocks - Part 1</a>
                 </li>
     </ul>
 	    </li>
@@ -116,7 +127,7 @@
     <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../05-resources-part2/">Terraform Building Blocks - Part 2</a>
+    <a class="" href="../05-resource-dependencies/">Terraform Building Blocks - Part 2</a>
                 </li>
     </ul>
 	    </li>
@@ -216,7 +227,51 @@
           <div role="main">
             <div class="section">
               
-                
+                <h1 id="environement-setup">Environement Setup</h1>
+<h2 id="terraform-installation">Terraform Installation</h2>
+<h3 id="ubuntu">Ubuntu</h3>
+<p>Follow the following steps to install Terraform on ubuntu.</p>
+<pre><code>wget https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_linux_amd64.zip
+unzip terraform_0.11.8_linux_amd64.zip
+sudo mv terraform /usr/bin/local
+sudo chmod +x /usr/bin/local/terraform
+</code></pre>
+
+<h3 id="windows">Windows</h3>
+<p>Visit the following link to download the Terraform executable.</p>
+<p><a href="https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_windows_amd64.zip">Terraform for Windows</a>.</p>
+<p>Extract the file.</p>
+<p><img alt="zip" src="../images/00-windows-zip.png" /></p>
+<p>Copy the extracted file.</p>
+<p><img alt="copy" src="../images/00-windows-copy.png" /></p>
+<p>Create a new directory called <code>Terrafrom</code> insice <code>C:\Program Files\</code></p>
+<p><img alt="dir" src="../images/00-windoes-dir.png" /></p>
+<p>Paste the file we have copied in the previous step.</p>
+<p><img alt="paste" src="../images/00-windows-paste.png" /></p>
+<p>Copy the file path for the executable.
+<img alt="file-path" src="../images/00-windows-file-path.png" /></p>
+<p>Search for <code>environment</code> from your start menu.
+<img alt="env" src="../images/00-windows-env-search.png" /></p>
+<p>Then select environment variables form the window.
+<img alt="env-select" src="../images/00-windows-env-select.png" /></p>
+<p>Select Path variable and edit it.
+<img alt="env-path-edit" src="../images/00-windows-env-path-edit.png" /></p>
+<p>Add the path that we have copied earlier.
+<img alt="windows-path-env-paste" src="../images/00-windows-path-env-paste.png" /></p>
+<h3 id="macos">MacOS</h3>
+<pre><code>wget https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_darwin_amd64.zip
+unzip terraform_0.11.8_darwin_amd64.zip
+sudo mv terraform /usr/bin/local
+sudo chmod +x /usr/bin/local/terraform
+</code></pre>
+
+<h2 id="validate-the-installation">Validate the Installation</h2>
+<p>Open a Shell session and run <code>terraform -v</code>. This should produce the following output.</p>
+<pre><code>terraform -v
+
+[output]
+Terraform v0.11.7
+</code></pre>
               
             </div>
           </div>
