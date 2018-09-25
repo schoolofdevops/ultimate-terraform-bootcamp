@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Data Sources - Ultimate Terraform Bootcamp</title>
+  <title>Course Outline - Ultimate Terraform Bootcamp</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,9 +17,9 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Data Sources";
-    var mkdocs_page_input_path = "08-datasources.md";
-    var mkdocs_page_url = "/08-datasources/";
+    var mkdocs_page_name = "Course Outline";
+    var mkdocs_page_input_path = "XX-course-outline.md";
+    var mkdocs_page_url = "/XX-course-outline/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -144,15 +144,9 @@
 		
     <span class="caption-text">Data Sources</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Data Sources</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#data-source">Data Source</a></li>
-    
-
-    </ul>
+    <a class="" href="../08-datasources/">Data Sources</a>
                 </li>
     </ul>
 	    </li>
@@ -176,9 +170,12 @@
 		
     <span class="caption-text">Course Outline</span>
     <ul class="subnav">
-                <li class="">
+                <li class=" current">
                     
-    <a class="" href="../XX-course-outline/">Course Outline</a>
+    <a class="current" href="./">Course Outline</a>
+    <ul class="subnav">
+            
+    </ul>
                 </li>
     </ul>
 	    </li>
@@ -205,11 +202,11 @@
     
       
         
-          <li>Data Sources &raquo;</li>
+          <li>Course Outline &raquo;</li>
         
       
     
-    <li>Data Sources</li>
+    <li>Course Outline</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -219,13 +216,53 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="data-source">Data Source</h2>
-<p>Data sources are read only information that Terraform can get from Provider's API. When we use data source, Terraform doesn't create/modify anything. It just queries the API, so that the data can be used by other resources.</p>
-<p>Let us create a ELB which will loadbalance our application which we are gonna deploy in the next chapter.</p>
-<p><code>file: main.tf</code></p>
-<pre><code>resource &quot;aws_elb&quot; &quot;demo-elb&quot; {
-    name = 
-}
+                <pre><code>Goal in mind:
+=============
+  • Deploy Devops Demo app using Terraform
+Outline:
+========
+  • providers
+       |---set up credential for AWS provisioner
+       |---show how terraform init works
+  • backends 
+       |---introduction to backends and state locking
+       |---show local state file
+       |---use s3+dynamo db as backend
+  • resources
+       |---create vpc and subnets
+       |---create one ec2 resource without variables
+  • variables &amp; outputs
+       |---introduction to variables
+       |---create RDS resource
+       |---parameterise ec2 template with variables(rds password, db name,user,pw, etc.,)
+       |---print public IP of ec2 instance, rdp endpoints, etc., with outputs
+  • data sources
+       |---introduction to data sources
+       |---use an existing AMI as reference(frontend installed)
+  • provisioners
+       |---introduction to provisioner
+       |---file provisioner to copy the script
+       |---remote-exec provisioner to execute the script(set up catalogue)
+  • modules
+       |---introduction to modules
+       |---create a module which contains ec2 template
+  • other useful terraform commands(graph, fmt, etc.,)
+  • terraform with Packer(demo)
+      |---creation of ami with packer
+      |---use that ami in terraform
+  • terraform with GCP(demo)
+      |---start with GCP provider
+      |---GCP backend setup
+      |---Deployment of mogambo Stack on GCP
+  • terraform with Azure(demo)
+     |---start with Azure provider
+     |---Azure backend setup
+     |---Deployment of mogambo Stack on Azure
+  • variable interpolation(conditionals) (advanced)
+  • terraform enterprise(advanced)
+  • import(advanced)
+  • templates(advanced)
+  • plugin development(advanced)
 </code></pre>
               
             </div>
@@ -234,10 +271,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../09-terraform-state/" class="btn btn-neutral float-right" title="State Management in Terraform">Next <span class="icon icon-circle-arrow-right"></span></a>
       
-      
-        <a href="../07-provisioners/" class="btn btn-neutral" title="Provisioners in detail"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../10-backends/" class="btn btn-neutral" title="Backend and Statelocking"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -263,10 +298,8 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../07-provisioners/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../10-backends/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
-      
-        <span style="margin-left: 15px"><a href="../09-terraform-state/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
