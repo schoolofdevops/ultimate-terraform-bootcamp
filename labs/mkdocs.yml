@@ -4,18 +4,17 @@ plugins:
   - search
 pages:
   - Home: index.md
-  - Setup:
-    - Setting up the environment: "00-environment-setup.md"
   - Getting Started with Terraform:
-    - Getting Started: "01-getting-started.md"
+    - Setting up the environment: "00-environment-setup.md"
     - Important Commands: "02-terraform-important-commands.md"
     - Terraform Providers: "03-providers.md"
-    - Terraform Building Blocks - Part 1: "04-resources-part1.md"
-    - Terraform Building Blocks - Part 2: "05-resources-part2.md"
+    - Resources: "04-resources.md"
+    - Resource Dependencies: "05-resource-dependencies.md"
     - Input and Output Variables: "06-variables-and-outputs.md"
     - Provisioners in detail: "07-provisioners.md"
-    - Data Source: "08-datasources.md"
+    - Data Sources: "08-datasources.md"
     - State Management in Terraform: "09-terraform-state.md"
     - Backend and Statelocking: "10-backends.md"
+    - Course Outline: "XX-course-outline.md"
 theme: readthedocs
 

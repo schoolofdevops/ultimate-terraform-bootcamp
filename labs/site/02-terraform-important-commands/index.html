@@ -65,12 +65,8 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Getting Started with Terraform</span>
+    <span class="caption-text">Important Commands</span>
     <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../01-getting-started/">Getting Started</a>
-                </li>
                 <li class=" current">
                     
     <a class="current" href="./">Important Commands</a>
@@ -82,35 +78,88 @@
         
             <li><a class="toctree-l4" href="#terraform-plan">Terraform Plan</a></li>
         
+            <li><a class="toctree-l4" href="#terraform-apply">Terraform Apply</a></li>
+        
+            <li><a class="toctree-l4" href="#terraform-destroy">Terraform Destroy</a></li>
+        
         </ul>
     
 
     </ul>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Providers</span>
+    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../03-providers/">Terraform Providers</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Resources</span>
+    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../04-resources-part1/">Terraform Building Blocks - Part 1</a>
+    <a class="" href="../04-resources/">Terraform Building Blocks - Part 1</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Explicit Dependency</span>
+    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../05-resources-part2/">Terraform Building Blocks - Part 2</a>
+    <a class="" href="../05-resource-dependencies/">Terraform Building Blocks - Part 2</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Variables</span>
+    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Provisioners</span>
+    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../07-provisioners/">Provisioners in detail</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Data Sources</span>
+    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../08-datasources/">Data Source</a>
+    <a class="" href="../08-datasources/">Data Sources</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">State Management and Remote Backends</span>
+    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../09-terraform-state/">State Management in Terraform</a>
@@ -118,6 +167,17 @@
                 <li class="">
                     
     <a class="" href="../10-backends/">Backend and Statelocking</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Course Outline</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../XX-course-outline/">Course Outline</a>
                 </li>
     </ul>
 	    </li>
@@ -144,7 +204,7 @@
     
       
         
-          <li>Getting Started with Terraform &raquo;</li>
+          <li>Important Commands &raquo;</li>
         
       
     
@@ -160,7 +220,146 @@
               
                 <h1 id="important-terraform-commands">Important Terraform Commands</h1>
 <h2 id="terraform-plan">Terraform Plan</h2>
-<p>When you run <code>terraform plan</code> it will present you with the <code>execution plan</code></p>
+<p>When you run <code>terraform plan</code> it will present you with the <code>execution plan</code>. This will show you which resources are going to be created/deleted or modified. This is more like a dry run, if you want to see what your code will do before you apply it. </p>
+<p><code>Example</code>  </p>
+<pre><code>terrform plan 
+
+[output]
+ Acquiring state lock. This may take a few moments...
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+aws_security_group.webserver_sg: Refreshing state... (ID: sg-04b81bcdfa7f287b0)
+aws_key_pair.webserver_key: Refreshing state... (ID: web-admin-key)
+aws_instance.webserver: Refreshing state... (ID: i-00ddea272445bd4ec)
+
+------------------------------------------------------------------------
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+-/+ aws_instance.webserver (tainted) (new resource required)
+      id:                                &quot;i-00ddea272445bd4ec&quot; =&gt; &lt;computed&gt; (forces new resource)
+      ami:                               &quot;ami-408c7f28&quot; =&gt; &quot;ami-408c7f28&quot;
+      arn:                               &quot;arn:aws:ec2:us-east-1:822941572458:instance/i-00ddea272445bd4ec&quot; =&gt; &lt;computed&gt;
+      associate_public_ip_address:       &quot;true&quot; =&gt; &lt;computed&gt;
+      availability_zone:                 &quot;us-east-1a&quot; =&gt; &lt;computed&gt;
+      cpu_core_count:                    &quot;1&quot; =&gt; &lt;computed&gt;
+      cpu_threads_per_core:              &quot;1&quot; =&gt; &lt;computed&gt;
+      ebs_block_device.#:                &quot;0&quot; =&gt; &lt;computed&gt;
+      ephemeral_block_device.#:          &quot;0&quot; =&gt; &lt;computed&gt;
+      get_password_data:                 &quot;false&quot; =&gt; &quot;false&quot;
+      instance_state:                    &quot;running&quot; =&gt; &lt;computed&gt;
+      instance_type:                     &quot;t1.micro&quot; =&gt; &quot;t1.micro&quot;
+      ipv6_address_count:                &quot;&quot; =&gt; &lt;computed&gt;
+      ipv6_addresses.#:                  &quot;0&quot; =&gt; &lt;computed&gt;
+      key_name:                          &quot;web-admin-key&quot; =&gt; &quot;web-admin-key&quot;
+      network_interface.#:               &quot;0&quot; =&gt; &lt;computed&gt;
+      network_interface_id:              &quot;eni-0e92356540e1a2f47&quot; =&gt; &lt;computed&gt;
+      password_data:                     &quot;&quot; =&gt; &lt;computed&gt;
+      placement_group:                   &quot;&quot; =&gt; &lt;computed&gt;
+      primary_network_interface_id:      &quot;eni-0e92356540e1a2f47&quot; =&gt; &lt;computed&gt;
+      private_dns:                       &quot;ip-172-31-38-119.ec2.internal&quot; =&gt; &lt;computed&gt;
+      private_ip:                        &quot;172.31.38.119&quot; =&gt; &lt;computed&gt;
+      public_dns:                        &quot;ec2-35-173-130-100.compute-1.amazonaws.com&quot; =&gt; &lt;computed&gt;
+      public_ip:                         &quot;35.173.130.100&quot; =&gt; &lt;computed&gt;
+      root_block_device.#:               &quot;1&quot; =&gt; &lt;computed&gt;
+      security_groups.#:                 &quot;1&quot; =&gt; &lt;computed&gt;
+      source_dest_check:                 &quot;true&quot; =&gt; &quot;true&quot;
+      subnet_id:                         &quot;subnet-d363e58f&quot; =&gt; &lt;computed&gt;
+      tags.%:                            &quot;1&quot; =&gt; &quot;1&quot;
+      tags.Name:                         &quot;demo-server&quot; =&gt; &quot;demo-server&quot;
+      tenancy:                           &quot;default&quot; =&gt; &lt;computed&gt;
+      volume_tags.%:                     &quot;0&quot; =&gt; &lt;computed&gt;
+      vpc_security_group_ids.#:          &quot;1&quot; =&gt; &quot;1&quot;
+      vpc_security_group_ids.3215502186: &quot;sg-04b81bcdfa7f287b0&quot; =&gt; &quot;sg-04b81bcdfa7f287b0&quot;
+
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+
+------------------------------------------------------------------------
+
+Note: You didn't specify an &quot;-out&quot; parameter to save this plan, so Terraform
+can't guarantee that exactly these actions will be performed if
+&quot;terraform apply&quot; is subsequently run.
+
+Releasing state lock. This may take a few moments...
+
+</code></pre>
+
+<h2 id="terraform-apply">Terraform Apply</h2>
+<p>Terraform apply is command which creates the resources for us. The output will look similar to <code>terraform plan</code> but this time you will be prompted for permisson on your console. The output is truncated from the original.</p>
+<p><code>Example</code></p>
+<pre><code>aws_security_group.webserver_sg: Refreshing state... (ID: sg-04b81bcdfa7f287b0)
+aws_key_pair.webserver_key: Refreshing state... (ID: web-admin-key)
+aws_instance.webserver: Refreshing state... (ID: i-00ddea272445bd4ec)
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+-/+ aws_instance.webserver (tainted) (new resource required)
+      id:                                &quot;i-00ddea272445bd4ec&quot; =&gt; &lt;computed&gt; (forces new resource)
+      ami:                               &quot;ami-408c7f28&quot; =&gt; &quot;ami-408c7f28&quot;
+      arn:                               &quot;arn:aws:ec2:us-east-1:822941572458:instance/
+      [...]
+      volume_tags.%:                     &quot;0&quot; =&gt; &lt;computed&gt;
+      vpc_security_group_ids.#:          &quot;1&quot; =&gt; &quot;1&quot;
+      vpc_security_group_ids.3215502186: &quot;sg-04b81bcdfa7f287b0&quot; =&gt; &quot;sg-04b81bcdfa7f287b0&quot;
+
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_instance.webserver: Destroying... (ID: i-00ddea272445bd4ec)
+aws_instance.webserver: Destruction complete after 49s
+[...]
+</code></pre>
+
+<h2 id="terraform-destroy">Terraform Destroy</h2>
+<p>This command will delete everything that terraform manages for you. So we need to be really careful when we run this command and only run it when you know what you are doing. </p>
+<p><code>Example</code></p>
+<pre><code>terraform destroy
+
+[output]
+Acquiring state lock. This may take a few moments...
+aws_security_group.webserver_sg: Refreshing state... (ID: sg-04b81bcdfa7f287b0)
+aws_key_pair.webserver_key: Refreshing state... (ID: web-admin-key)
+aws_instance.webserver: Refreshing state... (ID: i-04264d266661e096d)
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  - aws_instance.webserver
+
+  - aws_key_pair.webserver_key
+
+  - aws_security_group.webserver_sg
+
+
+Plan: 0 to add, 0 to change, 3 to destroy.
+
+Do you really want to destroy?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+  [...]
+</code></pre>
               
             </div>
           </div>
@@ -171,7 +370,7 @@
         <a href="../03-providers/" class="btn btn-neutral float-right" title="Terraform Providers">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../01-getting-started/" class="btn btn-neutral" title="Getting Started"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../00-environment-setup/" class="btn btn-neutral" title="Setting up the environment"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -197,7 +396,7 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../01-getting-started/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../00-environment-setup/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../03-providers/" style="color: #fcfcfc">Next &raquo;</a></span>

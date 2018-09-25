@@ -4,11 +4,12 @@
 
  When you run `terraform plan` it will present you with the `execution plan`. This will show you which resources are going to be created/deleted or modified. This is more like a dry run, if you want to see what your code will do before you apply it. 
 
- `Example`
- ```
- terrform plan 
+ `Example`  
 
- [output]
+```
+terrform plan 
+
+[output]
  Acquiring state lock. This may take a few moments...
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
@@ -72,11 +73,14 @@ can't guarantee that exactly these actions will be performed if
 "terraform apply" is subsequently run.
 
 Releasing state lock. This may take a few moments...
- ```
+
+```
+
 ## Terraform Apply
 Terraform apply is command which creates the resources for us. The output will look similar to `terraform plan` but this time you will be prompted for permisson on your console. The output is truncated from the original.
 
 `Example`
+
 ```
 aws_security_group.webserver_sg: Refreshing state... (ID: sg-04b81bcdfa7f287b0)
 aws_key_pair.webserver_key: Refreshing state... (ID: web-admin-key)
@@ -115,7 +119,11 @@ aws_instance.webserver: Destruction complete after 49s
 This command will delete everything that terraform manages for you. So we need to be really careful when we run this command and only run it when you know what you are doing. 
 
 `Example`
+
 ```
+terraform destroy
+
+[output]
 Acquiring state lock. This may take a few moments...
 aws_security_group.webserver_sg: Refreshing state... (ID: sg-04b81bcdfa7f287b0)
 aws_key_pair.webserver_key: Refreshing state... (ID: web-admin-key)

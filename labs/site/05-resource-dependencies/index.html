@@ -18,8 +18,8 @@
   <script>
     // Current page data
     var mkdocs_page_name = "Terraform Building Blocks - Part 2";
-    var mkdocs_page_input_path = "05-resources-part2.md";
-    var mkdocs_page_url = "/05-resources-part2/";
+    var mkdocs_page_input_path = "05-resource-dependencies.md";
+    var mkdocs_page_url = "/05-resource-dependencies/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js"></script>
@@ -65,30 +65,47 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Getting Started with Terraform</span>
+    <span class="caption-text">Important Commands</span>
     <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../01-getting-started/">Getting Started</a>
-                </li>
                 <li class="">
                     
     <a class="" href="../02-terraform-important-commands/">Important Commands</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Providers</span>
+    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../03-providers/">Terraform Providers</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Resources</span>
+    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../04-resources-part1/">Terraform Building Blocks - Part 1</a>
+    <a class="" href="../04-resources/">Terraform Building Blocks - Part 1</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Explicit Dependency</span>
+    <ul class="subnav">
                 <li class=" current">
                     
     <a class="current" href="./">Terraform Building Blocks - Part 2</a>
     <ul class="subnav">
             
-    <li class="toctree-l3"><a href="#resources-part-2">Resources - Part 2</a></li>
+    <li class="toctree-l3"><a href="#resource-dependency">Resource Dependency</a></li>
     
         <ul>
         
@@ -99,20 +116,51 @@
         </ul>
     
 
+    <li class="toctree-l3"><a href="#reference">Reference</a></li>
+    
+
     </ul>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Variables</span>
+    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Provisioners</span>
+    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../07-provisioners/">Provisioners in detail</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Data Sources</span>
+    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../08-datasources/">Data Source</a>
+    <a class="" href="../08-datasources/">Data Sources</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">State Management and Remote Backends</span>
+    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../09-terraform-state/">State Management in Terraform</a>
@@ -120,6 +168,17 @@
                 <li class="">
                     
     <a class="" href="../10-backends/">Backend and Statelocking</a>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Course Outline</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../XX-course-outline/">Course Outline</a>
                 </li>
     </ul>
 	    </li>
@@ -146,7 +205,7 @@
     
       
         
-          <li>Getting Started with Terraform &raquo;</li>
+          <li>Explicit Dependency &raquo;</li>
         
       
     
@@ -160,7 +219,7 @@
           <div role="main">
             <div class="section">
               
-                <h2 id="resources-part-2">Resources - Part 2</h2>
+                <h2 id="resource-dependency">Resource Dependency</h2>
 <p>The ec2 instance that we have created is not that useful when we don't have access to it. So let us delete it and  we shall set up this again with additional resources. </p>
 <p>Let us create a security group, which allows us to ssh(port 22) into the machine.</p>
 <p><code>file: main.tf</code></p>
@@ -407,6 +466,8 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 </code></pre>
 
 <p>If you have noticed, Terraform did not create the security group this time around. The reason for this behaviour is, it had created the security group resource in the first run itself. So it did not create the same resource again when we applied the second time. This behaviour is called <code>Idempotency</code>.</p>
+<h2 id="reference">Reference</h2>
+<p>If you want to know more about, resource dependencies then please refer <a href="https://www.terraform.io/intro/getting-started/dependencies.html">this link</a>.</p>
               
             </div>
           </div>
@@ -417,7 +478,7 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
         <a href="../06-variables-and-outputs/" class="btn btn-neutral float-right" title="Input and Output Variables">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../04-resources-part1/" class="btn btn-neutral" title="Terraform Building Blocks - Part 1"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../04-resources/" class="btn btn-neutral" title="Terraform Building Blocks - Part 1"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -443,7 +504,7 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../04-resources-part1/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../04-resources/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../06-variables-and-outputs/" style="color: #fcfcfc">Next &raquo;</a></span>

@@ -65,40 +65,85 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Getting Started with Terraform</span>
+    <span class="caption-text">Important Commands</span>
     <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../01-getting-started/">Getting Started</a>
-                </li>
                 <li class="">
                     
     <a class="" href="../02-terraform-important-commands/">Important Commands</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Providers</span>
+    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../03-providers/">Terraform Providers</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Resources</span>
+    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../04-resources-part1/">Terraform Building Blocks - Part 1</a>
+    <a class="" href="../04-resources/">Terraform Building Blocks - Part 1</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Explicit Dependency</span>
+    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../05-resources-part2/">Terraform Building Blocks - Part 2</a>
+    <a class="" href="../05-resource-dependencies/">Terraform Building Blocks - Part 2</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Variables</span>
+    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Provisioners</span>
+    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../07-provisioners/">Provisioners in detail</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Data Sources</span>
+    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../08-datasources/">Data Source</a>
+    <a class="" href="../08-datasources/">Data Sources</a>
                 </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">State Management and Remote Backends</span>
+    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../09-terraform-state/">State Management in Terraform</a>
@@ -121,7 +166,21 @@
         </ul>
     
 
+    <li class="toctree-l3"><a href="#reference">Reference</a></li>
+    
+
     </ul>
+                </li>
+    </ul>
+	    </li>
+          
+            <li class="toctree-l1">
+		
+    <span class="caption-text">Course Outline</span>
+    <ul class="subnav">
+                <li class="">
+                    
+    <a class="" href="../XX-course-outline/">Course Outline</a>
                 </li>
     </ul>
 	    </li>
@@ -148,7 +207,7 @@
     
       
         
-          <li>Getting Started with Terraform &raquo;</li>
+          <li>State Management and Remote Backends &raquo;</li>
         
       
     
@@ -190,7 +249,7 @@
     bucket         = &quot;devopsdemo-tf-backend&quot;
     key            = &quot;dev&quot;
     region         = &quot;us-east-1&quot;
-    dynamodb_table = &quot;devops-demo-lock&quot;
+    dynamodb_table = &quot;devops-demo-table&quot;
   }
 }
 </code></pre>
@@ -234,12 +293,17 @@ If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 </code></pre>
+
+<h2 id="reference">Reference</h2>
+<p>If you want read more about AWS Remote Backends, follow <a href="https://www.terraform.io/docs/backends/types/s3.html">this link</a>.</p>
               
             </div>
           </div>
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../XX-course-outline/" class="btn btn-neutral float-right" title="Course Outline">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../09-terraform-state/" class="btn btn-neutral" title="State Management in Terraform"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -270,6 +334,8 @@ commands will detect it and remind you to do so if necessary.
       
         <span><a href="../09-terraform-state/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
+      
+        <span style="margin-left: 15px"><a href="../XX-course-outline/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

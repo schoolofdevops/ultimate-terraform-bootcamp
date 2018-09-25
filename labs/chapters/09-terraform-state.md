@@ -99,7 +99,9 @@ What happens when someone manually changes(which is not desirable) the propertie
 Let us see what happens to tfstate file when we destroy the ec2 instance
 ```
 terraform destroy
+```
 
+```
 [output]
 aws_instance.webserver: Refreshing state... (ID: i-02489cdf638f05bbd)
 

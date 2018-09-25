@@ -2,8 +2,8 @@
 
 Provisioners are used to execute scripts either on local machines or on remote machines. 
 Provisioners will run at either
-  1. Resource creation time , hence called `Creation-Time provisioner` or  
-  2. Resource destruction time, hence called `Destroy-Time provisioner`  
+  * Resource creation time , hence called `Creation-Time provisioner` or  
+  * Resource destruction time, hence called `Destroy-Time provisioner`  
 
 Most generally used provisioners are,  
   * file        => copy file from local to remote
