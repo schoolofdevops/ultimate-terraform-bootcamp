@@ -4,7 +4,8 @@ The ec2 instance that we have created is not that useful when we don't have acce
 
 Let us create a security group, which allows us to ssh(port 22) into the machine.
 
-`file: main.tf`
+`file: main.tf` 
+
 ```
 provider "aws" {
   region = "us-east-1"
@@ -150,42 +151,15 @@ resource "aws_security_group" "webserver_sg" {
 
 resource "aws_key_pair" "webserver_key" {
   key_name   = "web-admin-key"
-  public_key = "ssh-rsa sh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local"
+  public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local"
 }
 ```
 
 ### Explicit Dependency
-When we apply the manifest, we will get the following error.
 
-```
-terraform apply
-
-[output]
-aws_security_group.webserver_sg: Still creating... (10s elapsed)
-aws_security_group.webserver_sg: Creation complete after 11s (ID: sg-0c22a3497351d1caa)
-
-Error: Error applying plan:
-
-2 error(s) occurred:
-
-* aws_instance.webserver: 1 error(s) occurred:
-
-* aws_instance.webserver: Error launching source instance: InvalidKeyPair.NotFound: The key pair 'web-admin-key' does not exist
-	status code: 400, request id: 36af6c0c-9016-4dc4-bd3a-7b94fc3dfade
-* aws_key_pair.webserver_key: 1 error(s) occurred:
-
-* aws_key_pair.webserver_key: Error import KeyPair: InvalidKey.Format: Key is not in valid OpenSSH public key format
-	status code: 400, request id: 8a3697d2-4450-4150-86e0-3b75c0d43b80
-
-Terraform does not automatically rollback in the face of errors.
-Instead, your Terraform state file has been partially updated with
-any resources that successfully completed. Please address the error
-above and apply again to incrementally change your infrastructure.
-```
-
-This is because, the ec2 resource tries to use the key even before it is created. We can control the order of execution in two ways.
-  1. Implicit Dependecy (Automatic Dependency)  
-  2. Explicit Dependency (Manual Dependency)  
+We can control the order of execution in two ways.  
+  * Implicit Dependecy (Automatic Dependency)  
+  * Explicit Dependency (Manual Dependency)  
 
 We will learn more about `Implicit Dependency` in the next chapter. Now we will focus on adding `Explicit Dependency` to *aws_instance* resource to depend on *aws_key_pair* resource.
 
@@ -208,6 +182,8 @@ resource "aws_instance" "webserver" {
 ```
 
 Syntax: `depends_on = ["resource_type.resource_name"]`
+
+`Exercise: Create an explicit dependency on security group in ec2 instance block just like key pair dependecy`
 
 ### Idempotency
 
@@ -273,5 +249,5 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
 If you have noticed, Terraform did not create the security group this time around. The reason for this behaviour is, it had created the security group resource in the first run itself. So it did not create the same resource again when we applied the second time. This behaviour is called `Idempotency`.
 
-## Reference
+## Reference  
 If you want to know more about, resource dependencies then please refer [this link](https://www.terraform.io/intro/getting-started/dependencies.html).

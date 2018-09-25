@@ -1,4 +1,4 @@
-# Resources
+## Resources
 
 Resources are the building block in Terraform. These the actual cloud entities that you are either creating/deleting or modifying. To do so, you will have to define them in a terraform manifest and apply them. 
 
@@ -117,5 +117,92 @@ We have successfully created our first reosource on AWS. Please check your AWS c
 
 ![terraform apply](./images/04-resources-apply.png)
 
-## Reference
+## Resource Lifecycles  
+
+In Terraform, a resource can be,  
+  * Created (+)  
+  * Destroyed (-)  
+  * Recreated (-/+) or  
+  * Updated (~)  
+Like in the previous example, when Terraform creates a resource, it represents it with `+` symbol. Similarly Destroy, Recreate and Modify are represented with `-`, `-/+` and `~` respectively.  
+
+### Resource Update  
+Let us see what happens when we apply a tag to the instance from `main.tf`.  
+`file: main.tf`
+```
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_instance" "webserver" {
+  ami           = "ami-408c7f28"
+  instance_type = "t1.micro"
+
+  tags {
+    Name = "instance-01"
+  }
+}
+```
+We have added a tag block with in *aws_instance* resource which will add the name `instance-01` for our EC2 instance.
+
+```
+terraform plan
+terraform apply
+
+[output]
+Acquiring state lock. This may take a few moments...
+aws_instance.webserver: Refreshing state... (ID: i-0f6ab73cdd9d6882c)
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  ~ aws_instance.webserver
+      tags.%:    "0" => "1"
+      tags.Name: "" => "instance-01"
+
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_instance.webserver: Modifying... (ID: i-0f6ab73cdd9d6882c)
+  tags.%:    "0" => "1"
+  tags.Name: "" => "instance-01"
+aws_instance.webserver: Still modifying... (ID: i-0f6ab73cdd9d6882c, 10s elapsed)
+aws_instance.webserver: Modifications complete after 12s (ID: i-0f6ab73cdd9d6882c)
+
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+Releasing state lock. This may take a few moments...
+```  
+This did not recreate the instance, but just updated it. The instance still has the same internal and external IPs and other properties.
+
+### Resource Recreation  
+Now let us change the *ami* for the instance from *ami-408c7f28*(ubuntu 14.04) to *ami-0c11a0129f63fb571*(ubuntu 16.04).  
+
+`file: main.tf`
+
+```
+provider "aws" {
+  region = "us-east-1"
+}
+
+resource "aws_instance" "webserver" {
+  ami           = "ami-0c11a0129f63fb571"
+  instance_type = "t1.micro"
+
+  tags {
+    Name = "instance-01"
+  }
+}
+```
+
+## Reference  
+
 If you need further details about resources, please visit this [link](https://www.terraform.io/docs/configuration/resources.html)
