@@ -14,7 +14,7 @@ resource "resource_type" "resource_name" {
   config1 = value1
   config2 = value2
 }
-```
+```  
 Here, 
   resource_type = The type of the resouce that we create/delete/modfiy
   resource_name = Give the resource a name for Terraform internal references.
@@ -201,6 +201,148 @@ resource "aws_instance" "webserver" {
     Name = "instance-01"
   }
 }
+```
+
+Let us plan and apply this manifest. 
+```
+terraform apply 
+
+[output]
+Acquiring state lock. This may take a few moments...
+aws_instance.webserver: Refreshing state... (ID: i-0f6ab73cdd9d6882c)
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+-/+ aws_instance.webserver (new resource required)
+      id:                           "i-0f6ab73cdd9d6882c" => <computed> (forces new resource)
+      ami:                          "ami-408c7f28" => "ami-0c11a0129f63fb571" (forces new resource)
+      arn:                          "arn:aws:ec2:us-east-1:822941572458:instance/i-0f6ab73cdd9d6882c" => <computed>
+      associate_public_ip_address:  "false" => <computed>
+      availability_zone:            "us-east-1a" => <computed>
+      cpu_core_count:               "1" => <computed>
+      cpu_threads_per_core:         "1" => <computed>
+      ebs_block_device.#:           "0" => <computed>
+      ephemeral_block_device.#:     "0" => <computed>
+      get_password_data:            "false" => "false"
+      instance_state:               "stopped" => <computed>
+      instance_type:                "t1.micro" => "t1.micro"
+      ipv6_address_count:           "" => <computed>
+      ipv6_addresses.#:             "0" => <computed>
+      key_name:                     "web-admin-key" => <computed>
+      network_interface.#:          "0" => <computed>
+      network_interface_id:         "eni-0c851ccf5348f539b" => <computed>
+      password_data:                "" => <computed>
+      placement_group:              "" => <computed>
+      primary_network_interface_id: "eni-0c851ccf5348f539b" => <computed>
+      private_dns:                  "ip-172-31-39-209.ec2.internal" => <computed>
+      private_ip:                   "172.31.39.209" => <computed>
+      public_dns:                   "" => <computed>
+      public_ip:                    "" => <computed>
+      root_block_device.#:          "1" => <computed>
+      security_groups.#:            "1" => <computed>
+      source_dest_check:            "true" => "true"
+      subnet_id:                    "subnet-d363e58f" => <computed>
+      tags.%:                       "1" => "1"
+      tags.Name:                    "instance-01" => "instance-01"
+      tenancy:                      "default" => <computed>
+      volume_tags.%:                "0" => <computed>
+      vpc_security_group_ids.#:     "1" => <computed>
+
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+aws_instance.webserver: Destroying... (ID: i-0f6ab73cdd9d6882c)
+aws_instance.webserver: Still destroying... (ID: i-0f6ab73cdd9d6882c, 10s elapsed)
+aws_instance.webserver: Destruction complete after 13s
+aws_instance.webserver: Creating...
+aws_instance.webserver: Still creating... (10s elapsed)
+aws_instance.webserver: Still creating... (20s elapsed)
+aws_instance.webserver: Still creating... (30s elapsed)
+aws_instance.webserver: Creation complete after 40s (ID: i-04aa34e873c5e4c63)
+```
+If we change `ami` attribute, it forces the instance to be recreated. 
+
+### Resource Destruction  
+Let us see what happens when we run `terraform plan --destroy`
+
+```
+terraform plan --destroy
+
+[output]
+Acquiring state lock. This may take a few moments...
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+aws_instance.webserver: Refreshing state... (ID: i-04aa34e873c5e4c63)
+
+------------------------------------------------------------------------
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  - aws_instance.webserver
+
+
+Plan: 0 to add, 0 to change, 1 to destroy.
+
+------------------------------------------------------------------------
+
+Note: You didn't specify an "-out" parameter to save this plan, so Terraform
+can't guarantee that exactly these actions will be performed if
+"terraform apply" is subsequently run.
+
+Releasing state lock. This may take a few moments...
+```
+This command will help you to see what will happen when you run `terraform destroy`. 
+
+```
+terraform destroy
+
+[output]
+Acquiring state lock. This may take a few moments...
+aws_instance.webserver: Refreshing state... (ID: i-04aa34e873c5e4c63)
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  - aws_instance.webserver
+
+
+Plan: 0 to add, 0 to change, 1 to destroy.
+
+Do you really want to destroy?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+aws_instance.webserver: Destroying... (ID: i-04aa34e873c5e4c63)
+aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 10s elapsed)
+aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 20s elapsed)
+aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 30s elapsed)
+aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 40s elapsed)
+aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 50s elapsed)
+aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 1m0s elapsed)
+aws_instance.webserver: Destruction complete after 1m0s
+
+Destroy complete! Resources: 1 destroyed.
+Releasing state lock. This may take a few moments...
 ```
 
 ## Reference  
