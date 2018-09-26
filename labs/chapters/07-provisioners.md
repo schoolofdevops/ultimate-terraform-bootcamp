@@ -226,5 +226,7 @@ Once the creation is complete, you should be able to access the application by v
 
 ![demoapp](./images/07-demoapp.png)
 
+We shall discuss about `local-exec` provisioner in the next chapter.
+
 ## Reference  
 For more details about provisioners, please visit [this link](https://www.terraform.io/intro/getting-started/provision.html).

@@ -12,8 +12,8 @@ Follow the following steps to install Terraform on ubuntu.
 ```
 wget https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_linux_amd64.zip
 unzip terraform_0.11.8_linux_amd64.zip
-sudo mv terraform /usr/bin/local
-sudo chmod +x /usr/bin/local/terraform
+sudo mv terraform /usr/local/bin
+sudo chmod +x /usr/local/bin/terraform
 ```
 
 ### Windows
@@ -58,8 +58,8 @@ Add the path that we have copied earlier.
 ```
 wget https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_darwin_amd64.zip
 unzip terraform_0.11.8_darwin_amd64.zip
-sudo mv terraform /usr/bin/local
-sudo chmod +x /usr/bin/local/terraform
+sudo mv terraform /usr/local/bin
+sudo chmod +x /usr/local/bin/terraform
 ```
 
 ## Validate the Installation

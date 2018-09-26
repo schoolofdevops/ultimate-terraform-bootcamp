@@ -54,85 +54,36 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Setup</span>
+    <span class="caption-text">Getting Started with Terraform</span>
     <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../00-environment-setup/">Setting up the environment</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Important Commands</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../02-terraform-important-commands/">Important Commands</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Providers</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../03-providers/">Terraform Providers</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Resources</span>
-    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../04-resources/">Terraform Building Blocks - Part 1</a>
+    <a class="" href="../04-resources/">Resources</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Explicit Dependency</span>
-    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../05-resource-dependencies/">Terraform Building Blocks - Part 2</a>
+    <a class="" href="../05-resource-dependencies/">Resource Dependencies</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Variables</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Provisioners</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../07-provisioners/">Provisioners in detail</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Data Sources</span>
-    <ul class="subnav">
                 <li class=" current">
                     
     <a class="current" href="./">Data Sources</a>
@@ -140,16 +91,17 @@
             
     <li class="toctree-l3"><a href="#data-source">Data Source</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l4" href="#creating-rds-db">Creating RDS DB</a></li>
+        
+            <li><a class="toctree-l4" href="#using-datasource">Using Datasource</a></li>
+        
+        </ul>
+    
 
     </ul>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">State Management and Remote Backends</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../09-terraform-state/">State Management in Terraform</a>
@@ -158,13 +110,6 @@
                     
     <a class="" href="../10-backends/">Backend and Statelocking</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Course Outline</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../XX-course-outline/">Course Outline</a>
@@ -194,7 +139,7 @@
     
       
         
-          <li>Data Sources &raquo;</li>
+          <li>Getting Started with Terraform &raquo;</li>
         
       
     
@@ -210,11 +155,191 @@
               
                 <h2 id="data-source">Data Source</h2>
 <p>Data sources are read only information that Terraform can get from Provider's API. When we use data source, Terraform doesn't create/modify anything. It just queries the API, so that the data can be used by other resources.</p>
-<p>Let us create a ELB which will loadbalance our application which we are gonna deploy in the next chapter.</p>
+<p>Let us create a RDS DB manually and we will refer to it in our manifest.</p>
+<h3 id="creating-rds-db">Creating RDS DB</h3>
+<ul>
+<li>
+<p>Go to RDS service page.
+  <img alt="08-create-new-db-select" src="../images/08-create-new-db-select.png" /></p>
+</li>
+<li>
+<p>Select MySQL DB Engine.
+  <img alt="08-select-mysql" src="../images/08-select-mysql.png" /></p>
+</li>
+<li>
+<p>Provide the DB instance the following name and enter some complex password.
+  <img alt="08-db-instance-details" src="../images/08-db-instance-details.png" /></p>
+</li>
+<li>
+<p>Provide the following network settings for the instance.
+  <img alt="08-db-instance-network" src="../images/08-db-instance-network.png" /></p>
+</li>
+<li>
+<p>Provide your DB a name and disable IAM authentication.
+  <img alt="08-db-name" src="../images/08-db-name.png" /></p>
+</li>
+<li>
+<p>Leave all other values to default and create the DB.
+  <img alt="08-db-creation-final" src="../images/08-db-creation-final.png" /></p>
+</li>
+</ul>
+<h3 id="using-datasource">Using Datasource</h3>
+<p>Let us add the <a href="https://www.terraform.io/docs/providers/aws/d/db_instance.html">datasource block</a>  for RDS in our <code>main.tf</code></p>
 <p><code>file: main.tf</code></p>
-<pre><code>resource &quot;aws_elb&quot; &quot;demo-elb&quot; {
-    name = 
+<pre><code>[...]
+data &quot;aws_db_instance&quot; &quot;database&quot; {
+  db_instance_identifier = &quot;${var.rds_name}&quot;
 }
+</code></pre>
+
+<p>We have parameterized the attribute <em>db_instance_identifier</em> which is the db instance's name.</p>
+<p>Define the variable <em>rds_name</em> in <code>variables.tf</code>.</p>
+<p><code>file: variables.tf</code></p>
+<pre><code>[...]
+variable &quot;rds_name&quot; {
+  default = &quot;devopsdemo-db&quot;
+}
+[...]
+</code></pre>
+
+<p>Let us check whether Terraform is able to fetch the datasource details from AWS API.</p>
+<p><code>file: main.tf</code> </p>
+<pre><code>[...]
+output &quot;rds_endpoint&quot; {
+  value = &quot;${data.aws_db_instance.database.endpoint}&quot;
+}
+[...]
+</code></pre>
+
+<p>Let us plan and apply.</p>
+<pre><code>terraform plan
+terraform apply
+
+[output]
+Acquiring state lock. This may take a few moments...
+aws_security_group.webserver_sg: Refreshing state... (ID: sg-0c740c046e9bcf571)
+aws_key_pair.webserver_key: Refreshing state... (ID: web-admin-key)
+data.aws_db_instance.database: Refreshing state...
+aws_instance.webserver: Refreshing state... (ID: i-082d8b9097ae94c53)
+
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+Releasing state lock. This may take a few moments...
+
+Outputs:
+
+rds_endpoint = devopsdemo-db.cewjdhpv9lg6.us-east-1.rds.amazonaws.com:3306
+webserver_ip = 54.165.195.171
+</code></pre>
+
+<p>We are able to get the endpoint for a resource which was not created Terraform.</p>
+<p>We need to change the placeholder values with our rds db values, from <code>/var/www/html/config.ini</code> in our instance.</p>
+<p><code>file: main.tf</code></p>
+<pre><code>[...]
+resource &quot;null_resource&quot; &quot;populate_db_01&quot; {
+  provisioner &quot;local-exec&quot; {
+    command = &quot;ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo sed -i -e 's/DBHOST/${data.aws_db_instance.database.address}/g' /var/www/html/config.ini'&quot;
+  }
+
+  provisioner &quot;local-exec&quot; {
+    command = &quot;ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo sed -i -e 's/SQLUSER/${data.aws_db_instance.database.master_username}/g' /var/www/html/config.ini'&quot;
+  }
+
+  provisioner &quot;local-exec&quot; {
+    command = &quot;ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo sed -i -e 's/SQLPASSWORD/${var.rds_pass}/g' /var/www/html/config.ini'&quot;
+  }
+
+  provisioner &quot;local-exec&quot; {
+    command = &quot;ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo sed -i -e 's/SQLDBNAME/${data.aws_db_instance.database.db_name}/g' /var/www/html/config.ini'&quot;
+  }
+
+  provisioner &quot;local-exec&quot; {
+    command = &quot;ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo service apache2 restart'&quot;
+  }
+}
+
+[...]
+</code></pre>
+
+<p>In this given example, we introduce a new resource called <code>null</code>, which helps us to use <code>local-exec</code> provisioner. </p>
+<p>We need to run <code>terraform init</code> to install the <em>null provider</em> plugin.</p>
+<pre><code>terraform init
+
+[output]
+Initializing the backend...
+
+Initializing provider plugins...
+- Checking for available provider plugins on https://releases.hashicorp.com...
+- Downloading plugin for provider &quot;null&quot; (1.0.0)...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = &quot;...&quot; constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.aws: version = &quot;~&gt; 1.37&quot;
+* provider.null: version = &quot;~&gt; 1.0&quot;
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running &quot;terraform plan&quot; to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+</code></pre>
+
+<p>We also need to define the <em>rds_pass</em> variable in <code>variables.tf</code>.</p>
+<p><code>file: variables.tf</code></p>
+<pre><code>[...]
+variable &quot;rds_pass&quot; {
+  default = &quot;1nitCron&quot;
+}
+[...]
+</code></pre>
+
+<p>Then run <em>terraform plan and apply</em></p>
+<pre><code>terraform plan
+terrafomr apply
+
+[output]
+
+Acquiring state lock. This may take a few moments...
+aws_key_pair.webserver_key: Refreshing state... (ID: web-admin-key)
+aws_security_group.webserver_sg: Refreshing state... (ID: sg-0c740c046e9bcf571)
+data.aws_db_instance.database: Refreshing state...
+aws_instance.webserver: Refreshing state... (ID: i-082d8b9097ae94c53)
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  + create
+
+Terraform will perform the following actions:
+
+  + null_resource.populate_db_01
+      id: &lt;computed&gt;
+
+
+Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+[...]
+null_resource.populate_db_01: Provisioning with 'local-exec'...
+null_resource.populate_db_01 (local-exec): Executing: [&quot;/bin/sh&quot; &quot;-c&quot; &quot;ssh ubuntu@54.165.195.171 'sudo service apache2 restart'&quot;]
+null_resource.populate_db_01 (local-exec):  * Restarting web server apache2
+null_resource.populate_db_01 (local-exec):    ...done.
+null_resource.populate_db_01: Creation complete after 20s (ID: 8985065039495500214)
+
+Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
 </code></pre>
               
             </div>
