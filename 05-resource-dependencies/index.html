@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Terraform Building Blocks - Part 2 - Ultimate Terraform Bootcamp</title>
+  <title>Resource Dependencies - Ultimate Terraform Bootcamp</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,7 +17,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Terraform Building Blocks - Part 2";
+    var mkdocs_page_name = "Resource Dependencies";
     var mkdocs_page_input_path = "05-resource-dependencies.md";
     var mkdocs_page_url = "/05-resource-dependencies/";
   </script>
@@ -54,55 +54,27 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Setup</span>
+    <span class="caption-text">Getting Started with Terraform</span>
     <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../00-environment-setup/">Setting up the environment</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Important Commands</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../02-terraform-important-commands/">Important Commands</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Providers</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../03-providers/">Terraform Providers</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Resources</span>
-    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../04-resources/">Terraform Building Blocks - Part 1</a>
+    <a class="" href="../04-resources/">Resources</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Explicit Dependency</span>
-    <ul class="subnav">
                 <li class=" current">
                     
-    <a class="current" href="./">Terraform Building Blocks - Part 2</a>
+    <a class="current" href="./">Resource Dependencies</a>
     <ul class="subnav">
             
     <li class="toctree-l3"><a href="#resource-dependency">Resource Dependency</a></li>
@@ -121,46 +93,18 @@
 
     </ul>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Variables</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Provisioners</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../07-provisioners/">Provisioners in detail</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Data Sources</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../08-datasources/">Data Sources</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">State Management and Remote Backends</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../09-terraform-state/">State Management in Terraform</a>
@@ -169,13 +113,6 @@
                     
     <a class="" href="../10-backends/">Backend and Statelocking</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Course Outline</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../XX-course-outline/">Course Outline</a>
@@ -205,11 +142,11 @@
     
       
         
-          <li>Explicit Dependency &raquo;</li>
+          <li>Getting Started with Terraform &raquo;</li>
         
       
     
-    <li>Terraform Building Blocks - Part 2</li>
+    <li>Resource Dependencies</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -222,7 +159,7 @@
                 <h2 id="resource-dependency">Resource Dependency</h2>
 <p>The ec2 instance that we have created is not that useful when we don't have access to it. So let us delete it and  we shall set up this again with additional resources. </p>
 <p>Let us create a security group, which allows us to ssh(port 22) into the machine.</p>
-<p><code>file: main.tf</code></p>
+<p><code>file: main.tf</code> </p>
 <pre><code>provider &quot;aws&quot; {
   region = &quot;us-east-1&quot;
 }
@@ -302,7 +239,7 @@ resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
 
 resource &quot;aws_key_pair&quot; &quot;webserver_key&quot; {
   key_name   = &quot;web-admin-key&quot;
-  public_key = &quot;ssh-rsa sh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local
+  public_key = &quot;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local
 }
 </code></pre>
 
@@ -325,7 +262,7 @@ resource &quot;aws_instance&quot; &quot;webserver&quot; {
 [...]
 </code></pre>
 
-<p>The final file shoudl look like the following.</p>
+<p>The final file should look like the following.</p>
 <pre><code>provider &quot;aws&quot; {
   region = &quot;us-east-1&quot;
 }
@@ -354,40 +291,14 @@ resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
 
 resource &quot;aws_key_pair&quot; &quot;webserver_key&quot; {
   key_name   = &quot;web-admin-key&quot;
-  public_key = &quot;ssh-rsa sh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local&quot;
+  public_key = &quot;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local&quot;
 }
 </code></pre>
 
 <h3 id="explicit-dependency">Explicit Dependency</h3>
-<p>When we apply the manifest, we will get the following error.</p>
-<pre><code>terraform apply
-
-[output]
-aws_security_group.webserver_sg: Still creating... (10s elapsed)
-aws_security_group.webserver_sg: Creation complete after 11s (ID: sg-0c22a3497351d1caa)
-
-Error: Error applying plan:
-
-2 error(s) occurred:
-
-* aws_instance.webserver: 1 error(s) occurred:
-
-* aws_instance.webserver: Error launching source instance: InvalidKeyPair.NotFound: The key pair 'web-admin-key' does not exist
-    status code: 400, request id: 36af6c0c-9016-4dc4-bd3a-7b94fc3dfade
-* aws_key_pair.webserver_key: 1 error(s) occurred:
-
-* aws_key_pair.webserver_key: Error import KeyPair: InvalidKey.Format: Key is not in valid OpenSSH public key format
-    status code: 400, request id: 8a3697d2-4450-4150-86e0-3b75c0d43b80
-
-Terraform does not automatically rollback in the face of errors.
-Instead, your Terraform state file has been partially updated with
-any resources that successfully completed. Please address the error
-above and apply again to incrementally change your infrastructure.
-</code></pre>
-
-<p>This is because, the ec2 resource tries to use the key even before it is created. We can control the order of execution in two ways.
-  1. Implicit Dependecy (Automatic Dependency)<br />
-  2. Explicit Dependency (Manual Dependency)  </p>
+<p>We can control the order of execution in two ways.<br />
+  * Implicit Dependecy (Automatic Dependency)<br />
+  * Explicit Dependency (Manual Dependency)  </p>
 <p>We will learn more about <code>Implicit Dependency</code> in the next chapter. Now we will focus on adding <code>Explicit Dependency</code> to <em>aws_instance</em> resource to depend on <em>aws_key_pair</em> resource.</p>
 <p>This will guarantee the creation of key pair before the instance get's created. In your instance block add the following,</p>
 <p><code>file: main.tf</code></p>
@@ -406,6 +317,7 @@ resource &quot;aws_instance&quot; &quot;webserver&quot; {
 </code></pre>
 
 <p>Syntax: <code>depends_on = ["resource_type.resource_name"]</code></p>
+<p><code>Exercise: Create an explicit dependency on security group in ec2 instance block just like key pair dependecy</code></p>
 <h3 id="idempotency">Idempotency</h3>
 <p>Finally apply the manifest by running,</p>
 <pre><code>terraform apply
@@ -478,7 +390,7 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
         <a href="../06-variables-and-outputs/" class="btn btn-neutral float-right" title="Input and Output Variables">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../04-resources/" class="btn btn-neutral" title="Terraform Building Blocks - Part 1"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../04-resources/" class="btn btn-neutral" title="Resources"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   

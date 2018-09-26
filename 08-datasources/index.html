@@ -54,85 +54,36 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Setup</span>
+    <span class="caption-text">Getting Started with Terraform</span>
     <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../00-environment-setup/">Setting up the environment</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Important Commands</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../02-terraform-important-commands/">Important Commands</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Providers</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../03-providers/">Terraform Providers</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Resources</span>
-    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../04-resources/">Terraform Building Blocks - Part 1</a>
+    <a class="" href="../04-resources/">Resources</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Explicit Dependency</span>
-    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../05-resource-dependencies/">Terraform Building Blocks - Part 2</a>
+    <a class="" href="../05-resource-dependencies/">Resource Dependencies</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Variables</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Provisioners</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../07-provisioners/">Provisioners in detail</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Data Sources</span>
-    <ul class="subnav">
                 <li class=" current">
                     
     <a class="current" href="./">Data Sources</a>
@@ -140,16 +91,15 @@
             
     <li class="toctree-l3"><a href="#data-source">Data Source</a></li>
     
+        <ul>
+        
+            <li><a class="toctree-l4" href="#creating-rds-db">Creating RDS DB</a></li>
+        
+        </ul>
+    
 
     </ul>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">State Management and Remote Backends</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../09-terraform-state/">State Management in Terraform</a>
@@ -158,13 +108,6 @@
                     
     <a class="" href="../10-backends/">Backend and Statelocking</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Course Outline</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../XX-course-outline/">Course Outline</a>
@@ -194,7 +137,7 @@
     
       
         
-          <li>Data Sources &raquo;</li>
+          <li>Getting Started with Terraform &raquo;</li>
         
       
     
@@ -210,12 +153,35 @@
               
                 <h2 id="data-source">Data Source</h2>
 <p>Data sources are read only information that Terraform can get from Provider's API. When we use data source, Terraform doesn't create/modify anything. It just queries the API, so that the data can be used by other resources.</p>
-<p>Let us create a ELB which will loadbalance our application which we are gonna deploy in the next chapter.</p>
-<p><code>file: main.tf</code></p>
-<pre><code>resource &quot;aws_elb&quot; &quot;demo-elb&quot; {
-    name = 
-}
-</code></pre>
+<p>Let us create a RDS DB manually and we will refer to it in our manifest.</p>
+<h3 id="creating-rds-db">Creating RDS DB</h3>
+<ul>
+<li>
+<p>Go to RDS service page.
+  <img alt="08-create-new-db-select" src="../images/08-create-new-db-select.png" /></p>
+</li>
+<li>
+<p>Select MySQL DB Engine.
+  <img alt="08-select-mysql" src="../images/08-select-mysql.png" /></p>
+</li>
+<li>
+<p>Provide the DB instance the following name and enter some complex password.
+  <img alt="08-db-instance-details" src="../images/08-db-instance-details.png" /></p>
+</li>
+<li>
+<p>Provide the following network settings for the instance.
+  <img alt="08-db-instance-network" src="../images/08-db-instance-network.png" /></p>
+</li>
+<li>
+<p>Provide your DB a name and disable IAM authentication.
+  <img alt="08-db-name" src="../images/08-db-name.png" /></p>
+</li>
+<li>
+<p>Leave all other values to default and create the DB.
+  <img alt="08-db-creation-final" src="../images/08-db-creation-final.png" /></p>
+</li>
+</ul>
+<h3 id="_1"></h3>
               
             </div>
           </div>

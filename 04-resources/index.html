@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Terraform Building Blocks - Part 1 - Ultimate Terraform Bootcamp</title>
+  <title>Resources - Ultimate Terraform Bootcamp</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,7 +17,7 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Terraform Building Blocks - Part 1";
+    var mkdocs_page_name = "Resources";
     var mkdocs_page_input_path = "04-resources.md";
     var mkdocs_page_url = "/04-resources/";
   </script>
@@ -54,44 +54,23 @@
           
             <li class="toctree-l1">
 		
-    <span class="caption-text">Setup</span>
+    <span class="caption-text">Getting Started with Terraform</span>
     <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../00-environment-setup/">Setting up the environment</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Important Commands</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../02-terraform-important-commands/">Important Commands</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Providers</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../03-providers/">Terraform Providers</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Resources</span>
-    <ul class="subnav">
                 <li class=" current">
                     
-    <a class="current" href="./">Terraform Building Blocks - Part 1</a>
+    <a class="current" href="./">Resources</a>
     <ul class="subnav">
             
     <li class="toctree-l3"><a href="#resources">Resources</a></li>
@@ -104,64 +83,43 @@
         
             <li><a class="toctree-l4" href="#terraform-apply">Terraform Apply</a></li>
         
-            <li><a class="toctree-l4" href="#reference">Reference</a></li>
+        </ul>
+    
+
+    <li class="toctree-l3"><a href="#resource-lifecycles">Resource Lifecycles</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l4" href="#resource-update">Resource Update</a></li>
+        
+            <li><a class="toctree-l4" href="#resource-recreation">Resource Recreation</a></li>
+        
+            <li><a class="toctree-l4" href="#resource-destruction">Resource Destruction</a></li>
         
         </ul>
     
 
+    <li class="toctree-l3"><a href="#reference">Reference</a></li>
+    
+
     </ul>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Explicit Dependency</span>
-    <ul class="subnav">
                 <li class="">
                     
-    <a class="" href="../05-resource-dependencies/">Terraform Building Blocks - Part 2</a>
+    <a class="" href="../05-resource-dependencies/">Resource Dependencies</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Variables</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Provisioners</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../07-provisioners/">Provisioners in detail</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Data Sources</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../08-datasources/">Data Sources</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">State Management and Remote Backends</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../09-terraform-state/">State Management in Terraform</a>
@@ -170,13 +128,6 @@
                     
     <a class="" href="../10-backends/">Backend and Statelocking</a>
                 </li>
-    </ul>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Course Outline</span>
-    <ul class="subnav">
                 <li class="">
                     
     <a class="" href="../XX-course-outline/">Course Outline</a>
@@ -206,11 +157,11 @@
     
       
         
-          <li>Resources &raquo;</li>
+          <li>Getting Started with Terraform &raquo;</li>
         
       
     
-    <li>Terraform Building Blocks - Part 1</li>
+    <li>Resources</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -220,7 +171,7 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="resources">Resources</h1>
+                <h2 id="resources">Resources</h2>
 <p>Resources are the building block in Terraform. These the actual cloud entities that you are either creating/deleting or modifying. To do so, you will have to define them in a terraform manifest and apply them. </p>
 <h3 id="creating-our-first-resource">Creating our first Resource</h3>
 <p>Let us create an EC2 instance, which is going to be our first resource on AWS using Terraform. </p>
@@ -321,6 +272,223 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 
 <p>We have successfully created our first reosource on AWS. Please check your AWS console to check the properties(AMI and instance type) of the machine.</p>
 <p><img alt="terraform apply" src="../images/04-resources-apply.png" /></p>
+<h2 id="resource-lifecycles">Resource Lifecycles</h2>
+<p>In Terraform, a resource can be,<br />
+  * Created (+)<br />
+  * Destroyed (-)<br />
+  * Recreated (-/+) or<br />
+  * Updated (~)<br />
+Like in the previous example, when Terraform creates a resource, it represents it with <code>+</code> symbol. Similarly Destroy, Recreate and Modify are represented with <code>-</code>, <code>-/+</code> and <code>~</code> respectively.  </p>
+<h3 id="resource-update">Resource Update</h3>
+<p>Let us see what happens when we apply a tag to the instance from <code>main.tf</code>.<br />
+<code>file: main.tf</code></p>
+<pre><code>provider &quot;aws&quot; {
+  region = &quot;us-east-1&quot;
+}
+
+resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami           = &quot;ami-408c7f28&quot;
+  instance_type = &quot;t1.micro&quot;
+
+  tags {
+    Name = &quot;instance-01&quot;
+  }
+}
+</code></pre>
+
+<p>We have added a tag block with in <em>aws_instance</em> resource which will add the name <code>instance-01</code> for our EC2 instance.</p>
+<pre><code>terraform plan
+terraform apply
+
+[output]
+Acquiring state lock. This may take a few moments...
+aws_instance.webserver: Refreshing state... (ID: i-0f6ab73cdd9d6882c)
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  ~ update in-place
+
+Terraform will perform the following actions:
+
+  ~ aws_instance.webserver
+      tags.%:    &quot;0&quot; =&gt; &quot;1&quot;
+      tags.Name: &quot;&quot; =&gt; &quot;instance-01&quot;
+
+
+Plan: 0 to add, 1 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+
+aws_instance.webserver: Modifying... (ID: i-0f6ab73cdd9d6882c)
+  tags.%:    &quot;0&quot; =&gt; &quot;1&quot;
+  tags.Name: &quot;&quot; =&gt; &quot;instance-01&quot;
+aws_instance.webserver: Still modifying... (ID: i-0f6ab73cdd9d6882c, 10s elapsed)
+aws_instance.webserver: Modifications complete after 12s (ID: i-0f6ab73cdd9d6882c)
+
+Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+Releasing state lock. This may take a few moments...
+</code></pre>
+
+<p>This did not recreate the instance, but just updated it. The instance still has the same internal and external IPs and other properties.</p>
+<h3 id="resource-recreation">Resource Recreation</h3>
+<p>Now let us change the <em>ami</em> for the instance from <em>ami-408c7f28</em>(ubuntu 14.04) to <em>ami-0c11a0129f63fb571</em>(ubuntu 16.04).  </p>
+<p><code>file: main.tf</code></p>
+<pre><code>provider &quot;aws&quot; {
+  region = &quot;us-east-1&quot;
+}
+
+resource &quot;aws_instance&quot; &quot;webserver&quot; {
+  ami           = &quot;ami-0c11a0129f63fb571&quot;
+  instance_type = &quot;t1.micro&quot;
+
+  tags {
+    Name = &quot;instance-01&quot;
+  }
+}
+</code></pre>
+
+<p>Let us plan and apply this manifest. </p>
+<pre><code>terraform apply 
+
+[output]
+Acquiring state lock. This may take a few moments...
+aws_instance.webserver: Refreshing state... (ID: i-0f6ab73cdd9d6882c)
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+-/+ destroy and then create replacement
+
+Terraform will perform the following actions:
+
+-/+ aws_instance.webserver (new resource required)
+      id:                           &quot;i-0f6ab73cdd9d6882c&quot; =&gt; &lt;computed&gt; (forces new resource)
+      ami:                          &quot;ami-408c7f28&quot; =&gt; &quot;ami-0c11a0129f63fb571&quot; (forces new resource)
+      arn:                          &quot;arn:aws:ec2:us-east-1:822941572458:instance/i-0f6ab73cdd9d6882c&quot; =&gt; &lt;computed&gt;
+      associate_public_ip_address:  &quot;false&quot; =&gt; &lt;computed&gt;
+      availability_zone:            &quot;us-east-1a&quot; =&gt; &lt;computed&gt;
+      cpu_core_count:               &quot;1&quot; =&gt; &lt;computed&gt;
+      cpu_threads_per_core:         &quot;1&quot; =&gt; &lt;computed&gt;
+      ebs_block_device.#:           &quot;0&quot; =&gt; &lt;computed&gt;
+      ephemeral_block_device.#:     &quot;0&quot; =&gt; &lt;computed&gt;
+      get_password_data:            &quot;false&quot; =&gt; &quot;false&quot;
+      instance_state:               &quot;stopped&quot; =&gt; &lt;computed&gt;
+      instance_type:                &quot;t1.micro&quot; =&gt; &quot;t1.micro&quot;
+      ipv6_address_count:           &quot;&quot; =&gt; &lt;computed&gt;
+      ipv6_addresses.#:             &quot;0&quot; =&gt; &lt;computed&gt;
+      key_name:                     &quot;web-admin-key&quot; =&gt; &lt;computed&gt;
+      network_interface.#:          &quot;0&quot; =&gt; &lt;computed&gt;
+      network_interface_id:         &quot;eni-0c851ccf5348f539b&quot; =&gt; &lt;computed&gt;
+      password_data:                &quot;&quot; =&gt; &lt;computed&gt;
+      placement_group:              &quot;&quot; =&gt; &lt;computed&gt;
+      primary_network_interface_id: &quot;eni-0c851ccf5348f539b&quot; =&gt; &lt;computed&gt;
+      private_dns:                  &quot;ip-172-31-39-209.ec2.internal&quot; =&gt; &lt;computed&gt;
+      private_ip:                   &quot;172.31.39.209&quot; =&gt; &lt;computed&gt;
+      public_dns:                   &quot;&quot; =&gt; &lt;computed&gt;
+      public_ip:                    &quot;&quot; =&gt; &lt;computed&gt;
+      root_block_device.#:          &quot;1&quot; =&gt; &lt;computed&gt;
+      security_groups.#:            &quot;1&quot; =&gt; &lt;computed&gt;
+      source_dest_check:            &quot;true&quot; =&gt; &quot;true&quot;
+      subnet_id:                    &quot;subnet-d363e58f&quot; =&gt; &lt;computed&gt;
+      tags.%:                       &quot;1&quot; =&gt; &quot;1&quot;
+      tags.Name:                    &quot;instance-01&quot; =&gt; &quot;instance-01&quot;
+      tenancy:                      &quot;default&quot; =&gt; &lt;computed&gt;
+      volume_tags.%:                &quot;0&quot; =&gt; &lt;computed&gt;
+      vpc_security_group_ids.#:     &quot;1&quot; =&gt; &lt;computed&gt;
+
+
+Plan: 1 to add, 0 to change, 1 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+aws_instance.webserver: Destroying... (ID: i-0f6ab73cdd9d6882c)
+aws_instance.webserver: Still destroying... (ID: i-0f6ab73cdd9d6882c, 10s elapsed)
+aws_instance.webserver: Destruction complete after 13s
+aws_instance.webserver: Creating...
+aws_instance.webserver: Still creating... (10s elapsed)
+aws_instance.webserver: Still creating... (20s elapsed)
+aws_instance.webserver: Still creating... (30s elapsed)
+aws_instance.webserver: Creation complete after 40s (ID: i-04aa34e873c5e4c63)
+</code></pre>
+
+<p>If we change <code>ami</code> attribute, it forces the instance to be recreated. </p>
+<h3 id="resource-destruction">Resource Destruction</h3>
+<p>Let us see what happens when we run <code>terraform plan --destroy</code></p>
+<pre><code>terraform plan --destroy
+
+[output]
+Acquiring state lock. This may take a few moments...
+Refreshing Terraform state in-memory prior to plan...
+The refreshed state will be used to calculate this plan, but will not be
+persisted to local or remote state storage.
+
+aws_instance.webserver: Refreshing state... (ID: i-04aa34e873c5e4c63)
+
+------------------------------------------------------------------------
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  - aws_instance.webserver
+
+
+Plan: 0 to add, 0 to change, 1 to destroy.
+
+------------------------------------------------------------------------
+
+Note: You didn't specify an &quot;-out&quot; parameter to save this plan, so Terraform
+can't guarantee that exactly these actions will be performed if
+&quot;terraform apply&quot; is subsequently run.
+
+Releasing state lock. This may take a few moments...
+</code></pre>
+
+<p>This command will help you to see what will happen when you run <code>terraform destroy</code>. </p>
+<pre><code>terraform destroy
+
+[output]
+Acquiring state lock. This may take a few moments...
+aws_instance.webserver: Refreshing state... (ID: i-04aa34e873c5e4c63)
+
+An execution plan has been generated and is shown below.
+Resource actions are indicated with the following symbols:
+  - destroy
+
+Terraform will perform the following actions:
+
+  - aws_instance.webserver
+
+
+Plan: 0 to add, 0 to change, 1 to destroy.
+
+Do you really want to destroy?
+  Terraform will destroy all your managed infrastructure, as shown above.
+  There is no undo. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+aws_instance.webserver: Destroying... (ID: i-04aa34e873c5e4c63)
+aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 10s elapsed)
+aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 20s elapsed)
+aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 30s elapsed)
+aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 40s elapsed)
+aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 50s elapsed)
+aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 1m0s elapsed)
+aws_instance.webserver: Destruction complete after 1m0s
+
+Destroy complete! Resources: 1 destroyed.
+Releasing state lock. This may take a few moments...
+</code></pre>
+
 <h2 id="reference">Reference</h2>
 <p>If you need further details about resources, please visit this <a href="https://www.terraform.io/docs/configuration/resources.html">link</a></p>
               
@@ -330,7 +498,7 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../05-resource-dependencies/" class="btn btn-neutral float-right" title="Terraform Building Blocks - Part 2">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../05-resource-dependencies/" class="btn btn-neutral float-right" title="Resource Dependencies">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../03-providers/" class="btn btn-neutral" title="Terraform Providers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
