@@ -322,10 +322,11 @@ variable &quot;ami&quot; {
 # map type variable definition
 variable &quot;instance&quot; {
   description = &quot;instance parameters&quot;
-  type        = map
-  default     = {
-    &quot;type&quot; = &quot;t1.micro&quot;
-    &quot;name&quot; = &quot;devops-server&quot;
+  type        = &quot;map&quot;
+
+  default = {
+    type = &quot;t1.micro&quot;
+    name = &quot;demo-server&quot;
   }
 }
 
