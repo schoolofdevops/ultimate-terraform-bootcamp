@@ -86,7 +86,7 @@ We will need to destroy and recreate the resources to apply this provisioner
 terraform destroy
 
 [output]
-Destroy complete! Resources: 3 destroyed.
+Destroy complete! Resources: 2 destroyed.
 ```
 
 ```

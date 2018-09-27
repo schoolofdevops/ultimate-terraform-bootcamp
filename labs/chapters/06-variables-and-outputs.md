@@ -197,10 +197,11 @@ variable "ami" {
 # map type variable definition
 variable "instance" {
   description = "instance parameters"
-  type        = map
-  default     = {
-  	"type" = "t1.micro"
-  	"name" = "devops-server"
+  type        = "map"
+
+  default = {
+    type = "t1.micro"
+    name = "demo-server"
   }
 }
 

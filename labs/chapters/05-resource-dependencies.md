@@ -113,7 +113,7 @@ resource "aws_instance" "webserver" {
   key_name      = "web-admin-key"
 
   tags {
-    Name = "weberserver"
+    Name = "webserver"
   }
 }
 

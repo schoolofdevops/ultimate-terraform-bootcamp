@@ -119,6 +119,18 @@ resource "null_resource" "populate_db_01" {
 [...]
 ```
 
+We also need to define the *rds_pass* variable in `variables.tf`.
+
+`file: variables.tf`
+
+```
+[...]
+variable "rds_pass" {
+  default = "Sup3rS3cr3t"
+}
+[...]
+```
+
 In this given example, we introduce a new resource called `null`, which helps us to use `local-exec` provisioner. 
 
 We need to run `terraform init` to install the *null provider* plugin.
@@ -153,18 +165,6 @@ should now work.
 If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
-```
-
-We also need to define the *rds_pass* variable in `variables.tf`.
-
-`file: variables.tf`
-
-```
-[...]
-variable "rds_pass" {
-  default = "1nitCron"
-}
-[...]
 ```
 
 Then run *terraform plan and apply*

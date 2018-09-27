@@ -15,6 +15,7 @@ touch backend.tf
 ```
 
 `file: backend.tf`
+
 ```
 terraform {
   backend "s3" {
