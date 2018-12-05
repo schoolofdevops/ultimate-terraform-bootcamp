@@ -39,8 +39,8 @@ provider "aws" {
 Export your AWS access and secret keys as environment variables.
 
 ```
-export AWS_ACCESS_KEY_ID="AKIAI3NYUWMNORYTDYBC"
-export AWS_SECRET_ACCESS_KEY="toOh/ejVKe44wx3ujr7scaehdy4"
+export AWS_ACCESS_KEY_ID="Access-Key"
+export AWS_SECRET_ACCESS_KEY="Secret-Key"
 ```
 
 Finally run the following command to initialize your environment.
