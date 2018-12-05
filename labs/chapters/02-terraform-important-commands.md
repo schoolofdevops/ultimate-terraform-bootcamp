@@ -161,6 +161,19 @@ terraform init
 
 [Output]
 
+Initializing provider plugins...
+- Checking for available provider plugins on https://releases.hashicorp.com...
+- Downloading plugin for provider "aws" (1.37.0)...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = "..." constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.aws: version = "~> 1.37"
 Terraform has been successfully initialized!
 
 You may now begin working with Terraform. Try running "terraform plan" to see
