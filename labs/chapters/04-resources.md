@@ -30,13 +30,13 @@ resource "aws_instance" "webserver" {
 }
 ```
 Here, to compare it with the syntax,
-  resource_type = aws_instance
-  resource_name = webserver
-  config1       = ami
-  value1        = ami-408c7f28(ubuntu-14.04)
-  config2       = instance_type
-  value2        = t1.micro
-
+```  resource_type = aws_instance
+     resource_name = webserver
+     config1       = ami
+     value1        = ami-408c7f28(ubuntu-14.04)
+     config2       = instance_type
+     value2        = t1.micro
+```
 Your `main.tf` file should look like the following. 
 
 ```
