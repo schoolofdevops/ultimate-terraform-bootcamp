@@ -151,3 +151,27 @@ Do you really want to destroy?
   Enter a value: yes
   [...]
 ```
+## Terraform init
+The terraform init command is used to initialize a working directory containing Terraform configuration files. This is the first command that should be run after writing a new Terraform configuration or cloning an existing one from version control. It is safe to run this command multiple times.
+
+`Example`
+
+```
+terraform init
+
+[Output]
+
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running "terraform plan" to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
+```
+
+## Terraform fmt
+The terraform fmt command is used to rewrite Terraform configuration files to a canonical format and style.
