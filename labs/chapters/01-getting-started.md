@@ -61,8 +61,14 @@ Providers are a way to define where you want to create your infrastructure. Usua
 
 Mostly we will be using IaaS providers(Ex: AWS, Azure, GCP, etc.,)
 
-`Ex: AWS Provider`
+`Export AWS Access Key and Secret Key `
 
+```
+export AWS_ACCESS_KEY_ID="Access-Key"
+export AWS_SECRET_ACCESS_KEY="Secret-Key"
+```
+
+`Ex: AWS Provider`
 ```
 provider "aws" {
   region = "us-east-1"
