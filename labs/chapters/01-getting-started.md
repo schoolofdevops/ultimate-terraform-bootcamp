@@ -84,10 +84,13 @@ Resources are the different entities you want to create on given provider. As an
 resource "aws_instance" "web" {
   ami           = "ami-04169656fea786776"
   instance_type = "t2.micro"
-  key_name      = "schoolofdevops"
+  key_name      = "terraform"
 
-  tags {
-    Name = "terraform-second-machine"
+   tags {
+    Name       = "tf-frontend-01"
+    App        = "devops-demo"
+    Maintainer = "Gourav Shah"
+    Role ="frontend"
   }
 }
 ```
