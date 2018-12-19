@@ -41,11 +41,11 @@ sudo service apache2 restart
 `file: main.tf`
 ```
 [...]
-resource "aws_instance" "webserver" {
+resource "aws_instance" "frontend" {
   ami                    = "${var.ami}"
   instance_type          = "${var.instance["type"]}"
-  key_name               = "web-admin-key"
-  vpc_security_group_ids = ["${aws_security_group.webserver_sg.id}"]
+  key_name               = "${var.key["name"]}"
+  vpc_security_group_ids = ["${aws_security_group.frontend.id}"]
   depends_on             = ["aws_key_pair.webserver_key"]
 
   tags {
@@ -58,28 +58,14 @@ resource "aws_instance" "webserver" {
 
     connection {
       type        = "ssh"
-      user        = "${var.ssh_user}"
-      private_key = "${file(var.ssh_pvtkey)}"
+      user        = "ubuntu"
+      private_key = "${file("~/.ssh/terraform-ap)}"
     }
   }
 }
 [...]
 ```
 
-This `file` type provisioner copies the user-data from our local machine to the remote instance on `/tmp/user-data.sh` path. It requires authentication details to scp the file to the machine. Let us set the credentials in our `variables.tf` file.
-
-`file: variables.tf`
-```
-[...]
-variable "ssh_user" {
-  default = "ubuntu"
-}
-
-variable "ssh_pvtkey" {
-  default = "~/.ssh/id_rsa"
-}
-[...]
-```
 We will need to destroy and recreate the resources to apply this provisioner
 
 ```
@@ -93,7 +79,7 @@ Destroy complete! Resources: 2 destroyed.
 terraform apply
 
 [output]
-aws_instance.webserver: Still creating... (10s elapsed)
+             aws_instance.webserver: Still creating... (10s elapsed)
 aws_instance.webserver: Still creating... (20s elapsed)
 aws_instance.webserver: Still creating... (30s elapsed)
 aws_instance.webserver: Provisioning with 'file'...
@@ -116,11 +102,11 @@ Now we will execute the script that we have just copied over.
 
 `file: main.tf`
 ```
-resource "aws_instance" "webserver" {
+resource "aws_instance" "frontend" {
   ami                    = "${var.ami}"
   instance_type          = "${var.instance["type"]}"
-  key_name               = "web-admin-key"
-  vpc_security_group_ids = ["${aws_security_group.webserver_sg.id}"]
+  key_name               = "${var.key["name"]}"
+  vpc_security_group_ids = ["${aws_security_group.frontend.id}"]
   depends_on             = ["aws_key_pair.webserver_key"]
 
   tags {
@@ -130,8 +116,8 @@ resource "aws_instance" "webserver" {
   provisioner "file" {
     source      = "user-data.sh"
     destination = "/tmp/user-data.sh"
-
-    connection {
+      
+  connection {
       type        = "ssh"
       user        = "${var.ssh_user}"
       private_key = "${file(var.ssh_pvtkey)}"
@@ -146,7 +132,7 @@ resource "aws_instance" "webserver" {
     connection {
       type        = "ssh"
       user        = "${var.ssh_user}"
-      private_key = "${file(var.ssh_pvtkey)}"
+      private_key = "${file("~/.ssh/terraform-ap")}"
     }
   }
 }
@@ -157,21 +143,23 @@ We will also add the ingress policy port `80` and egress policy for allo traffic
 `file: main.tf`
 ```
 [...]
-resource "aws_security_group" "webserver_sg" {
-  name = "webserver-sg"
+resource "aws_security_group" "front-end" {
+  name = "front-end"
 
   ingress {
+    cidr_blocks = ["0.0.0.0/0"]
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    description = "Open SSH port to all "
   }
 
   ingress {
+    cidr_blocks = ["0.0.0.0/0"]
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
+    description = "Open HTTP port to all "
   }
 
   egress {
@@ -179,6 +167,7 @@ resource "aws_security_group" "webserver_sg" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+    description ="allow all outgoing connections"
   }
 }
 [...]
