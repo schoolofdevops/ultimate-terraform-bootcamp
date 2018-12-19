@@ -24,18 +24,18 @@ In your main.tf, add this block next to your Provider definition.
 
 `an ec2 resource`
 ```
-resource "aws_instance" "webserver" {
-  ami           = "ami-408c7f28"
-  instance_type = "t1.micro"
+resource "aws_instance" "frontend" {
+  ami           = "ami-0ac019f4fcb7cb7e6"
+  instance_type = "t2.micro"
 }
 ```
 Here, to compare it with the syntax,
 ```  resource_type = aws_instance
-     resource_name = webserver
+     resource_name = frontend
      config1       = ami
-     value1        = ami-408c7f28(ubuntu-14.04)
+     value1        = ami-0ac019f4fcb7cb7e6(ubuntu-14.04)
      config2       = instance_type
-     value2        = t1.micro
+     value2        = t2.micro
 ```
 Your `main.tf` file should look like the following. 
 
@@ -44,9 +44,9 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_instance" "webserver" {
-  ami           = "ami-408c7f28"
-  instance_type = "t1.micro"
+resource "aws_instance" "frontend" {
+  ami           = "ami-0ac019f4fcb7cb7e6"
+  instance_type = "t2.micro"
 }
 ```
 
@@ -73,7 +73,7 @@ Terraform will perform the following actions:
 
   + aws_instance.webserver
       id:                           <computed>
-      ami:                          "ami-408c7f28"
+      ami:                          "ami-0ac019f4fcb7cb7e6"
       arn:                          <computed>
       associate_public_ip_address:  <computed>
       availability_zone:            <computed>
@@ -83,7 +83,7 @@ Terraform will perform the following actions:
       ephemeral_block_device.#:     <computed>
       get_password_data:            "false"
       instance_state:               <computed>
-      instance_type:                "t1.micro"
+      instance_type:                "t2.micro"
 [...]
 
 Plan: 1 to add, 0 to change, 0 to destroy.
@@ -134,12 +134,15 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_instance" "webserver" {
-  ami           = "ami-408c7f28"
-  instance_type = "t1.micro"
+resource "aws_instance" "frontend" {
+  ami           = "ami-0ac019f4fcb7cb7e6"
+  instance_type = "t2.micro"
 
   tags {
-    Name = "instance-01"
+    Name       = "tf-frontend-01"
+    App        = "devops-demo"
+    Maintainer = "Gourav Shah"
+    Role ="frontend"
   }
 }
 ```
@@ -193,12 +196,15 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_instance" "webserver" {
+resource "aws_instance" "frontend" {
   ami           = "ami-0c11a0129f63fb571"
-  instance_type = "t1.micro"
+  instance_type = "t2.micro"
 
   tags {
-    Name = "instance-01"
+    Name       = "tf-frontend-01"
+    App        = "devops-demo"
+    Maintainer = "Gourav Shah"
+    Role ="frontend"
   }
 }
 ```
@@ -229,7 +235,7 @@ Terraform will perform the following actions:
       ephemeral_block_device.#:     "0" => <computed>
       get_password_data:            "false" => "false"
       instance_state:               "stopped" => <computed>
-      instance_type:                "t1.micro" => "t1.micro"
+      instance_type:                "t2.micro" => "t2.micro"
       ipv6_address_count:           "" => <computed>
       ipv6_addresses.#:             "0" => <computed>
       key_name:                     "web-admin-key" => <computed>
