@@ -174,15 +174,19 @@ ssh: connect to host 34.203.194.201 port 22: Operation timed out
 <p>We need to fix this issue. Let us associate our security group with this machine.</p>
 <p><code>file: main.tf</code></p>
 <p><strong>Bad Practice</strong></p>
-<pre><code>resource &quot;aws_instance&quot; &quot;webserver&quot; {
-  ami                    = &quot;ami-408c7f28&quot;
-  instance_type          = &quot;t1.micro&quot;
-  key_name               = &quot;web-admin-key&quot;
+<pre><code>resource &quot;aws_instance&quot; &quot;frontend&quot; {
+  ami                    = &quot;ami-0ac019f4fcb7cb7e6&quot;
+  instance_type          = &quot;t2.micro&quot;
+  key_name               = &quot;terraform&quot;
   vpc_security_group_ids = &quot;sg-0c22a3497351d1caa&quot;
-  depends_on             = [&quot;aws_key_pair.webserver_key&quot;]
+  depends_on             = [&quot;aws_key_pair.terraform&quot;]
 
   tags {
-    Name = &quot;weberserver&quot;
+    Name       = &quot;tf-frontend-01&quot;
+    App        = &quot;devops-demo&quot;
+    Maintainer = &quot;Gourav Shah&quot;
+    Role =&quot;frontend&quot;
+
   }
 }
 </code></pre>
@@ -191,22 +195,25 @@ ssh: connect to host 34.203.194.201 port 22: Operation timed out
 <h3 id="type-1-attribute-of-a-resource">Type 1: Attribute of a Resource</h3>
 <p><code>file: main.tf</code><br />
 <strong>Good Practice</strong></p>
-<pre><code>resource &quot;aws_instance&quot; &quot;webserver&quot; {
-  ami                    = &quot;ami-408c7f28&quot;
-  instance_type          = &quot;t1.micro&quot;
-  key_name               = &quot;web-admin-key&quot;
-  vpc_security_group_ids = [&quot;${aws_security_group.webserver_sg.id}&quot;]
-  depends_on             = [&quot;aws_key_pair.webserver_key&quot;]
+<pre><code>resource &quot;aws_instance&quot; &quot;frontend&quot; {
+  ami                    = &quot;ami-0ac019f4fcb7cb7e6&quot;
+  instance_type          = &quot;t2.micro&quot;
+  key_name               = &quot;terraform&quot;
+  vpc_security_group_ids = [&quot;${aws_security_group.front-end.id}&quot;]
+  depends_on             = [&quot;aws_key_pair.terraform&quot;]
 
   tags {
-    Name = &quot;weberserver&quot;
+    Name       = &quot;tf-frontend-01&quot;
+    App        = &quot;devops-demo&quot;
+    Maintainer = &quot;Gourav Shah&quot;
+    Role =&quot;frontend&quot;
   }
 }
 </code></pre>
 
 <p>This is how variable interpolation works in Terraform. </p>
 <p><code>Syntax: ${TYPE.NAME.ATTRIBUTE}</code></p>
-<p>In our case, it is, <code>${aws_security_group.webserver_sg.id}</code>.
+<p>In our case, it is, <code>${aws_security_group.fornt-end.id}</code>.
 Here,
   aws_security_group =&gt; TYPE
   webserver_sg       =&gt; NAME
@@ -283,21 +290,24 @@ ubuntu@ip-172-31-40-32:~$
 <p><code>file: variables.tf</code></p>
 <pre><code>variable &quot;ami&quot; {
   description = &quot;ami for the instance&quot;
-  default     = &quot;ami-408c7f28&quot;
+  default     = &quot;ami-0ac019f4fcb7cb7e6&quot;
 }
 </code></pre>
 
 <p>This variable can be referenced in the main manifest like the following.</p>
 <pre><code>[...]
-resource &quot;aws_instance&quot; &quot;webserver&quot; {
+resource &quot;aws_instance&quot; &quot;frontend&quot; {
   ami                    = &quot;${var.ami}&quot;
-  instance_type          = &quot;t1.micro&quot;
-  key_name               = &quot;web-admin-key&quot;
-  vpc_security_group_ids = [&quot;${aws_security_group.webserver_sg.id}&quot;]
-  depends_on             = [&quot;aws_key_pair.webserver_key&quot;]
+  instance_type          = &quot;t2.micro&quot;
+  key_name               = &quot;terraform&quot;
+  vpc_security_group_ids = [&quot;${aws_security_group.front-end.id}&quot;]
+  depends_on             = [&quot;aws_key_pair.terraform&quot;]
 
-  tags {
-    Name = &quot;weberserver&quot;
+  tags {    
+    Name       = &quot;tf-frontend-01&quot;
+    App        = &quot;devops-demo&quot;
+    Maintainer = &quot;Gourav Shah&quot;
+    Role =&quot;frontend&quot;
   }
 }
 [...]
@@ -319,7 +329,7 @@ Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
 <pre><code># default type is string
 variable &quot;ami&quot; {
   description = &quot;ami for the instance&quot;
-  default     = &quot;ami-408c7f28&quot;
+  default     = &quot;ami-0ac019f4fcb7cb7e6&quot;
 }
 
 # map type variable definition
@@ -328,14 +338,14 @@ variable &quot;instance&quot; {
   type        = &quot;map&quot;
 
   default = {
-    type = &quot;t1.micro&quot;
-    name = &quot;demo-server&quot;
+    type = &quot;t2.micro&quot;
+    name = &quot;tf-frontend-01&quot;
   }
 }
 
 variable &quot;key_name&quot; {
   description = &quot;name of the key&quot;
-  default     = &quot;web-admin-key&quot;
+  default     = &quot;terraform&quot;
 }
 
 variable &quot;key_pub&quot; {
@@ -347,23 +357,23 @@ variable &quot;key_pub&quot; {
 <p>Here is fully parameterized main manifest.
 <code>file: main.tf</code></p>
 <pre><code>provider &quot;aws&quot; {
-  region = &quot;us-east-1&quot;
+  region = &quot;ap-southeast-1&quot;
 }
 
-resource &quot;aws_instance&quot; &quot;webserver&quot; {
+resource &quot;aws_instance&quot; &quot;frontend&quot; {
   ami                    = &quot;${var.ami}&quot;
   instance_type          = &quot;${var.instance[&quot;type&quot;]}&quot;
   key_name               = &quot;web-admin-key&quot;
-  vpc_security_group_ids = [&quot;${aws_security_group.webserver_sg.id}&quot;]
-  depends_on             = [&quot;aws_key_pair.webserver_key&quot;]
+  vpc_security_group_ids = [&quot;${aws_security_group.front-end.id}&quot;]
+  depends_on             = [&quot;aws_key_pair.terraform&quot;]
 
   tags {
     Name = &quot;${var.instance[&quot;name&quot;]}&quot;
   }
 }
 
-resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
-  name = &quot;webserver-sg&quot;
+resource &quot;aws_security_group&quot; &quot;front-end&quot; {
+  name = &quot;front-end&quot;
 
   ingress {
     from_port   = 22
@@ -373,7 +383,7 @@ resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
   }
 }
 
-resource &quot;aws_key_pair&quot; &quot;webserver_key&quot; {
+resource &quot;aws_key_pair&quot; &quot;terraform&quot; {
   key_name   = &quot;${var.key_name}&quot;
   public_key = &quot;${var.key_pub}&quot;
 }

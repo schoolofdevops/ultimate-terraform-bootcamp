@@ -172,19 +172,19 @@
   config(1-n)   = The properties of the reosurce your manipulating.</p>
 <p>In your main.tf, add this block next to your Provider definition. </p>
 <p><code>an ec2 resource</code></p>
-<pre><code>resource &quot;aws_instance&quot; &quot;webserver&quot; {
-  ami           = &quot;ami-408c7f28&quot;
-  instance_type = &quot;t1.micro&quot;
+<pre><code>resource &quot;aws_instance&quot; &quot;frontend&quot; {
+  ami           = &quot;ami-0ac019f4fcb7cb7e6&quot;
+  instance_type = &quot;t2.micro&quot;
 }
 </code></pre>
 
 <p>Here, to compare it with the syntax,
 ```  resource_type = aws_instance
-     resource_name = webserver
+     resource_name = frontend
      config1       = ami
-     value1        = ami-408c7f28(ubuntu-14.04)
+     value1        = ami-0ac019f4fcb7cb7e6(ubuntu-14.04)
      config2       = instance_type
-     value2        = t1.micro</p>
+     value2        = t2.micro</p>
 <pre><code>Your `main.tf` file should look like the following. 
 
 </code></pre>
@@ -192,9 +192,9 @@
 <p>provider "aws" {
   region = "us-east-1"
 }</p>
-<p>resource "aws_instance" "webserver" {
-  ami           = "ami-408c7f28"
-  instance_type = "t1.micro"
+<p>resource "aws_instance" "frontend" {
+  ami           = "ami-0ac019f4fcb7cb7e6"
+  instance_type = "t2.micro"
 }</p>
 <pre><code>
 ### Terraform Plan
@@ -216,7 +216,7 @@ Resource actions are indicated with the following symbols:
 <ul>
 <li>aws_instance.webserver
       id:                           <computed>
-      ami:                          "ami-408c7f28"
+      ami:                          "ami-0ac019f4fcb7cb7e6"
       arn:                          <computed>
       associate_public_ip_address:  <computed>
       availability_zone:            <computed>
@@ -226,7 +226,7 @@ Resource actions are indicated with the following symbols:
       ephemeral_block_device.#:     <computed>
       get_password_data:            "false"
       instance_state:               <computed>
-      instance_type:                "t1.micro"
+      instance_type:                "t2.micro"
 [...]</li>
 </ul>
 <p>Plan: 1 to add, 0 to change, 0 to destroy.</p>
@@ -272,11 +272,14 @@ Let us see what happens when we apply a tag to the instance from `main.tf`.
 <p>provider "aws" {
   region = "us-east-1"
 }</p>
-<p>resource "aws_instance" "webserver" {
-  ami           = "ami-408c7f28"
-  instance_type = "t1.micro"</p>
+<p>resource "aws_instance" "frontend" {
+  ami           = "ami-0ac019f4fcb7cb7e6"
+  instance_type = "t2.micro"</p>
 <p>tags {
-    Name = "instance-01"
+    Name       = "tf-frontend-01"
+    App        = "devops-demo"
+    Maintainer = "Gourav Shah"
+    Role ="frontend"
   }
 }</p>
 <pre><code>We have added a tag block with in *aws_instance* resource which will add the name `instance-01` for our EC2 instance.
@@ -319,11 +322,14 @@ Now let us change the *ami* for the instance from *ami-408c7f28*(ubuntu 14.04) t
 <p>provider "aws" {
   region = "us-east-1"
 }</p>
-<p>resource "aws_instance" "webserver" {
+<p>resource "aws_instance" "frontend" {
   ami           = "ami-0c11a0129f63fb571"
-  instance_type = "t1.micro"</p>
+  instance_type = "t2.micro"</p>
 <p>tags {
-    Name = "instance-01"
+    Name       = "tf-frontend-01"
+    App        = "devops-demo"
+    Maintainer = "Gourav Shah"
+    Role ="frontend"
   }
 }</p>
 <pre><code>
@@ -350,7 +356,7 @@ Resource actions are indicated with the following symbols:
       ephemeral_block_device.#:     "0" =&gt; <computed>
       get_password_data:            "false" =&gt; "false"
       instance_state:               "stopped" =&gt; <computed>
-      instance_type:                "t1.micro" =&gt; "t1.micro"
+      instance_type:                "t2.micro" =&gt; "t2.micro"
       ipv6_address_count:           "" =&gt; <computed>
       ipv6_addresses.#:             "0" =&gt; <computed>
       key_name:                     "web-admin-key" =&gt; <computed>
