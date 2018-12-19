@@ -237,7 +237,7 @@ resource "aws_instance" "frontend" {
   ami                    = "${var.ami}"
   instance_type          = "${var.instance["type"]}"
   key_name               = "web-admin-key"
-  vpc_security_group_ids = ["${aws_security_group.front-end.id}"]
+  vpc_security_group_ids = ["${aws_security_group.frontend.id}"]
   depends_on             = ["aws_key_pair.terraform"]
 
   tags {
@@ -245,8 +245,8 @@ resource "aws_instance" "frontend" {
   }
 }
 
-resource "aws_security_group" "front-end" {
-  name = "front-end"
+resource "aws_security_group" "frontend" {
+  name = "frontend"
 
   ingress {
     from_port   = 22
