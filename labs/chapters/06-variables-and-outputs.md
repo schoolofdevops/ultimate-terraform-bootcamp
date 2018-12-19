@@ -117,7 +117,7 @@ Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 
 Check in your AWS console to check the same.
 
-![custom-sg](./images/06-custom-sg1.png)
+![custom-sg](./images/06-custom-sg.png)
 
 Now you should be able to SSH into the machine.
 ```
