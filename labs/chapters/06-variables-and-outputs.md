@@ -11,7 +11,7 @@ ssh: connect to host 34.203.194.201 port 22: Operation timed out
 
 You will not be able to SSH. The reason is we have not associated the security group that we have created with this instance. The instance is still using the default security group which doesn't allow ssh. 
 
-![default-sg](./images/06-default-sg.png)
+![default-sg](./images/06-default-sg1.png)
 
 We need to fix this issue. Let us associate our security group with this machine.
 
