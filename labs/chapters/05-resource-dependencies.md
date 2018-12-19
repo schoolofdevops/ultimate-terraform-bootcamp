@@ -11,27 +11,29 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_instance" "webserver" {
-  ami           = "ami-408c7f28"
-  instance_type = "t1.micro"
+resource "aws_instance" "frontend" {
+  ami           = "ami-0ac019f4fcb7cb7e6"
+  instance_type = "t2.micro"
 }
 
-resource "aws_security_group" "webserver_sg" {
+resource "aws_security_group" "front-end" {
 
-	name = "webserver-sg"
+	name = "front-end"
 
 	ingress {
-		from_port   = 22
-		to_port     = 22
-		protocol    = "tcp"
 		cidr_blocks = ["0.0.0.0/0"]
+   		from_port = 22
+		to_port = 22
+   		protocol = "tcp"  
+   		description = "open ssh port for all"
+		}  		
 	}
 }
 ```
 
 Here,
   Resource type = aws_security_group,
-  Resource name = webserver_sg
+  Resource name = front-end
 
 This `aws_security_group` resource allows us to ssh into the instance.
 
@@ -81,20 +83,21 @@ Paste the content of public key in the public_key
 ```
 [...]
 
-resource "aws_security_group" "webserver_sg" {
+resource "aws_security_group" "front-end" {
 
-	name = "webserver-sg"
+	name = "front-end"
 
 	ingress {
-		from_port   = 22
-		to_port     = 22
-		protocol    = "tcp"
 		cidr_blocks = ["0.0.0.0/0"]
-	}
+		from_port = 22
+		to_port = 22
+		protocol = "tcp"  
+		description = "open ssh port for all"
+}  	}
 }
 
-resource "aws_key_pair" "webserver_key" {
-  key_name   = "web-admin-key"
+resource "aws_key_pair" "terraform" {
+  key_name   = "terraform"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local
 }
 ```
@@ -107,13 +110,16 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_instance" "webserver" {
-  ami           = "ami-408c7f28"
-  instance_type = "t1.micro"
-  key_name      = "web-admin-key"
+resource "aws_instance" "frontend" {
+  ami           = "ami-0ac019f4fcb7cb7e6"
+  instance_type = "t2.micro"
+  key_name      = "terraform"
 
   tags {
-    Name = "webserver"
+    Name       = "tf-frontend-01"
+    App        = "devops-demo"
+    Maintainer = "Gourav Shah"
+    Role ="frontend"
   }
 }
 
@@ -127,30 +133,34 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_instance" "webserver" {
-  ami           = "ami-408c7f28"
-  instance_type = "t1.micro"
-  key_name      = "web-admin-key"
+resource "aws_instance" "frontend" {
+  ami           = "ami-0ac019f4fcb7cb7e6"
+  instance_type = "t2.micro"
+  key_name      = "terraform"
 
   tags {
-    Name = "weberserver"
+    Name       = "tf-frontend-01"
+    App        = "devops-demo"
+    Maintainer = "Gourav Shah"
+    Role       = "frontend"
   }
 }
 
-resource "aws_security_group" "webserver_sg" {
+resource "aws_security_group" "front-end" {
 
-        name = "webserver-sg"
+        name = "frontend"
 
         ingress {
-                from_port   = 22
-                to_port     = 22
-                protocol    = "tcp"
                 cidr_blocks = ["0.0.0.0/0"]
-        }
+   		from_port = 22
+		to_port = 22
+   		protocol = "tcp"  
+	   	description = "open ssh port for all"        
+		}
 }
 
-resource "aws_key_pair" "webserver_key" {
-  key_name   = "web-admin-key"
+resource "aws_key_pair" "terraform" {
+  key_name   = "terraform"
   public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local"
 }
 ```
@@ -168,14 +178,14 @@ This will guarantee the creation of key pair before the instance get's created. 
 `file: main.tf`
 ```
 [...]
-resource "aws_instance" "webserver" {
-  ami           = "ami-408c7f28"
-  instance_type = "t1.micro"
-  key_name      = "web-admin-key"
+resource "aws_instance" "frontend" {
+  ami           = "ami-0ac019f4fcb7cb7e6"
+  instance_type = "t2.micro"
+  key_name      = "terraform"
 
   depends_on = ["aws_key_pair.webserver_key"]
   tags {
-    Name = "weberserver"
+    Name = "terraform"
   }
 }
 [...]
@@ -203,11 +213,11 @@ Do you want to perform these actions?
 
 aws_key_pair.webserver_key: Creating...
   fingerprint: "" => "<computed>"
-  key_name:    "" => "web-admin-key"
+  key_name:    "" => "terraform"
   public_key:  "" => "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local"
 aws_key_pair.webserver_key: Creation complete after 3s (ID: web-admin-key)
 aws_instance.webserver: Creating...
-  ami:                          "" => "ami-408c7f28"
+  ami:                          "" => "ami-0ac019f4fcb7cb7e6"
   arn:                          "" => "<computed>"
   associate_public_ip_address:  "" => "<computed>"
   availability_zone:            "" => "<computed>"
@@ -217,10 +227,10 @@ aws_instance.webserver: Creating...
   ephemeral_block_device.#:     "" => "<computed>"
   get_password_data:            "" => "false"
   instance_state:               "" => "<computed>"
-  instance_type:                "" => "t1.micro"
+  instance_type:                "" => "t2.micro"
   ipv6_address_count:           "" => "<computed>"
   ipv6_addresses.#:             "" => "<computed>"
-  key_name:                     "" => "web-admin-key"
+  key_name:                     "" => "terraform"
   network_interface.#:          "" => "<computed>"
   network_interface_id:         "" => "<computed>"
   password_data:                "" => "<computed>"
@@ -235,7 +245,7 @@ aws_instance.webserver: Creating...
   source_dest_check:            "" => "true"
   subnet_id:                    "" => "<computed>"
   tags.%:                       "" => "1"
-  tags.Name:                    "" => "weberserver"
+  tags.Name:                    "" => "frontend"
   tenancy:                      "" => "<computed>"
   volume_tags.%:                "" => "<computed>"
   vpc_security_group_ids.#:     "" => "<computed>"
