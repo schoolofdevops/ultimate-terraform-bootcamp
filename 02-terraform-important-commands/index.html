@@ -75,6 +75,10 @@
         
             <li><a class="toctree-l4" href="#terraform-destroy">Terraform Destroy</a></li>
         
+            <li><a class="toctree-l4" href="#terraform-init">Terraform init</a></li>
+        
+            <li><a class="toctree-l4" href="#terraform-fmt">Terraform fmt</a></li>
+        
         </ul>
     
 
@@ -297,6 +301,41 @@ Do you really want to destroy?
   Enter a value: yes
   [...]
 </code></pre>
+
+<h2 id="terraform-init">Terraform init</h2>
+<p>The terraform init command is used to initialize a working directory containing Terraform configuration files. This is the first command that should be run after writing a new Terraform configuration or cloning an existing one from version control. It is safe to run this command multiple times.</p>
+<p><code>Example</code></p>
+<pre><code>terraform init
+
+[Output]
+
+Initializing provider plugins...
+- Checking for available provider plugins on https://releases.hashicorp.com...
+- Downloading plugin for provider &quot;aws&quot; (1.37.0)...
+
+The following providers do not have any version constraints in configuration,
+so the latest version was installed.
+
+To prevent automatic upgrades to new major versions that may contain breaking
+changes, it is recommended to add version = &quot;...&quot; constraints to the
+corresponding provider blocks in configuration, with the constraint strings
+suggested below.
+
+* provider.aws: version = &quot;~&gt; 1.37&quot;
+Terraform has been successfully initialized!
+
+You may now begin working with Terraform. Try running &quot;terraform plan&quot; to see
+any changes that are required for your infrastructure. All Terraform commands
+should now work.
+
+If you ever set or change modules or backend configuration for Terraform,
+rerun this command to reinitialize your working directory. If you forget, other
+commands will detect it and remind you to do so if necessary.
+
+</code></pre>
+
+<h2 id="terraform-fmt">Terraform fmt</h2>
+<p>The terraform fmt command is used to rewrite Terraform configuration files to a canonical format and style.</p>
               
             </div>
           </div>
