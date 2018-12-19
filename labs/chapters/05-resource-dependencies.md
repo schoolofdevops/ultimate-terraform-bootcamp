@@ -16,9 +16,9 @@ resource "aws_instance" "frontend" {
   instance_type = "t2.micro"
 }
 
-resource "aws_security_group" "front-end" {
+resource "aws_security_group" "frontend" {
 
-	name = "front-end"
+	name = "frontend"
 
 	ingress {
 		cidr_blocks = ["0.0.0.0/0"]
@@ -33,7 +33,7 @@ resource "aws_security_group" "front-end" {
 
 Here,
   Resource type = aws_security_group,
-  Resource name = front-end
+  Resource name = frontend
 
 This `aws_security_group` resource allows us to ssh into the instance.
 
@@ -83,9 +83,9 @@ Paste the content of public key in the public_key
 ```
 [...]
 
-resource "aws_security_group" "front-end" {
+resource "aws_security_group" "frontend" {
 
-	name = "front-end"
+	name = "frontend"
 
 	ingress {
 		cidr_blocks = ["0.0.0.0/0"]
@@ -146,7 +146,7 @@ resource "aws_instance" "frontend" {
   }
 }
 
-resource "aws_security_group" "front-end" {
+resource "aws_security_group" "frontend" {
 
         name = "frontend"
 
