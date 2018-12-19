@@ -19,15 +19,19 @@ We need to fix this issue. Let us associate our security group with this machine
 
 **Bad Practice**
 ```
-resource "aws_instance" "webserver" {
-  ami                    = "ami-408c7f28"
-  instance_type          = "t1.micro"
-  key_name               = "web-admin-key"
+resource "aws_instance" "frontend" {
+  ami                    = "ami-0ac019f4fcb7cb7e6"
+  instance_type          = "t2.micro"
+  key_name               = "terraform"
   vpc_security_group_ids = "sg-0c22a3497351d1caa"
-  depends_on             = ["aws_key_pair.webserver_key"]
+  depends_on             = ["aws_key_pair.terraform"]
 
   tags {
-    Name = "weberserver"
+    Name       = "tf-frontend-01"
+    App        = "devops-demo"
+    Maintainer = "Gourav Shah"
+    Role ="frontend"
+
   }
 }
 ```
@@ -39,15 +43,18 @@ We can manually copy the ID of the security group and apply the manifest. This w
 `file: main.tf`  
 **Good Practice**
 ```
-resource "aws_instance" "webserver" {
-  ami                    = "ami-408c7f28"
-  instance_type          = "t1.micro"
-  key_name               = "web-admin-key"
-  vpc_security_group_ids = ["${aws_security_group.webserver_sg.id}"]
-  depends_on             = ["aws_key_pair.webserver_key"]
+resource "aws_instance" "frontend" {
+  ami                    = "ami-0ac019f4fcb7cb7e6"
+  instance_type          = "t2.micro"
+  key_name               = "terraform"
+  vpc_security_group_ids = ["${aws_security_group.front-end.id}"]
+  depends_on             = ["aws_key_pair.terraform"]
 
   tags {
-    Name = "weberserver"
+    Name       = "tf-frontend-01"
+    App        = "devops-demo"
+    Maintainer = "Gourav Shah"
+    Role ="frontend"
   }
 }
 ```
@@ -56,7 +63,7 @@ This is how variable interpolation works in Terraform.
 
 `Syntax: ${TYPE.NAME.ATTRIBUTE}`
 
-In our case, it is, `${aws_security_group.webserver_sg.id}`.
+In our case, it is, `${aws_security_group.fornt-end.id}`.
 Here,
   aws_security_group => TYPE
   webserver_sg       => NAME
@@ -110,7 +117,7 @@ Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
 
 Check in your AWS console to check the same.
 
-![custom-sg](./images/06-custom-sg.png)
+![custom-sg](./images/06-custom-sg1.png)
 
 Now you should be able to SSH into the machine.
 ```
@@ -149,7 +156,7 @@ Let us define our first variable in this file.
 ```
 variable "ami" {
   description = "ami for the instance"
-  default     = "ami-408c7f28"
+  default     = "ami-0ac019f4fcb7cb7e6"
 }
 ```
 
@@ -157,15 +164,18 @@ This variable can be referenced in the main manifest like the following.
 
 ```
 [...]
-resource "aws_instance" "webserver" {
+resource "aws_instance" "frontend" {
   ami                    = "${var.ami}"
-  instance_type          = "t1.micro"
-  key_name               = "web-admin-key"
-  vpc_security_group_ids = ["${aws_security_group.webserver_sg.id}"]
-  depends_on             = ["aws_key_pair.webserver_key"]
+  instance_type          = "t2.micro"
+  key_name               = "terraform"
+  vpc_security_group_ids = ["${aws_security_group.front-end.id}"]
+  depends_on             = ["aws_key_pair.terraform"]
 
-  tags {
-    Name = "weberserver"
+  tags {    
+    Name       = "tf-frontend-01"
+    App        = "devops-demo"
+    Maintainer = "Gourav Shah"
+    Role ="frontend"
   }
 }
 [...]
@@ -191,7 +201,7 @@ Let us parameterize some properties from our main manifest.
 # default type is string
 variable "ami" {
   description = "ami for the instance"
-  default     = "ami-408c7f28"
+  default     = "ami-0ac019f4fcb7cb7e6"
 }
 
 # map type variable definition
@@ -200,14 +210,14 @@ variable "instance" {
   type        = "map"
 
   default = {
-    type = "t1.micro"
-    name = "demo-server"
+    type = "t2.micro"
+    name = "tf-frontend-01"
   }
 }
 
 variable "key_name" {
   description = "name of the key"
-  default     = "web-admin-key"
+  default     = "terraform"
 }
 
 variable "key_pub" {
@@ -223,12 +233,12 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_instance" "webserver" {
+resource "aws_instance" "frontend" {
   ami                    = "${var.ami}"
   instance_type          = "${var.instance["type"]}"
   key_name               = "web-admin-key"
-  vpc_security_group_ids = ["${aws_security_group.webserver_sg.id}"]
-  depends_on             = ["aws_key_pair.webserver_key"]
+  vpc_security_group_ids = ["${aws_security_group.front-end.id}"]
+  depends_on             = ["aws_key_pair.terraform"]
 
   tags {
     Name = "${var.instance["name"]}"
