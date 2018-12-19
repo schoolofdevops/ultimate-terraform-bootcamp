@@ -187,7 +187,7 @@ Syntax: `depends_on = ["resource_type.resource_name"]`
 
 ### Idempotency
 
-Finally apply the manifest by running,
+Finally apply the manifest by running
 
 ```
 terraform apply
