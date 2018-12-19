@@ -230,7 +230,7 @@ Here is fully parameterized main manifest.
 `file: main.tf`
 ```
 provider "aws" {
-  region = "us-east-1"
+  region = "ap-southeast-1"
 }
 
 resource "aws_instance" "frontend" {
@@ -245,8 +245,8 @@ resource "aws_instance" "frontend" {
   }
 }
 
-resource "aws_security_group" "webserver_sg" {
-  name = "webserver-sg"
+resource "aws_security_group" "front-end" {
+  name = "front-end"
 
   ingress {
     from_port   = 22
@@ -256,7 +256,7 @@ resource "aws_security_group" "webserver_sg" {
   }
 }
 
-resource "aws_key_pair" "webserver_key" {
+resource "aws_key_pair" "terraform" {
   key_name   = "${var.key_name}"
   public_key = "${var.key_pub}"
 }
