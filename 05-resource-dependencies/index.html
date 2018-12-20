@@ -169,9 +169,9 @@ resource &quot;aws_instance&quot; &quot;frontend&quot; {
   instance_type = &quot;t2.micro&quot;
 }
 
-resource &quot;aws_security_group&quot; &quot;front-end&quot; {
+resource &quot;aws_security_group&quot; &quot;frontend&quot; {
 
-    name = &quot;front-end&quot;
+    name = &quot;frontend&quot;
 
     ingress {
         cidr_blocks = [&quot;0.0.0.0/0&quot;]
@@ -186,7 +186,7 @@ resource &quot;aws_security_group&quot; &quot;front-end&quot; {
 
 <p>Here,
   Resource type = aws_security_group,
-  Resource name = front-end</p>
+  Resource name = frontend</p>
 <p>This <code>aws_security_group</code> resource allows us to ssh into the instance.</p>
 <p>We need to create the EC2 instance with this security group. To do that, </p>
 <p>The final requirement is a <code>key pair</code> using which we can login to the machine. Let us use <a href="https://www.terraform.io/docs/providers/aws/r/key_pair.html">aws_key_pair</a> to register the key with AWS and then use in our ec2 instance.</p>
@@ -227,9 +227,9 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlD
 <p><code>file: main.tf</code></p>
 <pre><code>[...]
 
-resource &quot;aws_security_group&quot; &quot;front-end&quot; {
+resource &quot;aws_security_group&quot; &quot;frontend&quot; {
 
-    name = &quot;front-end&quot;
+    name = &quot;frontend&quot;
 
     ingress {
         cidr_blocks = [&quot;0.0.0.0/0&quot;]
@@ -286,7 +286,7 @@ resource &quot;aws_instance&quot; &quot;frontend&quot; {
   }
 }
 
-resource &quot;aws_security_group&quot; &quot;front-end&quot; {
+resource &quot;aws_security_group&quot; &quot;frontend&quot; {
 
         name = &quot;frontend&quot;
 

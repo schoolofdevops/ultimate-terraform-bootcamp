@@ -193,11 +193,11 @@ sudo service apache2 restart
 
 <p><code>file: main.tf</code></p>
 <pre><code>[...]
-resource &quot;aws_instance&quot; &quot;webserver&quot; {
+resource &quot;aws_instance&quot; &quot;frontend&quot; {
   ami                    = &quot;${var.ami}&quot;
   instance_type          = &quot;${var.instance[&quot;type&quot;]}&quot;
-  key_name               = &quot;web-admin-key&quot;
-  vpc_security_group_ids = [&quot;${aws_security_group.webserver_sg.id}&quot;]
+  key_name               = &quot;${var.key[&quot;name&quot;]}&quot;
+  vpc_security_group_ids = [&quot;${aws_security_group.frontend.id}&quot;]
   depends_on             = [&quot;aws_key_pair.webserver_key&quot;]
 
   tags {
@@ -210,23 +210,10 @@ resource &quot;aws_instance&quot; &quot;webserver&quot; {
 
     connection {
       type        = &quot;ssh&quot;
-      user        = &quot;${var.ssh_user}&quot;
-      private_key = &quot;${file(var.ssh_pvtkey)}&quot;
+      user        = &quot;ubuntu&quot;
+      private_key = &quot;${file(&quot;~/.ssh/terraform-ap)}&quot;
     }
   }
-}
-[...]
-</code></pre>
-
-<p>This <code>file</code> type provisioner copies the user-data from our local machine to the remote instance on <code>/tmp/user-data.sh</code> path. It requires authentication details to scp the file to the machine. Let us set the credentials in our <code>variables.tf</code> file.</p>
-<p><code>file: variables.tf</code></p>
-<pre><code>[...]
-variable &quot;ssh_user&quot; {
-  default = &quot;ubuntu&quot;
-}
-
-variable &quot;ssh_pvtkey&quot; {
-  default = &quot;~/.ssh/id_rsa&quot;
 }
 [...]
 </code></pre>
@@ -241,7 +228,7 @@ Destroy complete! Resources: 2 destroyed.
 <pre><code>terraform apply
 
 [output]
-aws_instance.webserver: Still creating... (10s elapsed)
+             aws_instance.webserver: Still creating... (10s elapsed)
 aws_instance.webserver: Still creating... (20s elapsed)
 aws_instance.webserver: Still creating... (30s elapsed)
 aws_instance.webserver: Provisioning with 'file'...
@@ -261,11 +248,11 @@ webserver_ip = 35.173.254.26
 <h2 id="remote-exec-provisioner">Remote-Exec Provisioner</h2>
 <p>Now we will execute the script that we have just copied over.</p>
 <p><code>file: main.tf</code></p>
-<pre><code>resource &quot;aws_instance&quot; &quot;webserver&quot; {
+<pre><code>resource &quot;aws_instance&quot; &quot;frontend&quot; {
   ami                    = &quot;${var.ami}&quot;
   instance_type          = &quot;${var.instance[&quot;type&quot;]}&quot;
-  key_name               = &quot;web-admin-key&quot;
-  vpc_security_group_ids = [&quot;${aws_security_group.webserver_sg.id}&quot;]
+  key_name               = &quot;${var.key[&quot;name&quot;]}&quot;
+  vpc_security_group_ids = [&quot;${aws_security_group.frontend.id}&quot;]
   depends_on             = [&quot;aws_key_pair.webserver_key&quot;]
 
   tags {
@@ -276,7 +263,7 @@ webserver_ip = 35.173.254.26
     source      = &quot;user-data.sh&quot;
     destination = &quot;/tmp/user-data.sh&quot;
 
-    connection {
+  connection {
       type        = &quot;ssh&quot;
       user        = &quot;${var.ssh_user}&quot;
       private_key = &quot;${file(var.ssh_pvtkey)}&quot;
@@ -291,7 +278,7 @@ webserver_ip = 35.173.254.26
     connection {
       type        = &quot;ssh&quot;
       user        = &quot;${var.ssh_user}&quot;
-      private_key = &quot;${file(var.ssh_pvtkey)}&quot;
+      private_key = &quot;${file(&quot;~/.ssh/terraform-ap&quot;)}&quot;
     }
   }
 }
@@ -300,21 +287,23 @@ webserver_ip = 35.173.254.26
 <p>We will also add the ingress policy port <code>80</code> and egress policy for allo traffic in our security group.</p>
 <p><code>file: main.tf</code></p>
 <pre><code>[...]
-resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
-  name = &quot;webserver-sg&quot;
+resource &quot;aws_security_group&quot; &quot;front-end&quot; {
+  name = &quot;front-end&quot;
 
   ingress {
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
     from_port   = 22
     to_port     = 22
     protocol    = &quot;tcp&quot;
-    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+    description = &quot;Open SSH port to all &quot;
   }
 
   ingress {
+    cidr_blocks = [&quot;0.0.0.0/0&quot;]
     from_port   = 80
     to_port     = 80
     protocol    = &quot;tcp&quot;
-    cidr_blocks = [&quot;0.0.0.0/0&quot;]
+    description = &quot;Open HTTP port to all &quot;
   }
 
   egress {
@@ -322,6 +311,7 @@ resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
     to_port     = 0
     protocol    = &quot;-1&quot;
     cidr_blocks = [&quot;0.0.0.0/0&quot;]
+    description =&quot;allow all outgoing connections&quot;
   }
 }
 [...]
