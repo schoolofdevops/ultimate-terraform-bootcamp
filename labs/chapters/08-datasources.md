@@ -173,7 +173,7 @@ Terraform has been successfully initialized!
 You may now begin working with Terraform. Try running "terraform plan" to see
 any changes that are required for your infrastructure. All Terraform commands
 should now work.
-
+```
 
 
 ##### Updating instance to copy template with a file provisioner
