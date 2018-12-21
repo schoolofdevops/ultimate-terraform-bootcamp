@@ -53,7 +53,7 @@ variable "rds_name" {
 
 Let us check whether Terraform is able to fetch the datasource details from AWS API.
 
-`file: main.tf` 
+`file: main.tf`
 
 
 ```
@@ -88,52 +88,63 @@ webserver_ip = 54.165.195.171
 
 We are able to get the endpoint for a resource which was not created Terraform.
 
-We need to change the placeholder values with our rds db values, from `/var/www/html/config.ini` in our instance.
+#### Updating database configs using Templates (.tpl)
+
+We have already learnt how to discover RDS which was created outside of terraform. Now, its time to update application configurations to provide database connection information.
+
+To achieve this we would
+
+  * create a template file
+  * use a new provider, **template** along with a data source with vars.
+
+`file: config.ini.tpl`
+
+```
+[database]
+hostname = "${dbhost}"
+username = "${dbuser}"
+password = "${dbpass}"
+dbname =   "${dbname}"
+
+
+[environment]
+environment = DEV
+
+[prefs]
+color  = white
+fruit  = apple
+car    = fiat
+laptop = dell
+```
 
 `file: main.tf`
 
 ```
-[...]
-resource "null_resource" "populate_db_01" {
-  provisioner "local-exec" {
-    command = "ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo sed -i -e 's/DBHOST/${data.aws_db_instance.database.address}/g' /var/www/html/config.ini'"
-  }
+data "template_file" "dbconfig" {
+  template = "${file("${path.module}/config.ini.tpl")}"
 
-  provisioner "local-exec" {
-    command = "ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo sed -i -e 's/SQLUSER/${data.aws_db_instance.database.master_username}/g' /var/www/html/config.ini'"
-  }
-
-  provisioner "local-exec" {
-    command = "ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo sed -i -e 's/SQLPASSWORD/${var.rds_pass}/g' /var/www/html/config.ini'"
-  }
-
-  provisioner "local-exec" {
-    command = "ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo sed -i -e 's/SQLDBNAME/${data.aws_db_instance.database.db_name}/g' /var/www/html/config.ini'"
-  }
-
-  provisioner "local-exec" {
-    command = "ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo service apache2 restart'"
+  vars {
+    dbhost = "${data.aws_db_instance.database.address}"
+    dbpass = "${var.rds_pass}"
+    dbuser = "${data.aws_db_instance.database.master_username}"
+    dbname  = "${data.aws_db_instance.database.db_name}"
   }
 }
-
-[...]
 ```
 
-We also need to define the *rds_pass* variable in `variables.tf`.
 
 `file: variables.tf`
 
 ```
 [...]
 variable "rds_pass" {
-  default = "Sup3rS3cr3t"
+  default = "password"
 }
 [...]
 ```
 
-In this given example, we introduce a new resource called `null`, which helps us to use `local-exec` provisioner. 
 
-We need to run `terraform init` to install the *null provider* plugin.
+We need to run `terraform init` to install the *template provider* plugin.
 
 ```
 terraform init
@@ -143,7 +154,7 @@ Initializing the backend...
 
 Initializing provider plugins...
 - Checking for available provider plugins on https://releases.hashicorp.com...
-- Downloading plugin for provider "null" (1.0.0)...
+- Downloading plugin for provider "template" (1.0.0)...
 
 The following providers do not have any version constraints in configuration,
 so the latest version was installed.
@@ -154,7 +165,7 @@ corresponding provider blocks in configuration, with the constraint strings
 suggested below.
 
 * provider.aws: version = "~> 1.37"
-* provider.null: version = "~> 1.0"
+* provider.template: version = "~> 1.0"
 
 Terraform has been successfully initialized!
 
@@ -162,10 +173,29 @@ You may now begin working with Terraform. Try running "terraform plan" to see
 any changes that are required for your infrastructure. All Terraform commands
 should now work.
 
-If you ever set or change modules or backend configuration for Terraform,
-rerun this command to reinitialize your working directory. If you forget, other
-commands will detect it and remind you to do so if necessary.
+
+
+##### Updating instance to copy template with a file provisioner
+
+
+In addition to generating a template, it also needs to be copied over to the instance at */var/www/html/config.ini* as thats where the application will look for the configs.
+
+`file: main.tf`
+
 ```
+provisioner "file" {
+  content      = "${data.template_file.dbconfig.rendered}"
+  destination = "/var/www/html/config.ini"
+
+  connection {
+    type        = "ssh"
+    user        = "ubuntu"
+    private_key = "${file("~/.ssh/terraform")}"
+  }
+}
+```
+
+
 
 Then run *terraform plan and apply*
 

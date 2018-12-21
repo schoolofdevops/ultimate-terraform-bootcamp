@@ -79,23 +79,6 @@
         
             <li><a class="toctree-l4" href="#creating-our-first-resource">Creating our first Resource</a></li>
         
-            <li><a class="toctree-l4" href="#terraform-plan">Terraform Plan</a></li>
-        
-            <li><a class="toctree-l4" href="#terraform-apply">Terraform Apply</a></li>
-        
-        </ul>
-    
-
-    <li class="toctree-l3"><a href="#resource-lifecycles">Resource Lifecycles</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#resource-update">Resource Update</a></li>
-        
-            <li><a class="toctree-l4" href="#resource-recreation">Resource Recreation</a></li>
-        
-            <li><a class="toctree-l4" href="#resource-destruction">Resource Destruction</a></li>
-        
         </ul>
     
 
@@ -189,224 +172,217 @@
   config(1-n)   = The properties of the reosurce your manipulating.</p>
 <p>In your main.tf, add this block next to your Provider definition. </p>
 <p><code>an ec2 resource</code></p>
-<pre><code>resource &quot;aws_instance&quot; &quot;webserver&quot; {
-  ami           = &quot;ami-408c7f28&quot;
-  instance_type = &quot;t1.micro&quot;
+<pre><code>resource &quot;aws_instance&quot; &quot;frontend&quot; {
+  ami           = &quot;ami-0ac019f4fcb7cb7e6&quot;
+  instance_type = &quot;t2.micro&quot;
 }
 </code></pre>
 
 <p>Here, to compare it with the syntax,
-  resource_type = aws_instance
-  resource_name = webserver
-  config1       = ami
-  value1        = ami-408c7f28(ubuntu-14.04)
-  config2       = instance_type
-  value2        = t1.micro</p>
-<p>Your <code>main.tf</code> file should look like the following. </p>
-<pre><code>provider &quot;aws&quot; {
-  region = &quot;us-east-1&quot;
-}
+```  resource_type = aws_instance
+     resource_name = frontend
+     config1       = ami
+     value1        = ami-0ac019f4fcb7cb7e6(ubuntu-14.04)
+     config2       = instance_type
+     value2        = t2.micro</p>
+<pre><code>Your `main.tf` file should look like the following. 
 
-resource &quot;aws_instance&quot; &quot;webserver&quot; {
-  ami           = &quot;ami-408c7f28&quot;
-  instance_type = &quot;t1.micro&quot;
-}
 </code></pre>
 
-<h3 id="terraform-plan">Terraform Plan</h3>
-<p>Then run <code>terraform plan</code> to see what will happen if we apply the manifest.</p>
-<pre><code>terraform plan
+<p>provider "aws" {
+  region = "us-east-1"
+}</p>
+<p>resource "aws_instance" "frontend" {
+  ami           = "ami-0ac019f4fcb7cb7e6"
+  instance_type = "t2.micro"
+}</p>
+<pre><code>
+### Terraform Plan
 
-[output]
+Then run `terraform plan` to see what will happen if we apply the manifest.
+
+</code></pre>
+
+<p>terraform plan</p>
+<p>[output]
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
-persisted to local or remote state storage.
-
-
-------------------------------------------------------------------------
-
-An execution plan has been generated and is shown below.
+persisted to local or remote state storage.</p>
+<hr />
+<p>An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
-  + create
-
-Terraform will perform the following actions:
-
-  + aws_instance.webserver
-      id:                           &lt;computed&gt;
-      ami:                          &quot;ami-408c7f28&quot;
-      arn:                          &lt;computed&gt;
-      associate_public_ip_address:  &lt;computed&gt;
-      availability_zone:            &lt;computed&gt;
-      cpu_core_count:               &lt;computed&gt;
-      cpu_threads_per_core:         &lt;computed&gt;
-      ebs_block_device.#:           &lt;computed&gt;
-      ephemeral_block_device.#:     &lt;computed&gt;
-      get_password_data:            &quot;false&quot;
-      instance_state:               &lt;computed&gt;
-      instance_type:                &quot;t1.micro&quot;
-[...]
-
-Plan: 1 to add, 0 to change, 0 to destroy.
-
-------------------------------------------------------------------------
-
-Note: You didn't specify an &quot;-out&quot; parameter to save this plan, so Terraform
+  + create</p>
+<p>Terraform will perform the following actions:</p>
+<ul>
+<li>aws_instance.webserver
+      id:                           <computed>
+      ami:                          "ami-0ac019f4fcb7cb7e6"
+      arn:                          <computed>
+      associate_public_ip_address:  <computed>
+      availability_zone:            <computed>
+      cpu_core_count:               <computed>
+      cpu_threads_per_core:         <computed>
+      ebs_block_device.#:           <computed>
+      ephemeral_block_device.#:     <computed>
+      get_password_data:            "false"
+      instance_state:               <computed>
+      instance_type:                "t2.micro"
+[...]</li>
+</ul>
+<p>Plan: 1 to add, 0 to change, 0 to destroy.</p>
+<hr />
+<p>Note: You didn't specify an "-out" parameter to save this plan, so Terraform
 can't guarantee that exactly these actions will be performed if
-&quot;terraform apply&quot; is subsequently run.
+"terraform apply" is subsequently run.</p>
+<pre><code>
+### Terraform Apply
+
+Then run, `terraform apply` to actually create the resource on AWS.
+
 </code></pre>
 
-<h3 id="terraform-apply">Terraform Apply</h3>
-<p>Then run, <code>terraform apply</code> to actually create the resource on AWS.</p>
-<pre><code>terraform apply
-
-[output]
+<p>terraform apply</p>
+<p>[output]
 [...]
 aws_instance.webserver: Still creating... (10s elapsed)
 aws_instance.webserver: Still creating... (20s elapsed)
 aws_instance.webserver: Still creating... (30s elapsed)
 aws_instance.webserver: Still creating... (40s elapsed)
-aws_instance.webserver: Creation complete after 49s (ID: i-02489cdf638f05bbd)
+aws_instance.webserver: Creation complete after 49s (ID: i-02489cdf638f05bbd)</p>
+<p>Apply complete! Resources: 1 added, 0 changed, 0 destroyed.</p>
+<pre><code>
+We have successfully created our first reosource on AWS. Please check your AWS console to check the properties(AMI and instance type) of the machine.
 
-Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+![terraform apply](./images/04-resources-apply.png)
+
+## Resource Lifecycles  
+
+In Terraform, a resource can be,  
+  * Created (+)  
+  * Destroyed (-)  
+  * Recreated (-/+) or  
+  * Updated (~)  
+Like in the previous example, when Terraform creates a resource, it represents it with `+` symbol. Similarly Destroy, Recreate and Modify are represented with `-`, `-/+` and `~` respectively.  
+
+### Resource Update  
+Let us see what happens when we apply a tag to the instance from `main.tf`.  
+`file: main.tf`
 </code></pre>
 
-<p>We have successfully created our first reosource on AWS. Please check your AWS console to check the properties(AMI and instance type) of the machine.</p>
-<p><img alt="terraform apply" src="../images/04-resources-apply.png" /></p>
-<h2 id="resource-lifecycles">Resource Lifecycles</h2>
-<p>In Terraform, a resource can be,<br />
-  * Created (+)<br />
-  * Destroyed (-)<br />
-  * Recreated (-/+) or<br />
-  * Updated (~)<br />
-Like in the previous example, when Terraform creates a resource, it represents it with <code>+</code> symbol. Similarly Destroy, Recreate and Modify are represented with <code>-</code>, <code>-/+</code> and <code>~</code> respectively.  </p>
-<h3 id="resource-update">Resource Update</h3>
-<p>Let us see what happens when we apply a tag to the instance from <code>main.tf</code>.<br />
-<code>file: main.tf</code></p>
-<pre><code>provider &quot;aws&quot; {
-  region = &quot;us-east-1&quot;
-}
-
-resource &quot;aws_instance&quot; &quot;webserver&quot; {
-  ami           = &quot;ami-408c7f28&quot;
-  instance_type = &quot;t1.micro&quot;
-
-  tags {
-    Name = &quot;instance-01&quot;
+<p>provider "aws" {
+  region = "us-east-1"
+}</p>
+<p>resource "aws_instance" "frontend" {
+  ami           = "ami-0ac019f4fcb7cb7e6"
+  instance_type = "t2.micro"</p>
+<p>tags {
+    Name       = "tf-frontend-01"
+    App        = "devops-demo"
+    Maintainer = "Gourav Shah"
+    Role ="frontend"
   }
-}
+}</p>
+<pre><code>We have added a tag block with in *aws_instance* resource which will add the name `instance-01` for our EC2 instance.
+
 </code></pre>
 
-<p>We have added a tag block with in <em>aws_instance</em> resource which will add the name <code>instance-01</code> for our EC2 instance.</p>
-<pre><code>terraform plan
-terraform apply
-
-[output]
+<p>terraform plan
+terraform apply</p>
+<p>[output]
 Acquiring state lock. This may take a few moments...
-aws_instance.webserver: Refreshing state... (ID: i-0f6ab73cdd9d6882c)
-
-An execution plan has been generated and is shown below.
+aws_instance.webserver: Refreshing state... (ID: i-0f6ab73cdd9d6882c)</p>
+<p>An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
-  ~ update in-place
-
-Terraform will perform the following actions:
-
-  ~ aws_instance.webserver
-      tags.%:    &quot;0&quot; =&gt; &quot;1&quot;
-      tags.Name: &quot;&quot; =&gt; &quot;instance-01&quot;
-
-
-Plan: 0 to add, 1 to change, 0 to destroy.
-
-Do you want to perform these actions?
+  ~ update in-place</p>
+<p>Terraform will perform the following actions:</p>
+<p>~ aws_instance.webserver
+      tags.%:    "0" =&gt; "1"
+      tags.Name: "" =&gt; "instance-01"</p>
+<p>Plan: 0 to add, 1 to change, 0 to destroy.</p>
+<p>Do you want to perform these actions?
   Terraform will perform the actions described above.
-  Only 'yes' will be accepted to approve.
-
-  Enter a value: yes
-
-aws_instance.webserver: Modifying... (ID: i-0f6ab73cdd9d6882c)
-  tags.%:    &quot;0&quot; =&gt; &quot;1&quot;
-  tags.Name: &quot;&quot; =&gt; &quot;instance-01&quot;
+  Only 'yes' will be accepted to approve.</p>
+<p>Enter a value: yes</p>
+<p>aws_instance.webserver: Modifying... (ID: i-0f6ab73cdd9d6882c)
+  tags.%:    "0" =&gt; "1"
+  tags.Name: "" =&gt; "instance-01"
 aws_instance.webserver: Still modifying... (ID: i-0f6ab73cdd9d6882c, 10s elapsed)
-aws_instance.webserver: Modifications complete after 12s (ID: i-0f6ab73cdd9d6882c)
+aws_instance.webserver: Modifications complete after 12s (ID: i-0f6ab73cdd9d6882c)</p>
+<p>Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
+Releasing state lock. This may take a few moments...</p>
+<pre><code>This did not recreate the instance, but just updated it. The instance still has the same internal and external IPs and other properties.
 
-Apply complete! Resources: 0 added, 1 changed, 0 destroyed.
-Releasing state lock. This may take a few moments...
+### Resource Recreation  
+Now let us change the *ami* for the instance from *ami-408c7f28*(ubuntu 14.04) to *ami-0c11a0129f63fb571*(ubuntu 16.04).  
+
+`file: main.tf`
+
 </code></pre>
 
-<p>This did not recreate the instance, but just updated it. The instance still has the same internal and external IPs and other properties.</p>
-<h3 id="resource-recreation">Resource Recreation</h3>
-<p>Now let us change the <em>ami</em> for the instance from <em>ami-408c7f28</em>(ubuntu 14.04) to <em>ami-0c11a0129f63fb571</em>(ubuntu 16.04).  </p>
-<p><code>file: main.tf</code></p>
-<pre><code>provider &quot;aws&quot; {
-  region = &quot;us-east-1&quot;
-}
-
-resource &quot;aws_instance&quot; &quot;webserver&quot; {
-  ami           = &quot;ami-0c11a0129f63fb571&quot;
-  instance_type = &quot;t1.micro&quot;
-
-  tags {
-    Name = &quot;instance-01&quot;
+<p>provider "aws" {
+  region = "us-east-1"
+}</p>
+<p>resource "aws_instance" "frontend" {
+  ami           = "ami-0c11a0129f63fb571"
+  instance_type = "t2.micro"</p>
+<p>tags {
+    Name       = "tf-frontend-01"
+    App        = "devops-demo"
+    Maintainer = "Gourav Shah"
+    Role ="frontend"
   }
-}
+}</p>
+<pre><code>
+Let us plan and apply this manifest. 
 </code></pre>
 
-<p>Let us plan and apply this manifest. </p>
-<pre><code>terraform apply 
-
-[output]
+<p>terraform apply </p>
+<p>[output]
 Acquiring state lock. This may take a few moments...
-aws_instance.webserver: Refreshing state... (ID: i-0f6ab73cdd9d6882c)
-
-An execution plan has been generated and is shown below.
+aws_instance.webserver: Refreshing state... (ID: i-0f6ab73cdd9d6882c)</p>
+<p>An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
--/+ destroy and then create replacement
-
-Terraform will perform the following actions:
-
--/+ aws_instance.webserver (new resource required)
-      id:                           &quot;i-0f6ab73cdd9d6882c&quot; =&gt; &lt;computed&gt; (forces new resource)
-      ami:                          &quot;ami-408c7f28&quot; =&gt; &quot;ami-0c11a0129f63fb571&quot; (forces new resource)
-      arn:                          &quot;arn:aws:ec2:us-east-1:822941572458:instance/i-0f6ab73cdd9d6882c&quot; =&gt; &lt;computed&gt;
-      associate_public_ip_address:  &quot;false&quot; =&gt; &lt;computed&gt;
-      availability_zone:            &quot;us-east-1a&quot; =&gt; &lt;computed&gt;
-      cpu_core_count:               &quot;1&quot; =&gt; &lt;computed&gt;
-      cpu_threads_per_core:         &quot;1&quot; =&gt; &lt;computed&gt;
-      ebs_block_device.#:           &quot;0&quot; =&gt; &lt;computed&gt;
-      ephemeral_block_device.#:     &quot;0&quot; =&gt; &lt;computed&gt;
-      get_password_data:            &quot;false&quot; =&gt; &quot;false&quot;
-      instance_state:               &quot;stopped&quot; =&gt; &lt;computed&gt;
-      instance_type:                &quot;t1.micro&quot; =&gt; &quot;t1.micro&quot;
-      ipv6_address_count:           &quot;&quot; =&gt; &lt;computed&gt;
-      ipv6_addresses.#:             &quot;0&quot; =&gt; &lt;computed&gt;
-      key_name:                     &quot;web-admin-key&quot; =&gt; &lt;computed&gt;
-      network_interface.#:          &quot;0&quot; =&gt; &lt;computed&gt;
-      network_interface_id:         &quot;eni-0c851ccf5348f539b&quot; =&gt; &lt;computed&gt;
-      password_data:                &quot;&quot; =&gt; &lt;computed&gt;
-      placement_group:              &quot;&quot; =&gt; &lt;computed&gt;
-      primary_network_interface_id: &quot;eni-0c851ccf5348f539b&quot; =&gt; &lt;computed&gt;
-      private_dns:                  &quot;ip-172-31-39-209.ec2.internal&quot; =&gt; &lt;computed&gt;
-      private_ip:                   &quot;172.31.39.209&quot; =&gt; &lt;computed&gt;
-      public_dns:                   &quot;&quot; =&gt; &lt;computed&gt;
-      public_ip:                    &quot;&quot; =&gt; &lt;computed&gt;
-      root_block_device.#:          &quot;1&quot; =&gt; &lt;computed&gt;
-      security_groups.#:            &quot;1&quot; =&gt; &lt;computed&gt;
-      source_dest_check:            &quot;true&quot; =&gt; &quot;true&quot;
-      subnet_id:                    &quot;subnet-d363e58f&quot; =&gt; &lt;computed&gt;
-      tags.%:                       &quot;1&quot; =&gt; &quot;1&quot;
-      tags.Name:                    &quot;instance-01&quot; =&gt; &quot;instance-01&quot;
-      tenancy:                      &quot;default&quot; =&gt; &lt;computed&gt;
-      volume_tags.%:                &quot;0&quot; =&gt; &lt;computed&gt;
-      vpc_security_group_ids.#:     &quot;1&quot; =&gt; &lt;computed&gt;
-
-
-Plan: 1 to add, 0 to change, 1 to destroy.
-
-Do you want to perform these actions?
+-/+ destroy and then create replacement</p>
+<p>Terraform will perform the following actions:</p>
+<p>-/+ aws_instance.webserver (new resource required)
+      id:                           "i-0f6ab73cdd9d6882c" =&gt; <computed> (forces new resource)
+      ami:                          "ami-408c7f28" =&gt; "ami-0c11a0129f63fb571" (forces new resource)
+      arn:                          "arn:aws:ec2:us-east-1:822941572458:instance/i-0f6ab73cdd9d6882c" =&gt; <computed>
+      associate_public_ip_address:  "false" =&gt; <computed>
+      availability_zone:            "us-east-1a" =&gt; <computed>
+      cpu_core_count:               "1" =&gt; <computed>
+      cpu_threads_per_core:         "1" =&gt; <computed>
+      ebs_block_device.#:           "0" =&gt; <computed>
+      ephemeral_block_device.#:     "0" =&gt; <computed>
+      get_password_data:            "false" =&gt; "false"
+      instance_state:               "stopped" =&gt; <computed>
+      instance_type:                "t2.micro" =&gt; "t2.micro"
+      ipv6_address_count:           "" =&gt; <computed>
+      ipv6_addresses.#:             "0" =&gt; <computed>
+      key_name:                     "web-admin-key" =&gt; <computed>
+      network_interface.#:          "0" =&gt; <computed>
+      network_interface_id:         "eni-0c851ccf5348f539b" =&gt; <computed>
+      password_data:                "" =&gt; <computed>
+      placement_group:              "" =&gt; <computed>
+      primary_network_interface_id: "eni-0c851ccf5348f539b" =&gt; <computed>
+      private_dns:                  "ip-172-31-39-209.ec2.internal" =&gt; <computed>
+      private_ip:                   "172.31.39.209" =&gt; <computed>
+      public_dns:                   "" =&gt; <computed>
+      public_ip:                    "" =&gt; <computed>
+      root_block_device.#:          "1" =&gt; <computed>
+      security_groups.#:            "1" =&gt; <computed>
+      source_dest_check:            "true" =&gt; "true"
+      subnet_id:                    "subnet-d363e58f" =&gt; <computed>
+      tags.%:                       "1" =&gt; "1"
+      tags.Name:                    "instance-01" =&gt; "instance-01"
+      tenancy:                      "default" =&gt; <computed>
+      volume_tags.%:                "0" =&gt; <computed>
+      vpc_security_group_ids.#:     "1" =&gt; <computed></p>
+<p>Plan: 1 to add, 0 to change, 1 to destroy.</p>
+<p>Do you want to perform these actions?
   Terraform will perform the actions described above.
-  Only 'yes' will be accepted to approve.
-
-  Enter a value: yes
+  Only 'yes' will be accepted to approve.</p>
+<p>Enter a value: yes
 aws_instance.webserver: Destroying... (ID: i-0f6ab73cdd9d6882c)
 aws_instance.webserver: Still destroying... (ID: i-0f6ab73cdd9d6882c, 10s elapsed)
 aws_instance.webserver: Destruction complete after 13s
@@ -414,81 +390,66 @@ aws_instance.webserver: Creating...
 aws_instance.webserver: Still creating... (10s elapsed)
 aws_instance.webserver: Still creating... (20s elapsed)
 aws_instance.webserver: Still creating... (30s elapsed)
-aws_instance.webserver: Creation complete after 40s (ID: i-04aa34e873c5e4c63)
+aws_instance.webserver: Creation complete after 40s (ID: i-04aa34e873c5e4c63)</p>
+<pre><code>If we change `ami` attribute, it forces the instance to be recreated. 
+
+### Resource Destruction  
+Let us see what happens when we run `terraform plan --destroy`
+
 </code></pre>
 
-<p>If we change <code>ami</code> attribute, it forces the instance to be recreated. </p>
-<h3 id="resource-destruction">Resource Destruction</h3>
-<p>Let us see what happens when we run <code>terraform plan --destroy</code></p>
-<pre><code>terraform plan --destroy
-
-[output]
+<p>terraform plan --destroy</p>
+<p>[output]
 Acquiring state lock. This may take a few moments...
 Refreshing Terraform state in-memory prior to plan...
 The refreshed state will be used to calculate this plan, but will not be
-persisted to local or remote state storage.
-
-aws_instance.webserver: Refreshing state... (ID: i-04aa34e873c5e4c63)
-
-------------------------------------------------------------------------
-
-An execution plan has been generated and is shown below.
+persisted to local or remote state storage.</p>
+<p>aws_instance.webserver: Refreshing state... (ID: i-04aa34e873c5e4c63)</p>
+<hr />
+<p>An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
-  - destroy
-
-Terraform will perform the following actions:
-
-  - aws_instance.webserver
-
-
-Plan: 0 to add, 0 to change, 1 to destroy.
-
-------------------------------------------------------------------------
-
-Note: You didn't specify an &quot;-out&quot; parameter to save this plan, so Terraform
+  - destroy</p>
+<p>Terraform will perform the following actions:</p>
+<ul>
+<li>aws_instance.webserver</li>
+</ul>
+<p>Plan: 0 to add, 0 to change, 1 to destroy.</p>
+<hr />
+<p>Note: You didn't specify an "-out" parameter to save this plan, so Terraform
 can't guarantee that exactly these actions will be performed if
-&quot;terraform apply&quot; is subsequently run.
+"terraform apply" is subsequently run.</p>
+<p>Releasing state lock. This may take a few moments...</p>
+<pre><code>This command will help you to see what will happen when you run `terraform destroy`. 
 
-Releasing state lock. This may take a few moments...
 </code></pre>
 
-<p>This command will help you to see what will happen when you run <code>terraform destroy</code>. </p>
-<pre><code>terraform destroy
-
-[output]
+<p>terraform destroy</p>
+<p>[output]
 Acquiring state lock. This may take a few moments...
-aws_instance.webserver: Refreshing state... (ID: i-04aa34e873c5e4c63)
-
-An execution plan has been generated and is shown below.
+aws_instance.webserver: Refreshing state... (ID: i-04aa34e873c5e4c63)</p>
+<p>An execution plan has been generated and is shown below.
 Resource actions are indicated with the following symbols:
-  - destroy
-
-Terraform will perform the following actions:
-
-  - aws_instance.webserver
-
-
-Plan: 0 to add, 0 to change, 1 to destroy.
-
-Do you really want to destroy?
+  - destroy</p>
+<p>Terraform will perform the following actions:</p>
+<ul>
+<li>aws_instance.webserver</li>
+</ul>
+<p>Plan: 0 to add, 0 to change, 1 to destroy.</p>
+<p>Do you really want to destroy?
   Terraform will destroy all your managed infrastructure, as shown above.
-  There is no undo. Only 'yes' will be accepted to confirm.
-
-  Enter a value: yes
-
-aws_instance.webserver: Destroying... (ID: i-04aa34e873c5e4c63)
+  There is no undo. Only 'yes' will be accepted to confirm.</p>
+<p>Enter a value: yes</p>
+<p>aws_instance.webserver: Destroying... (ID: i-04aa34e873c5e4c63)
 aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 10s elapsed)
 aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 20s elapsed)
 aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 30s elapsed)
 aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 40s elapsed)
 aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 50s elapsed)
 aws_instance.webserver: Still destroying... (ID: i-04aa34e873c5e4c63, 1m0s elapsed)
-aws_instance.webserver: Destruction complete after 1m0s
-
-Destroy complete! Resources: 1 destroyed.
+aws_instance.webserver: Destruction complete after 1m0s</p>
+<p>Destroy complete! Resources: 1 destroyed.
 Releasing state lock. This may take a few moments...
-</code></pre>
-
+```</p>
 <h2 id="reference">Reference</h2>
 <p>If you need further details about resources, please visit this <a href="https://www.terraform.io/docs/configuration/resources.html">link</a></p>
               

@@ -164,27 +164,29 @@
   region = &quot;us-east-1&quot;
 }
 
-resource &quot;aws_instance&quot; &quot;webserver&quot; {
-  ami           = &quot;ami-408c7f28&quot;
-  instance_type = &quot;t1.micro&quot;
+resource &quot;aws_instance&quot; &quot;frontend&quot; {
+  ami           = &quot;ami-0ac019f4fcb7cb7e6&quot;
+  instance_type = &quot;t2.micro&quot;
 }
 
-resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
+resource &quot;aws_security_group&quot; &quot;frontend&quot; {
 
-    name = &quot;webserver-sg&quot;
+    name = &quot;frontend&quot;
 
     ingress {
-        from_port   = 22
-        to_port     = 22
-        protocol    = &quot;tcp&quot;
         cidr_blocks = [&quot;0.0.0.0/0&quot;]
+        from_port = 22
+        to_port = 22
+        protocol = &quot;tcp&quot;  
+        description = &quot;open ssh port for all&quot;
+        }       
     }
 }
 </code></pre>
 
 <p>Here,
   Resource type = aws_security_group,
-  Resource name = webserver_sg</p>
+  Resource name = frontend</p>
 <p>This <code>aws_security_group</code> resource allows us to ssh into the instance.</p>
 <p>We need to create the EC2 instance with this security group. To do that, </p>
 <p>The final requirement is a <code>key pair</code> using which we can login to the machine. Let us use <a href="https://www.terraform.io/docs/providers/aws/r/key_pair.html">aws_key_pair</a> to register the key with AWS and then use in our ec2 instance.</p>
@@ -225,20 +227,21 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlD
 <p><code>file: main.tf</code></p>
 <pre><code>[...]
 
-resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
+resource &quot;aws_security_group&quot; &quot;frontend&quot; {
 
-    name = &quot;webserver-sg&quot;
+    name = &quot;frontend&quot;
 
     ingress {
-        from_port   = 22
-        to_port     = 22
-        protocol    = &quot;tcp&quot;
         cidr_blocks = [&quot;0.0.0.0/0&quot;]
-    }
+        from_port = 22
+        to_port = 22
+        protocol = &quot;tcp&quot;  
+        description = &quot;open ssh port for all&quot;
+}   }
 }
 
-resource &quot;aws_key_pair&quot; &quot;webserver_key&quot; {
-  key_name   = &quot;web-admin-key&quot;
+resource &quot;aws_key_pair&quot; &quot;terraform&quot; {
+  key_name   = &quot;terraform&quot;
   public_key = &quot;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local
 }
 </code></pre>
@@ -249,13 +252,16 @@ resource &quot;aws_key_pair&quot; &quot;webserver_key&quot; {
   region = &quot;us-east-1&quot;
 }
 
-resource &quot;aws_instance&quot; &quot;webserver&quot; {
-  ami           = &quot;ami-408c7f28&quot;
-  instance_type = &quot;t1.micro&quot;
-  key_name      = &quot;web-admin-key&quot;
+resource &quot;aws_instance&quot; &quot;frontend&quot; {
+  ami           = &quot;ami-0ac019f4fcb7cb7e6&quot;
+  instance_type = &quot;t2.micro&quot;
+  key_name      = &quot;terraform&quot;
 
   tags {
-    Name = &quot;webserver&quot;
+    Name       = &quot;tf-frontend-01&quot;
+    App        = &quot;devops-demo&quot;
+    Maintainer = &quot;Gourav Shah&quot;
+    Role =&quot;frontend&quot;
   }
 }
 
@@ -267,30 +273,34 @@ resource &quot;aws_instance&quot; &quot;webserver&quot; {
   region = &quot;us-east-1&quot;
 }
 
-resource &quot;aws_instance&quot; &quot;webserver&quot; {
-  ami           = &quot;ami-408c7f28&quot;
-  instance_type = &quot;t1.micro&quot;
-  key_name      = &quot;web-admin-key&quot;
+resource &quot;aws_instance&quot; &quot;frontend&quot; {
+  ami           = &quot;ami-0ac019f4fcb7cb7e6&quot;
+  instance_type = &quot;t2.micro&quot;
+  key_name      = &quot;terraform&quot;
 
   tags {
-    Name = &quot;weberserver&quot;
+    Name       = &quot;tf-frontend-01&quot;
+    App        = &quot;devops-demo&quot;
+    Maintainer = &quot;Gourav Shah&quot;
+    Role       = &quot;frontend&quot;
   }
 }
 
-resource &quot;aws_security_group&quot; &quot;webserver_sg&quot; {
+resource &quot;aws_security_group&quot; &quot;frontend&quot; {
 
-        name = &quot;webserver-sg&quot;
+        name = &quot;frontend&quot;
 
         ingress {
-                from_port   = 22
-                to_port     = 22
-                protocol    = &quot;tcp&quot;
                 cidr_blocks = [&quot;0.0.0.0/0&quot;]
+        from_port = 22
+        to_port = 22
+        protocol = &quot;tcp&quot;  
+        description = &quot;open ssh port for all&quot;        
         }
 }
 
-resource &quot;aws_key_pair&quot; &quot;webserver_key&quot; {
-  key_name   = &quot;web-admin-key&quot;
+resource &quot;aws_key_pair&quot; &quot;terraform&quot; {
+  key_name   = &quot;terraform&quot;
   public_key = &quot;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local&quot;
 }
 </code></pre>
@@ -303,14 +313,14 @@ resource &quot;aws_key_pair&quot; &quot;webserver_key&quot; {
 <p>This will guarantee the creation of key pair before the instance get's created. In your instance block add the following,</p>
 <p><code>file: main.tf</code></p>
 <pre><code>[...]
-resource &quot;aws_instance&quot; &quot;webserver&quot; {
-  ami           = &quot;ami-408c7f28&quot;
-  instance_type = &quot;t1.micro&quot;
-  key_name      = &quot;web-admin-key&quot;
+resource &quot;aws_instance&quot; &quot;frontend&quot; {
+  ami           = &quot;ami-0ac019f4fcb7cb7e6&quot;
+  instance_type = &quot;t2.micro&quot;
+  key_name      = &quot;terraform&quot;
 
   depends_on = [&quot;aws_key_pair.webserver_key&quot;]
   tags {
-    Name = &quot;weberserver&quot;
+    Name = &quot;terraform&quot;
   }
 }
 [...]
@@ -319,7 +329,7 @@ resource &quot;aws_instance&quot; &quot;webserver&quot; {
 <p>Syntax: <code>depends_on = ["resource_type.resource_name"]</code></p>
 <p><code>Exercise: Create an explicit dependency on security group in ec2 instance block just like key pair dependecy</code></p>
 <h3 id="idempotency">Idempotency</h3>
-<p>Finally apply the manifest by running,</p>
+<p>Finally apply the manifest by running</p>
 <pre><code>terraform apply
 
 [output]
@@ -333,11 +343,11 @@ Do you want to perform these actions?
 
 aws_key_pair.webserver_key: Creating...
   fingerprint: &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
-  key_name:    &quot;&quot; =&gt; &quot;web-admin-key&quot;
+  key_name:    &quot;&quot; =&gt; &quot;terraform&quot;
   public_key:  &quot;&quot; =&gt; &quot;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local&quot;
 aws_key_pair.webserver_key: Creation complete after 3s (ID: web-admin-key)
 aws_instance.webserver: Creating...
-  ami:                          &quot;&quot; =&gt; &quot;ami-408c7f28&quot;
+  ami:                          &quot;&quot; =&gt; &quot;ami-0ac019f4fcb7cb7e6&quot;
   arn:                          &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
   associate_public_ip_address:  &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
   availability_zone:            &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
@@ -347,10 +357,10 @@ aws_instance.webserver: Creating...
   ephemeral_block_device.#:     &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
   get_password_data:            &quot;&quot; =&gt; &quot;false&quot;
   instance_state:               &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
-  instance_type:                &quot;&quot; =&gt; &quot;t1.micro&quot;
+  instance_type:                &quot;&quot; =&gt; &quot;t2.micro&quot;
   ipv6_address_count:           &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
   ipv6_addresses.#:             &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
-  key_name:                     &quot;&quot; =&gt; &quot;web-admin-key&quot;
+  key_name:                     &quot;&quot; =&gt; &quot;terraform&quot;
   network_interface.#:          &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
   network_interface_id:         &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
   password_data:                &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
@@ -365,7 +375,7 @@ aws_instance.webserver: Creating...
   source_dest_check:            &quot;&quot; =&gt; &quot;true&quot;
   subnet_id:                    &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
   tags.%:                       &quot;&quot; =&gt; &quot;1&quot;
-  tags.Name:                    &quot;&quot; =&gt; &quot;weberserver&quot;
+  tags.Name:                    &quot;&quot; =&gt; &quot;frontend&quot;
   tenancy:                      &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
   volume_tags.%:                &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
   vpc_security_group_ids.#:     &quot;&quot; =&gt; &quot;&lt;computed&gt;&quot;
