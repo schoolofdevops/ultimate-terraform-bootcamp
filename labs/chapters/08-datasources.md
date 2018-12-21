@@ -33,6 +33,7 @@ Let us add the [datasource block](https://www.terraform.io/docs/providers/aws/d/
 ```
 [...]
 data "aws_db_instance" "database" {
+  provider = "aws.singapore"
   db_instance_identifier = "${var.rds_name}"
 }
 ```
