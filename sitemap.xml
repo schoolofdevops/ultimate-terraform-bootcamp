@@ -1,82 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
-    
     <url>
-     <loc>/</loc>
-     <lastmod>2018-12-20</lastmod>
+     <loc>None</loc>
+     <lastmod>2019-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-    
-
-    
-        
     <url>
-     <loc>/00-environment-setup/</loc>
-     <lastmod>2018-12-20</lastmod>
+     <loc>None</loc>
+     <lastmod>2019-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
-     <loc>/02-terraform-important-commands/</loc>
-     <lastmod>2018-12-20</lastmod>
+     <loc>None</loc>
+     <lastmod>2019-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
-     <loc>/03-providers/</loc>
-     <lastmod>2018-12-20</lastmod>
+     <loc>None</loc>
+     <lastmod>2019-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
-     <loc>/04-resources/</loc>
-     <lastmod>2018-12-20</lastmod>
+     <loc>None</loc>
+     <lastmod>2019-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
-     <loc>/05-resource-dependencies/</loc>
-     <lastmod>2018-12-20</lastmod>
+     <loc>None</loc>
+     <lastmod>2019-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
-     <loc>/06-variables-and-outputs/</loc>
-     <lastmod>2018-12-20</lastmod>
+     <loc>None</loc>
+     <lastmod>2019-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
-     <loc>/07-provisioners/</loc>
-     <lastmod>2018-12-20</lastmod>
+     <loc>None</loc>
+     <lastmod>2019-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
-     <loc>/08-datasources/</loc>
-     <lastmod>2018-12-20</lastmod>
+     <loc>None</loc>
+     <lastmod>2019-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
-     <loc>/09-terraform-state/</loc>
-     <lastmod>2018-12-20</lastmod>
+     <loc>None</loc>
+     <lastmod>2019-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
-     <loc>/10-backends/</loc>
-     <lastmod>2018-12-20</lastmod>
+     <loc>None</loc>
+     <lastmod>2019-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
     <url>
-     <loc>/XX-course-outline/</loc>
-     <lastmod>2018-12-20</lastmod>
+     <loc>None</loc>
+     <lastmod>2019-11-12</lastmod>
      <changefreq>daily</changefreq>
     </url>
-        
-    
-
 </urlset>

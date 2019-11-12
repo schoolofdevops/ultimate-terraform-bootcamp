@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Setting up the environment - Ultimate Terraform Bootcamp</title>
+  <title>11 modules - Ultimate Terraform Bootcamp</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Setting up the environment";
-    var mkdocs_page_input_path = "00-environment-setup.md";
+    var mkdocs_page_name = "11 modules";
+    var mkdocs_page_input_path = "11-modules.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -57,25 +57,9 @@
 		
     <span class="caption-text">Getting Started with Terraform</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Setting up the environment</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#environement-setup">Environement Setup</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#aws-account-setup">AWS Account Setup</a></li>
-        
-            <li><a class="toctree-l4" href="#terraform-installation">Terraform Installation</a></li>
-        
-            <li><a class="toctree-l4" href="#validate-the-installation">Validate the Installation</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../00-environment-setup/">Setting up the environment</a>
                 </li>
                 <li class="">
                     
@@ -141,12 +125,8 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Getting Started with Terraform &raquo;</li>
-        
-      
     
-    <li>Setting up the environment</li>
+    <li>11 modules</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -156,65 +136,22 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="environement-setup">Environement Setup</h1>
-<h2 id="aws-account-setup">AWS Account Setup</h2>
-<h2 id="terraform-installation">Terraform Installation</h2>
-<h3 id="ubuntu">Ubuntu</h3>
-<p>Follow the following steps to install Terraform on ubuntu.</p>
-<pre><code>wget https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_linux_amd64.zip
-unzip terraform_0.11.8_linux_amd64.zip
-sudo mv terraform /usr/local/bin
-sudo chmod +x /usr/local/bin/terraform
-</code></pre>
-
-<h3 id="windows">Windows</h3>
-<p>Visit the following link to download the Terraform executable.</p>
-<p><a href="https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_windows_amd64.zip">Terraform for Windows</a>.</p>
-<p>Extract the file.</p>
-<p><img alt="zip" src="../images/00-windows-zip.png" /></p>
-<p>Copy the extracted file.</p>
-<p><img alt="copy" src="../images/00-windows-copy.png" /></p>
-<p>Create a new directory called <code>Terrafrom</code> insice <code>C:\Program Files\</code></p>
-<p><img alt="dir" src="./images/00-windoes-dir.png" /></p>
-<p>Paste the file we have copied in the previous step.</p>
-<p><img alt="paste" src="../images/00-windows-paste.png" /></p>
-<p>Copy the file path for the executable.
-<img alt="file-path" src="../images/00-windows-file-path.png" /></p>
-<p>Search for <code>environment</code> from your start menu.
-<img alt="env" src="../images/00-windows-env-search.png" /></p>
-<p>Then select environment variables form the window.
-<img alt="env-select" src="../images/00-windows-env-select.png" /></p>
-<p>Select Path variable and edit it.
-<img alt="env-path-edit" src="../images/00-windows-env-path-edit.png" /></p>
-<p>Add the path that we have copied earlier.
-<img alt="windows-path-env-paste" src="../images/00-windows-path-env-paste.png" /></p>
-<h3 id="macos">MacOS</h3>
-<pre><code>wget https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_darwin_amd64.zip
-unzip terraform_0.11.8_darwin_amd64.zip
-sudo mv terraform /usr/local/bin
-sudo chmod +x /usr/local/bin/terraform
-</code></pre>
-
-<h2 id="validate-the-installation">Validate the Installation</h2>
-<p>Open a Shell session and run <code>terraform -v</code>. This should produce the following output.</p>
-<pre><code>terraform -v
-
-[output]
-Terraform v0.11.7
-</code></pre>
+                <h2 id="modules">Modules</h2>
+<p>Modules will help you to package your Terraform configurations in to groups. This will help us to organize our code in a better way. In fact, when you run terraform apply, the current working directory holding the Terraform files you're applying comprise what is called the <code>root module</code>.</p>
+<p>Modules are meant to be reused. Thats why it is recommended to abstract the data from code.</p>
+<h3 id="creating-our-first-module">Creating our first module</h3>
+<p>So far, we have created 4 files in total which are namely,  </p>
+<ul>
+<li>main.tf  </li>
+<li>variables.tf  </li>
+<li>backend.tf  </li>
+<li>user-data.sh  </li>
+</ul>
+<p>Let us convert this into a module. Remember, variables file will not be part of module.</p>
               
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../02-terraform-important-commands/" class="btn btn-neutral float-right" title="Important Commands">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
@@ -238,10 +175,6 @@ Terraform v0.11.7
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../02-terraform-important-commands/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

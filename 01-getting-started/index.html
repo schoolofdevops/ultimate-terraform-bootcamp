@@ -8,7 +8,7 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>Setting up the environment - Ultimate Terraform Bootcamp</title>
+  <title>01 getting started - Ultimate Terraform Bootcamp</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
@@ -17,8 +17,8 @@
   
   <script>
     // Current page data
-    var mkdocs_page_name = "Setting up the environment";
-    var mkdocs_page_input_path = "00-environment-setup.md";
+    var mkdocs_page_name = "01 getting started";
+    var mkdocs_page_input_path = "01-getting-started.md";
     var mkdocs_page_url = null;
   </script>
   
@@ -57,25 +57,9 @@
 		
     <span class="caption-text">Getting Started with Terraform</span>
     <ul class="subnav">
-                <li class=" current">
+                <li class="">
                     
-    <a class="current" href="./">Setting up the environment</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#environement-setup">Environement Setup</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#aws-account-setup">AWS Account Setup</a></li>
-        
-            <li><a class="toctree-l4" href="#terraform-installation">Terraform Installation</a></li>
-        
-            <li><a class="toctree-l4" href="#validate-the-installation">Validate the Installation</a></li>
-        
-        </ul>
-    
-
-    </ul>
+    <a class="" href="../00-environment-setup/">Setting up the environment</a>
                 </li>
                 <li class="">
                     
@@ -141,12 +125,8 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
-        
-          <li>Getting Started with Terraform &raquo;</li>
-        
-      
     
-    <li>Setting up the environment</li>
+    <li>01 getting started</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -156,65 +136,94 @@
           <div role="main">
             <div class="section">
               
-                <h1 id="environement-setup">Environement Setup</h1>
-<h2 id="aws-account-setup">AWS Account Setup</h2>
-<h2 id="terraform-installation">Terraform Installation</h2>
-<h3 id="ubuntu">Ubuntu</h3>
-<p>Follow the following steps to install Terraform on ubuntu.</p>
-<pre><code>wget https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_linux_amd64.zip
-unzip terraform_0.11.8_linux_amd64.zip
-sudo mv terraform /usr/local/bin
-sudo chmod +x /usr/local/bin/terraform
+                <h2 id="getting-started-with-terraform">Getting started with Terraform</h2>
+<h3 id="terraform-commands">Terraform Commands</h3>
+<p>You can check the list of commands for Terraform by running, </p>
+<p><code>terrform -h</code></p>
+<pre><code>bash-root$ terraform -h
+sage: terraform [--version] [--help] &lt;command&gt; [args]
+
+The available commands for execution are listed below.
+The most common, useful commands are shown first, followed by
+less common or more advanced commands. If you're just getting
+started with Terraform, stick with the common commands. For the
+other commands, please read the help and docs before usage.
+
+Common commands:
+    apply              Builds or changes infrastructure
+    console            Interactive console for Terraform interpolations
+    destroy            Destroy Terraform-managed infrastructure
+    env                Workspace management
+    fmt                Rewrites config files to canonical format
+    get                Download and install modules for the configuration
+    graph              Create a visual graph of Terraform resources
+    import             Import existing infrastructure into Terraform
+    init               Initialize a Terraform working directory
+    output             Read an output from a state file
+    plan               Generate and show an execution plan
+    providers          Prints a tree of the providers used in the configuration
+    push               Upload this Terraform module to Atlas to run
+    refresh            Update local state file against real resources
+    show               Inspect Terraform state or plan
+    taint              Manually mark a resource for recreation
+    untaint            Manually unmark a resource as tainted
+    validate           Validates the Terraform files
+    version            Prints the Terraform version
+    workspace          Workspace management
+
+All other commands:
+    debug              Debug output management (experimental)
+    force-unlock       Manually unlock the terraform state
+    state              Advanced state management
 </code></pre>
 
-<h3 id="windows">Windows</h3>
-<p>Visit the following link to download the Terraform executable.</p>
-<p><a href="https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_windows_amd64.zip">Terraform for Windows</a>.</p>
-<p>Extract the file.</p>
-<p><img alt="zip" src="../images/00-windows-zip.png" /></p>
-<p>Copy the extracted file.</p>
-<p><img alt="copy" src="../images/00-windows-copy.png" /></p>
-<p>Create a new directory called <code>Terrafrom</code> insice <code>C:\Program Files\</code></p>
-<p><img alt="dir" src="./images/00-windoes-dir.png" /></p>
-<p>Paste the file we have copied in the previous step.</p>
-<p><img alt="paste" src="../images/00-windows-paste.png" /></p>
-<p>Copy the file path for the executable.
-<img alt="file-path" src="../images/00-windows-file-path.png" /></p>
-<p>Search for <code>environment</code> from your start menu.
-<img alt="env" src="../images/00-windows-env-search.png" /></p>
-<p>Then select environment variables form the window.
-<img alt="env-select" src="../images/00-windows-env-select.png" /></p>
-<p>Select Path variable and edit it.
-<img alt="env-path-edit" src="../images/00-windows-env-path-edit.png" /></p>
-<p>Add the path that we have copied earlier.
-<img alt="windows-path-env-paste" src="../images/00-windows-path-env-paste.png" /></p>
-<h3 id="macos">MacOS</h3>
-<pre><code>wget https://releases.hashicorp.com/terraform/0.11.8/terraform_0.11.8_darwin_amd64.zip
-unzip terraform_0.11.8_darwin_amd64.zip
-sudo mv terraform /usr/local/bin
-sudo chmod +x /usr/local/bin/terraform
+<p>From those commands, the following are important.</p>
+<pre><code>terraform plan
+terraform apply
+terraform destroy
+terraform init
+terraform fmt
 </code></pre>
 
-<h2 id="validate-the-installation">Validate the Installation</h2>
-<p>Open a Shell session and run <code>terraform -v</code>. This should produce the following output.</p>
-<pre><code>terraform -v
+<h3 id="providers">Providers</h3>
+<p>Providers are a way to define where you want to create your infrastructure. Usually Providers are,</p>
+<ul>
+<li>IaaS</li>
+<li>PaaS</li>
+<li>SaaS</li>
+</ul>
+<p>Mostly we will be using IaaS providers(Ex: AWS, Azure, GCP, etc.,)</p>
+<p><code>Export AWS Access Key and Secret Key</code></p>
+<pre><code>export AWS_ACCESS_KEY_ID=&quot;Access-Key&quot;
+export AWS_SECRET_ACCESS_KEY=&quot;Secret-Key&quot;
+</code></pre>
 
-[output]
-Terraform v0.11.7
+<p><code>Ex: AWS Provider</code></p>
+<pre><code>provider &quot;aws&quot; {
+  region = &quot;us-east-1&quot;
+}
+</code></pre>
+
+<h3 id="resources">Resources</h3>
+<p>Resources are the different entities you want to create on given provider. As an example, for AWS provider, if you want to create an EC2 machine, you have to create the following resource.</p>
+<p><code>Ex: EC2 Resource</code></p>
+<pre><code>resource &quot;aws_instance&quot; &quot;web&quot; {
+  ami           = &quot;ami-04169656fea786776&quot;
+  instance_type = &quot;t2.micro&quot;
+  key_name      = &quot;terraform&quot;
+
+   tags {
+    Name       = &quot;tf-frontend-01&quot;
+    App        = &quot;devops-demo&quot;
+    Maintainer = &quot;Gourav Shah&quot;
+    Role =&quot;frontend&quot;
+  }
+}
 </code></pre>
               
             </div>
           </div>
           <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="../02-terraform-important-commands/" class="btn btn-neutral float-right" title="Important Commands">Next <span class="icon icon-circle-arrow-right"></span></a>
-      
-      
-        <a href=".." class="btn btn-neutral" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-      
-    </div>
   
 
   <hr/>
@@ -238,10 +247,6 @@ Terraform v0.11.7
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../02-terraform-important-commands/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

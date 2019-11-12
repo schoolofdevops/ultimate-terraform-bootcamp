@@ -13,18 +13,19 @@
 
   <link rel="stylesheet" href="../css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="../css/highlight.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   
   <script>
     // Current page data
     var mkdocs_page_name = "Data Sources";
     var mkdocs_page_input_path = "08-datasources.md";
-    var mkdocs_page_url = "/08-datasources/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="../js/jquery-2.1.1.min.js"></script>
-  <script src="../js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="../js/highlight.pack.js"></script> 
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -38,7 +39,7 @@
         <a href=".." class="icon icon-home"> Ultimate Terraform Bootcamp</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -188,6 +189,7 @@
 <p><code>file: main.tf</code></p>
 <pre><code>[...]
 data &quot;aws_db_instance&quot; &quot;database&quot; {
+  provider = &quot;aws.singapore&quot;
   db_instance_identifier = &quot;${var.rds_name}&quot;
 }
 </code></pre>
@@ -203,7 +205,7 @@ variable &quot;rds_name&quot; {
 </code></pre>
 
 <p>Let us check whether Terraform is able to fetch the datasource details from AWS API.</p>
-<p><code>file: main.tf</code> </p>
+<p><code>file: main.tf</code></p>
 <pre><code>[...]
 output &quot;rds_endpoint&quot; {
   value = &quot;${data.aws_db_instance.database.endpoint}&quot;
@@ -232,45 +234,53 @@ webserver_ip = 54.165.195.171
 </code></pre>
 
 <p>We are able to get the endpoint for a resource which was not created Terraform.</p>
-<p>We need to change the placeholder values with our rds db values, from <code>/var/www/html/config.ini</code> in our instance.</p>
-<p><code>file: main.tf</code></p>
-<pre><code>[...]
-resource &quot;null_resource&quot; &quot;populate_db_01&quot; {
-  provisioner &quot;local-exec&quot; {
-    command = &quot;ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo sed -i -e 's/DBHOST/${data.aws_db_instance.database.address}/g' /var/www/html/config.ini'&quot;
-  }
+<h4 id="updating-database-configs-using-templates-tpl">Updating database configs using Templates (.tpl)</h4>
+<p>We have already learnt how to discover RDS which was created outside of terraform. Now, its time to update application configurations to provide database connection information.</p>
+<p>To achieve this we would</p>
+<ul>
+<li>create a template file</li>
+<li>use a new provider, <strong>template</strong> along with a data source with vars.</li>
+</ul>
+<p><code>file: config.ini.tpl</code></p>
+<pre><code>[database]
+hostname = &quot;${dbhost}&quot;
+username = &quot;${dbuser}&quot;
+password = &quot;${dbpass}&quot;
+dbname =   &quot;${dbname}&quot;
 
-  provisioner &quot;local-exec&quot; {
-    command = &quot;ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo sed -i -e 's/SQLUSER/${data.aws_db_instance.database.master_username}/g' /var/www/html/config.ini'&quot;
-  }
 
-  provisioner &quot;local-exec&quot; {
-    command = &quot;ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo sed -i -e 's/SQLPASSWORD/${var.rds_pass}/g' /var/www/html/config.ini'&quot;
-  }
+[environment]
+environment = DEV
 
-  provisioner &quot;local-exec&quot; {
-    command = &quot;ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo sed -i -e 's/SQLDBNAME/${data.aws_db_instance.database.db_name}/g' /var/www/html/config.ini'&quot;
-  }
-
-  provisioner &quot;local-exec&quot; {
-    command = &quot;ssh ubuntu@${aws_instance.webserver.public_ip} 'sudo service apache2 restart'&quot;
-  }
-}
-
-[...]
+[prefs]
+color  = white
+fruit  = apple
+car    = fiat
+laptop = dell
 </code></pre>
 
-<p>We also need to define the <em>rds_pass</em> variable in <code>variables.tf</code>.</p>
+<p><code>file: main.tf</code></p>
+<pre><code>data &quot;template_file&quot; &quot;dbconfig&quot; {
+  template = &quot;${file(&quot;${path.module}/config.ini.tpl&quot;)}&quot;
+
+  vars {
+    dbhost = &quot;${data.aws_db_instance.database.address}&quot;
+    dbpass = &quot;${var.rds_pass}&quot;
+    dbuser = &quot;${data.aws_db_instance.database.master_username}&quot;
+    dbname  = &quot;${data.aws_db_instance.database.db_name}&quot;
+  }
+}
+</code></pre>
+
 <p><code>file: variables.tf</code></p>
 <pre><code>[...]
 variable &quot;rds_pass&quot; {
-  default = &quot;Sup3rS3cr3t&quot;
+  default = &quot;password&quot;
 }
 [...]
 </code></pre>
 
-<p>In this given example, we introduce a new resource called <code>null</code>, which helps us to use <code>local-exec</code> provisioner. </p>
-<p>We need to run <code>terraform init</code> to install the <em>null provider</em> plugin.</p>
+<p>We need to run <code>terraform init</code> to install the <em>template provider</em> plugin.</p>
 <pre><code>terraform init
 
 [output]
@@ -278,7 +288,7 @@ Initializing the backend...
 
 Initializing provider plugins...
 - Checking for available provider plugins on https://releases.hashicorp.com...
-- Downloading plugin for provider &quot;null&quot; (1.0.0)...
+- Downloading plugin for provider &quot;template&quot; (1.0.0)...
 
 The following providers do not have any version constraints in configuration,
 so the latest version was installed.
@@ -289,17 +299,28 @@ corresponding provider blocks in configuration, with the constraint strings
 suggested below.
 
 * provider.aws: version = &quot;~&gt; 1.37&quot;
-* provider.null: version = &quot;~&gt; 1.0&quot;
+* provider.template: version = &quot;~&gt; 1.0&quot;
 
 Terraform has been successfully initialized!
 
 You may now begin working with Terraform. Try running &quot;terraform plan&quot; to see
 any changes that are required for your infrastructure. All Terraform commands
 should now work.
+</code></pre>
 
-If you ever set or change modules or backend configuration for Terraform,
-rerun this command to reinitialize your working directory. If you forget, other
-commands will detect it and remind you to do so if necessary.
+<h5 id="updating-instance-to-copy-template-with-a-file-provisioner">Updating instance to copy template with a file provisioner</h5>
+<p>In addition to generating a template, it also needs to be copied over to the instance at <em>/var/www/html/config.ini</em> as thats where the application will look for the configs.</p>
+<p><code>file: main.tf</code></p>
+<pre><code>provisioner &quot;file&quot; {
+  content      = &quot;${data.template_file.dbconfig.rendered}&quot;
+  destination = &quot;/var/www/html/config.ini&quot;
+
+  connection {
+    type        = &quot;ssh&quot;
+    user        = &quot;ubuntu&quot;
+    private_key = &quot;${file(&quot;~/.ssh/terraform&quot;)}&quot;
+  }
+}
 </code></pre>
 
 <p>Then run <em>terraform plan and apply</em></p>
@@ -385,9 +406,8 @@ Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
     </span>
 </div>
     <script>var base_url = '..';</script>
-    <script src="../js/theme.js"></script>
-      <script src="../search/require.js"></script>
-      <script src="../search/search.js"></script>
+    <script src="../js/theme.js" defer></script>
+      <script src="../search/main.js" defer></script>
 
 </body>
 </html>
