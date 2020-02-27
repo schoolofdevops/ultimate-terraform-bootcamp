@@ -1,8 +1,8 @@
-site_name: Ultimate Terraform Bootcamp
+site_name: Terraform Tutorial
 docs_dir: chapters
-plugins: 
+plugins:
   - search
-pages:
+nav:
   - Home: index.md
   - Getting Started with Terraform:
     - Setting up the environment: "00-environment-setup.md"
@@ -17,4 +17,18 @@ pages:
     - Backend and Statelocking: "10-backends.md"
     - Course Outline: "XX-course-outline.md"
 theme: readthedocs
-
+site_url: https://terraform-tutorial.schoolofdevops.com/
+site_author: Gourav Shah
+site_description: Terraform Tutorial by School of Devops
+google_analytics: ['UA-36802546-19', 'terraform-tutorial.schoolofdevops.com']
+repo_url: https://github.com/schoolofdevops/ultimate-terraform-bootcamp
+edit_uri: edit/tree/chapters
+copyright: Copyright @ 2017-2020 Gourav Shah, School of Devops. Some rights reserved. License CC BY-NC-SA
+extra:
+  social:
+    - type: 'github'
+      link: 'https://github.com/schoolofdevops'
+    - type: 'twitter'
+      link: 'https://twitter.com/gouravhah'
+    - type: 'linkedin'
+      link: 'https://www.linkedin.com/in/gouravshah'
