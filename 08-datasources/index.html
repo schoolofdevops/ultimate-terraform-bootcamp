@@ -7,13 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Gourav Shah">
+  <link rel="canonical" href="https://terraform-tutorial.schoolofdevops.com/08-datasources/">
   <link rel="shortcut icon" href="../img/favicon.ico">
   <title>Data Sources - Terraform Tutorial</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   
   <script>
     // Current page data
@@ -24,16 +25,15 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
   <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      ga('create', '', 'terraform-tutorial.schoolofdevops.com');
+      ga('create', 'UA-36802546-19', 'terraform-tutorial.schoolofdevops.com');
       ga('send', 'pageview');
   </script>
   
@@ -45,92 +45,62 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href=".." class="icon icon-home"> Terraform Tutorial</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="..">Home</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Getting Started with Terraform</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../00-environment-setup/">Setting up the environment</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../02-terraform-important-commands/">Important Commands</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../03-providers/">Terraform Providers</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../04-resources/">Resources</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../05-resource-dependencies/">Resource Dependencies</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../07-provisioners/">Provisioners in detail</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Data Sources</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#data-source">Data Source</a></li>
-    
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started with Terraform</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../00-environment-setup/">Setting up the environment</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-terraform-important-commands/">Important Commands</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-providers/">Terraform Providers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-resources/">Resources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-resource-dependencies/">Resource Dependencies</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-variables-and-outputs/">Input and Output Variables</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-provisioners/">Provisioners in detail</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Data Sources</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#creating-rds-db">Creating RDS DB</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-datasource">Using Datasource</a>
         <ul>
-        
-            <li><a class="toctree-l4" href="#creating-rds-db">Creating RDS DB</a></li>
-        
-            <li><a class="toctree-l4" href="#using-datasource">Using Datasource</a></li>
-        
+    <li class="toctree-l3"><a class="reference internal" href="#updating-database-configs-using-templates-tpl">Updating database configs using Templates (.tpl)</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#updating-instance-to-copy-template-with-a-file-provisioner">Updating instance to copy template with a file provisioner</a>
+    </li>
         </ul>
-    
-
-    </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../09-terraform-state/">State Management in Terraform</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../10-backends/">Backend and Statelocking</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../XX-course-outline/">Course Outline</a>
-                </li>
-    </ul>
-	    </li>
-          
+    </li>
         </ul>
+    </li>
+    </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-terraform-state/">State Management in Terraform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-backends/">Backend and Statelocking</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../XX-course-outline/">Course Outline</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -157,13 +127,15 @@
     <li>Data Sources</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/edit/labs/chapters/manuscript/08-datasources.md"
+        <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/edit/tree/chapters/08-datasources.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
   </ul>
+  
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -206,7 +178,6 @@ data &quot;aws_db_instance&quot; &quot;database&quot; {
   db_instance_identifier = &quot;${var.rds_name}&quot;
 }
 </code></pre>
-
 <p>We have parameterized the attribute <em>db_instance_identifier</em> which is the db instance's name.</p>
 <p>Define the variable <em>rds_name</em> in <code>variables.tf</code>.</p>
 <p><code>file: variables.tf</code></p>
@@ -216,7 +187,6 @@ variable &quot;rds_name&quot; {
 }
 [...]
 </code></pre>
-
 <p>Let us check whether Terraform is able to fetch the datasource details from AWS API.</p>
 <p><code>file: main.tf</code></p>
 <pre><code>[...]
@@ -225,7 +195,6 @@ output &quot;rds_endpoint&quot; {
 }
 [...]
 </code></pre>
-
 <p>Let us plan and apply.</p>
 <pre><code>terraform plan
 terraform apply
@@ -245,7 +214,6 @@ Outputs:
 rds_endpoint = devopsdemo-db.cewjdhpv9lg6.us-east-1.rds.amazonaws.com:3306
 webserver_ip = 54.165.195.171
 </code></pre>
-
 <p>We are able to get the endpoint for a resource which was not created Terraform.</p>
 <h4 id="updating-database-configs-using-templates-tpl">Updating database configs using Templates (.tpl)</h4>
 <p>We have already learnt how to discover RDS which was created outside of terraform. Now, its time to update application configurations to provide database connection information.</p>
@@ -271,7 +239,6 @@ fruit  = apple
 car    = fiat
 laptop = dell
 </code></pre>
-
 <p><code>file: main.tf</code></p>
 <pre><code>data &quot;template_file&quot; &quot;dbconfig&quot; {
   template = &quot;${file(&quot;${path.module}/config.ini.tpl&quot;)}&quot;
@@ -284,7 +251,6 @@ laptop = dell
   }
 }
 </code></pre>
-
 <p><code>file: variables.tf</code></p>
 <pre><code>[...]
 variable &quot;rds_pass&quot; {
@@ -292,7 +258,6 @@ variable &quot;rds_pass&quot; {
 }
 [...]
 </code></pre>
-
 <p>We need to run <code>terraform init</code> to install the <em>template provider</em> plugin.</p>
 <pre><code>terraform init
 
@@ -320,7 +285,6 @@ You may now begin working with Terraform. Try running &quot;terraform plan&quot;
 any changes that are required for your infrastructure. All Terraform commands
 should now work.
 </code></pre>
-
 <h5 id="updating-instance-to-copy-template-with-a-file-provisioner">Updating instance to copy template with a file provisioner</h5>
 <p>In addition to generating a template, it also needs to be copied over to the instance at <em>/var/www/html/config.ini</em> as thats where the application will look for the configs.</p>
 <p><code>file: main.tf</code></p>
@@ -335,7 +299,6 @@ should now work.
   }
 }
 </code></pre>
-
 <p>Then run <em>terraform plan and apply</em></p>
 <pre><code>terraform plan
 terrafomr apply
@@ -399,7 +362,7 @@ Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -409,22 +372,30 @@ Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../07-provisioners/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../09-terraform-state/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../07-provisioners/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../09-terraform-state/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>

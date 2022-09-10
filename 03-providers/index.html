@@ -7,13 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Gourav Shah">
+  <link rel="canonical" href="https://terraform-tutorial.schoolofdevops.com/03-providers/">
   <link rel="shortcut icon" href="../img/favicon.ico">
   <title>Terraform Providers - Terraform Tutorial</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   
   <script>
     // Current page data
@@ -24,16 +25,15 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
   <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      ga('create', '', 'terraform-tutorial.schoolofdevops.com');
+      ga('create', 'UA-36802546-19', 'terraform-tutorial.schoolofdevops.com');
       ga('send', 'pageview');
   </script>
   
@@ -45,94 +45,56 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href=".." class="icon icon-home"> Terraform Tutorial</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="..">Home</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Getting Started with Terraform</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../00-environment-setup/">Setting up the environment</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../02-terraform-important-commands/">Important Commands</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Terraform Providers</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#providers">Providers</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#example-provider">Example Provider</a></li>
-        
-            <li><a class="toctree-l4" href="#setting-up-our-environment-for-aws">Setting up our environment for AWS</a></li>
-        
-            <li><a class="toctree-l4" href="#reference">Reference</a></li>
-        
-        </ul>
-    
-
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started with Terraform</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../00-environment-setup/">Setting up the environment</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-terraform-important-commands/">Important Commands</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Terraform Providers</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#example-provider">Example Provider</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#setting-up-our-environment-for-aws">Setting up our environment for AWS</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#reference">Reference</a>
+    </li>
     </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../04-resources/">Resources</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../05-resource-dependencies/">Resource Dependencies</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../07-provisioners/">Provisioners in detail</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../08-datasources/">Data Sources</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../09-terraform-state/">State Management in Terraform</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../10-backends/">Backend and Statelocking</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../XX-course-outline/">Course Outline</a>
-                </li>
-    </ul>
-	    </li>
-          
-        </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-resources/">Resources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-resource-dependencies/">Resource Dependencies</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-variables-and-outputs/">Input and Output Variables</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-provisioners/">Provisioners in detail</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-datasources/">Data Sources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-terraform-state/">State Management in Terraform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-backends/">Backend and Statelocking</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../XX-course-outline/">Course Outline</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -159,18 +121,23 @@
     <li>Terraform Providers</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/edit/labs/chapters/manuscript/03-providers.md"
+        <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/edit/tree/chapters/03-providers.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
   </ul>
+  
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
                 <h1 id="providers">Providers</h1>
-<p>In Terraform, Providers are responsible for understanding API interactions from IaaS(AWS, Azure, etc.,), PaaS(Heroku) or SaaS(CloudFlare, DNSSimple, DNSMadeEasy, etc.,). </p>
+<p>In Terraform, Providers are responsible for understanding API interactions from 
+  * IaaS : e.g. AWS, Azure, GCP 
+  * PaaS : e.g. Heroku, Kubernetes
+  * SaaS : e.g. CloudFlare, DNSSimple, DNSMadeEasy </p>
 <h2 id="example-provider">Example Provider</h2>
 <p>Let's look at AWS Provider as an example.</p>
 <pre><code>provider &quot;aws&quot; {
@@ -179,29 +146,24 @@
   region     = &quot;us-east-1&quot;
 }
 </code></pre>
-
 <p>As seen in the above given example, Provider is a way to instruct Terraform to interact with AWS API. Every provider needs some kind of credentials to get authenticated with the API. In our example, we have porvided AWS access key and secret key to perform the same. </p>
 <h2 id="setting-up-our-environment-for-aws">Setting up our environment for AWS</h2>
 <p>Let us set up our environment by creating a directory called <code>aws</code>.</p>
 <pre><code>mkdir aws
 cd aws
 </code></pre>
-
 <p>After changing directory into <code>aws</code>, we need to create a file named <code>main.tf</code>.</p>
 <pre><code>touch main.tf
 </code></pre>
-
 <p>Define your Provider details in this main manifest. Change the region if you want to create the resources elsewhere.</p>
 <pre><code>provider &quot;aws&quot; {
   region = &quot;us-east-1&quot;
 }
 </code></pre>
-
 <p>Export your AWS access and secret keys as environment variables.</p>
 <pre><code>export AWS_ACCESS_KEY_ID=&quot;Access-Key&quot;
 export AWS_SECRET_ACCESS_KEY=&quot;Secret-Key&quot;
 </code></pre>
-
 <p>Finally run the following command to initialize your environment.</p>
 <pre><code>terraform init
 
@@ -230,7 +192,6 @@ If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 </code></pre>
-
 <p>This should initialize the environment for our course.</p>
 <h2 id="reference">Reference</h2>
 <p>If you want to learn more about providers, you can visit <a href="https://www.terraform.io/docs/providers/">this link</a>.</p>
@@ -258,7 +219,7 @@ commands will detect it and remind you to do so if necessary.
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -268,22 +229,30 @@ commands will detect it and remind you to do so if necessary.
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../02-terraform-important-commands/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../04-resources/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../02-terraform-important-commands/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../04-resources/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>

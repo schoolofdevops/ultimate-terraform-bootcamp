@@ -7,33 +7,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Gourav Shah">
+  <link rel="canonical" href="https://terraform-tutorial.schoolofdevops.com/01-getting-started/">
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>01 getting started - Terraform Tutorial</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <title>Lab 3 : Getting Started with Terraform - Terraform Tutorial</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   
   <script>
     // Current page data
-    var mkdocs_page_name = "01 getting started";
+    var mkdocs_page_name = "Lab 3 : Getting Started with Terraform";
     var mkdocs_page_input_path = "01-getting-started.md";
     var mkdocs_page_url = "/01-getting-started/";
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
   <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      ga('create', '', 'terraform-tutorial.schoolofdevops.com');
+      ga('create', 'UA-36802546-19', 'terraform-tutorial.schoolofdevops.com');
       ga('send', 'pageview');
   </script>
   
@@ -45,78 +45,48 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href=".." class="icon icon-home"> Terraform Tutorial</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="..">Home</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Getting Started with Terraform</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../00-environment-setup/">Setting up the environment</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../02-terraform-important-commands/">Important Commands</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../03-providers/">Terraform Providers</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../04-resources/">Resources</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../05-resource-dependencies/">Resource Dependencies</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../07-provisioners/">Provisioners in detail</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../08-datasources/">Data Sources</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../09-terraform-state/">State Management in Terraform</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../10-backends/">Backend and Statelocking</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../XX-course-outline/">Course Outline</a>
-                </li>
-    </ul>
-	    </li>
-          
-        </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started with Terraform</span></p>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../00-environment-setup/">Setting up the environment</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-terraform-important-commands/">Important Commands</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-providers/">Terraform Providers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-resources/">Resources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-resource-dependencies/">Resource Dependencies</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-variables-and-outputs/">Input and Output Variables</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-provisioners/">Provisioners in detail</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-datasources/">Data Sources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-terraform-state/">State Management in Terraform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-backends/">Backend and Statelocking</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../XX-course-outline/">Course Outline</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -136,103 +106,246 @@
     
       
     
-    <li>01 getting started</li>
+    <li>Lab 3 : Getting Started with Terraform</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/edit/labs/chapters/manuscript/01-getting-started.md"
+        <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/edit/tree/chapters/01-getting-started.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
   </ul>
+  
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
-                <h2 id="getting-started-with-terraform">Getting started with Terraform</h2>
-<h3 id="terraform-commands">Terraform Commands</h3>
-<p>You can check the list of commands for Terraform by running, </p>
+                <h1 id="lab-3-getting-started-with-terraform">Lab 3 : Getting Started with Terraform</h1>
+<p>In this lab you are going to learn how to, 
+    * Create a  Terraform Configuration
+    * Add and initialise a  Cloud Provisioner 
+    * Write a Resource by using HCL 
+    * Validate Configurations 
+    * Create a Change Plan 
+    * Apply Configurations to Build Actual Infrastructure 
+    * Modify Existing Infrastructure  created with Terraform 
+    * Destroy the Infrastructure created by Terraform</p>
+<h2 id="getting-started-with-terraform-cli">Getting Started with <code>terraform</code> CLI</h2>
+<p>You could get started with <code>terraform</code>   and check the list of commands for Terraform by running, </p>
 <p><code>terrform -h</code></p>
-<pre><code>bash-root$ terraform -h
-sage: terraform [--version] [--help] &lt;command&gt; [args]
-
-The available commands for execution are listed below.
-The most common, useful commands are shown first, followed by
-less common or more advanced commands. If you're just getting
-started with Terraform, stick with the common commands. For the
-other commands, please read the help and docs before usage.
-
-Common commands:
-    apply              Builds or changes infrastructure
-    console            Interactive console for Terraform interpolations
-    destroy            Destroy Terraform-managed infrastructure
-    env                Workspace management
-    fmt                Rewrites config files to canonical format
-    get                Download and install modules for the configuration
-    graph              Create a visual graph of Terraform resources
-    import             Import existing infrastructure into Terraform
-    init               Initialize a Terraform working directory
-    output             Read an output from a state file
-    plan               Generate and show an execution plan
-    providers          Prints a tree of the providers used in the configuration
-    push               Upload this Terraform module to Atlas to run
-    refresh            Update local state file against real resources
-    show               Inspect Terraform state or plan
-    taint              Manually mark a resource for recreation
-    untaint            Manually unmark a resource as tainted
-    validate           Validates the Terraform files
-    version            Prints the Terraform version
-    workspace          Workspace management
-
-All other commands:
-    debug              Debug output management (experimental)
-    force-unlock       Manually unlock the terraform state
-    state              Advanced state management
-</code></pre>
-
-<p>From those commands, the following are important.</p>
-<pre><code>terraform plan
+<p>From the  commands listed , the following are most commonly used ones, </p>
+<pre><code>terraform init
+terraform validate
+terraform plan
 terraform apply
 terraform destroy
-terraform init
-terraform fmt
 </code></pre>
-
-<h3 id="providers">Providers</h3>
-<p>Providers are a way to define where you want to create your infrastructure. Usually Providers are,</p>
-<ul>
-<li>IaaS</li>
-<li>PaaS</li>
-<li>SaaS</li>
-</ul>
-<p>Mostly we will be using IaaS providers(Ex: AWS, Azure, GCP, etc.,)</p>
-<p><code>Export AWS Access Key and Secret Key</code></p>
-<pre><code>export AWS_ACCESS_KEY_ID=&quot;Access-Key&quot;
-export AWS_SECRET_ACCESS_KEY=&quot;Secret-Key&quot;
+<h2 id="adding-terraform-configurations">Adding Terraform Configurations</h2>
+<pre><code>mkdir terraform-code
+cd terraform-code
 </code></pre>
-
-<p><code>Ex: AWS Provider</code></p>
-<pre><code>provider &quot;aws&quot; {
-  region = &quot;us-east-1&quot;
-}
-</code></pre>
-
-<h3 id="resources">Resources</h3>
-<p>Resources are the different entities you want to create on given provider. As an example, for AWS provider, if you want to create an EC2 machine, you have to create the following resource.</p>
-<p><code>Ex: EC2 Resource</code></p>
-<pre><code>resource &quot;aws_instance&quot; &quot;web&quot; {
-  ami           = &quot;ami-04169656fea786776&quot;
-  instance_type = &quot;t2.micro&quot;
-  key_name      = &quot;terraform&quot;
-
-   tags {
-    Name       = &quot;tf-frontend-01&quot;
-    App        = &quot;devops-demo&quot;
-    Maintainer = &quot;Gourav Shah&quot;
-    Role =&quot;frontend&quot;
+<p>You will begin by defining  required_providers block for terraform. This defines which providers should terraform install, from where, and which version. </p>
+<p>Create <code>main.tf</code> with the following initial configuration </p>
+<pre><code>terraform {
+  required_providers {
+    aws = {
+      source  = &quot;registry.terraform.io/hashicorp/aws&quot;
+      version = &quot;~&gt; 4.29&quot;
+    }
   }
 }
 </code></pre>
+<p>Provider Source Components </p>
+<p><img alt="" src="Providers%20.jpg" /></p>
+<p>You could read more about Provider Requirements at <a href="https://www.terraform.io/language/providers/requirements">Provider Requirements - Configuration Language | Terraform by HashiCorp</a> and about AWS Provider’s Version etc. used above  at https://registry.terraform.io/providers/hashicorp/aws/latest. </p>
+<p>Check the providers configuration using  </p>
+<pre><code>terraform providers
+</code></pre>
+<h2 id="adding-aws-cloud-provider">Adding AWS Cloud Provider</h2>
+<p>In Terraform, Providers are responsible for understanding API interactions from 
+  * IaaS : e.g. AWS, Azure, GCP 
+  * PaaS : e.g. Heroku, Kubernetes
+  * SaaS : e.g. CloudFlare, DNSSimple, DNSMadeEasy </p>
+<p>Let’s add AWS provider to <code>main.tf</code> as follows, </p>
+<pre><code>provider &quot;aws&quot; {
+  region     = &quot;us-east-1&quot;
+}
+</code></pre>
+<p>As seen in the above given example, Provider is a way to instruct Terraform to interact with AWS API. Every provider needs some kind of credentials to get authenticated with the API. In this  example, we would provide AWS access key and secret key by adding those to the environment.  </p>
+<p>Export your AWS access and secret keys as environment variables.</p>
+<pre><code>export AWS_ACCESS_KEY_ID=&quot;Access-Key&quot;
+export AWS_SECRET_ACCESS_KEY=&quot;Secret-Key&quot;
+</code></pre>
+<p>You could also add the above lines to your <code>~/.bashrc</code> , <code>~/.zshrc</code> files based on which shell you are using to avoid setting these credentials every time you open a new shell. 
+Now run the following command to initialize your environment.</p>
+<pre><code>terraform init
+</code></pre>
+<p>This should initialize the environment by 
+    * Installing the provider from the registry as defined in <code>main.tf</code>
+    * Adding a lock file <code>.terraform.lock.hcl</code> to record the provider details installed. </p>
+<h2 id="launching-a-ec2-instance-with-terraform">Launching a EC2 Instance with Terraform</h2>
+<p>To create anything with terraform, you need to write a Resource. You could get started by reading about using Resources  here<a href="https://www.terraform.io/language/resources">Resources Overview - Configuration Language | Terraform by HashiCorp</a></p>
+<p>Resources are the building block in Terraform. These the actual cloud entities that you are either creating/deleting or modifying.  </p>
+<p>Following is a syntax for writing a simple resource. <img alt="" src="Providers%20%202.jpg" />
+There are a few more  properties such as meta-arguments, condition checks, timeouts etc. which we would explore later. </p>
+<p>To get started,  with the  AWS provider, you would create EC2 instance by using  <code>aws_instance</code> as a resource.  You could refer to this document <a href="https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance">Terraform Registry</a>, to find the details about using this resource.  You should be specially paying attention to the <code>Argument References</code></p>
+<p>Add the following code to same <code>main.tf</code> file to define creation of a  new EC2 instance by name <code>frontend</code>. </p>
+<pre><code>resource &quot;aws_instance&quot; &quot;frontend&quot; {
+  ami           = &quot;ami-052efd3df9dad4825&quot;
+  instance_type = &quot;t2.micro&quot;
+
+   tags = {
+    Name       = &quot;tf-frontend-01&quot;
+    App        = &quot;devops-demo&quot;
+    Maintainer = &quot;Gourav Shah&quot;
+  }
+}
+</code></pre>
+<p>Validate terraform configurations with, </p>
+<pre><code>terraform validate
+</code></pre>
+<p>Optionally, you could further format the configuration file automatically to follow correct terraform style with, </p>
+<pre><code>terraform fmt
+</code></pre>
+<p>Now you could let Terraform create a Change Plan using the following command, </p>
+<pre><code>terraform plan
+</code></pre>
+<p>To apply this plan and build actual infrastructure, in this case create a ec2 instance with,  </p>
+<pre><code>terraform apply
+</code></pre>
+<p>Terraform apply first generates a plan and then asks for approval as, </p>
+<p>[Sample Output]</p>
+<pre><code>Plan: 1 to add, 0 to change, 0 to destroy.
+
+Do you want to perform these actions?
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  Enter a value: yes
+</code></pre>
+<p>Say <code>yes</code> to proceed, which will create the instance. </p>
+<p>[Sample Output]</p>
+<pre><code>aws_instance.frontend: Creating...
+aws_instance.frontend: Still creating... [10s elapsed]
+aws_instance.frontend: Still creating... [20s elapsed]
+aws_instance.frontend: Still creating... [30s elapsed]
+aws_instance.frontend: Creation complete after 36s [id=i-04b03b981dbc55d7c]
+
+Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+</code></pre>
+<p>Try running apply command again. </p>
+<pre><code>terraform apply
+</code></pre>
+<p>It does nothing this time since the instance was already created. </p>
+<p>Check the state file created using the following or similar command specific to your OS, </p>
+<pre><code>cat terraform.tfstate
+</code></pre>
+<h2 id="modifying-properties-of-an-existing-instance">Modifying Properties of an Existing Instance</h2>
+<p>Begin by applying terraform once </p>
+<pre><code>terraform apply 
+</code></pre>
+<p>Since there is no change from the previous run, it does not plan to change anything. The property of terraform where it refreshes the current state, compares it with the desired state, and decides to make change only if necessary  is idempotence.  This makes terraform safe to apply multiple times. </p>
+<p>Lets try making a change by adding a property which is mutable. To do this, just add one more tag to the existing map of <code>tags</code> as, </p>
+<pre><code>...
+   tags = {
+    Name       = &quot;tf-frontend-01&quot;
+    App        = &quot;devops-demo&quot;
+    Maintainer = &quot;Gourav Shah&quot;
+    Role       = &quot;frontend&quot;
+  }
+}
+</code></pre>
+<p>Where <code>Role = "frontend"</code> is the new property. </p>
+<p>[Sample Output]</p>
+<pre><code>  # aws_instance.frontend will be updated in-place
+  ~ resource &quot;aws_instance&quot; &quot;frontend&quot; {
+        id                                   = &quot;i-04b03b981dbc55d7c&quot;
+      ~ tags                                 = {
+          + &quot;Role&quot;       = &quot;frontend&quot;
+            # (3 unchanged elements hidden)
+        }
+      ~ tags_all                             = {
+          + &quot;Role&quot;       = &quot;frontend&quot;
+            # (3 unchanged elements hidden)
+        }
+        # (29 unchanged attributes hidden)
+
+        # (7 unchanged blocks hidden)
+    }
+</code></pre>
+<p>Since this property is mutable , it would update the instance in place, without needing for it to be recreate. Say yes to apply the changes. </p>
+<p>Now, try updating a property which is immutable e.g. keypair.  Update <code>main.tf</code> by adding a key pair to be associated with this instance. </p>
+<pre><code>resource &quot;aws_instance&quot; &quot;frontend&quot; {
+  ami           = &quot;ami-052efd3df9dad4825&quot;
+  instance_type = &quot;t2.micro&quot;
+  key_name      = &quot;demo&quot;
+
+   tags = {
+    Name       = &quot;tf-frontend-01&quot;
+    App        = &quot;devops-demo&quot;
+    Maintainer = &quot;Gourav Shah&quot;
+    Role       = &quot;frontend&quot;
+  }
+}
+</code></pre>
+<p>Where,  <code>key_name = "demo"</code>  is the new argument added.  Ensure a key pair by name <code>demo</code> is present on AWS for the region for which you are creating this instance. </p>
+<pre><code>terraform apply
+</code></pre>
+<p>This time terraform plan should show you that its going to recreate the instance, since the change is immutable. </p>
+<pre><code>  # aws_instance.frontend must be replaced
+-/+ resource &quot;aws_instance&quot; &quot;frontend&quot; {
+      ~ arn                                  = &quot;arn:aws:ec2:us-east-1:665496447754:instance/i-0a477fc11e0055d72&quot; -&gt; (known after apply)
+      ~ associate_public_ip_address          = true -&gt; (known after apply)
+..
+..
+      + key_name                             = &quot;demo&quot; # forces replacement
+..
+..
+Plan: 1 to add, 0 to change, 1 to destroy.
+
+Do you want to perform these actions?
+</code></pre>
+<p>Say yes to have the instance be recreated, this time with a key pair. </p>
+<p>[Sample Output]</p>
+<pre><code>aws_instance.frontend: Destroying... [id=i-0a477fc11e0055d72]
+aws_instance.frontend: Still destroying... [id=i-0a477fc11e0055d72, 10s elapsed]
+aws_instance.frontend: Still destroying... [id=i-0a477fc11e0055d72, 20s elapsed]
+aws_instance.frontend: Still destroying... [id=i-0a477fc11e0055d72, 30s elapsed]
+aws_instance.frontend: Destruction complete after 32s
+aws_instance.frontend: Creating...
+aws_instance.frontend: Still creating... [10s elapsed]
+aws_instance.frontend: Still creating... [20s elapsed]
+aws_instance.frontend: Still creating... [30s elapsed]
+aws_instance.frontend: Creation complete after 37s [id=i-02b2a78e90ac9e89e]
+
+Apply complete! Resources: 1 added, 0 changed, 1 destroyed.
+</code></pre>
+<p>If you check from the AWS Console, you shall now see a new instance created, this time associated with the keypair you defined e.g. <code>demo</code> as shows in the image below. </p>
+<p><img alt="" src="keypair.png" /></p>
+<h2 id="deleting-instance-with-terraform-destroy">Deleting  Instance with Terraform Destroy</h2>
+<pre><code>terraform destroy -auto-approve
+</code></pre>
+<p>[Sample Output]</p>
+<pre><code>Terraform will perform the following actions:
+
+  # aws_instance.frontend will be destroyed
+  - resource &quot;aws_instance&quot; &quot;frontend&quot; {
+      - ami                                  = &quot;ami-052efd3df9dad4825&quot; -&gt; null
+..
+...
+
+Plan: 0 to add, 0 to change, 1 to destroy.
+aws_instance.frontend: Destroying... [id=i-02b2a78e90ac9e89e]
+aws_instance.frontend: Still destroying... [id=i-02b2a78e90ac9e89e, 10s elapsed]
+aws_instance.frontend: Still destroying... [id=i-02b2a78e90ac9e89e, 20s elapsed]
+aws_instance.frontend: Still destroying... [id=i-02b2a78e90ac9e89e, 30s elapsed]
+aws_instance.frontend: Destruction complete after 32s
+
+Destroy complete! Resources: 1 destroyed.
+</code></pre>
+<h2 id="summary">Summary</h2>
+<p>In this lab, you learnt how to get started with terraform to build your infrastructure. You configured terraform, added and initialised a provider, created a resource using HCL (Hashicorp Configuration Language), learnt to apply the configuration and also to modify and destroy a resource with terraform. </p>
               
             </div>
           </div>
@@ -248,7 +361,7 @@ export AWS_SECRET_ACCESS_KEY=&quot;Secret-Key&quot;
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -258,18 +371,26 @@ export AWS_SECRET_ACCESS_KEY=&quot;Secret-Key&quot;
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-      
-    </span>
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
 </div>
     <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>

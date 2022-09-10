@@ -7,13 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Gourav Shah">
+  <link rel="canonical" href="https://terraform-tutorial.schoolofdevops.com/05-resource-dependencies/">
   <link rel="shortcut icon" href="../img/favicon.ico">
   <title>Resource Dependencies - Terraform Tutorial</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   
   <script>
     // Current page data
@@ -24,16 +25,15 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
   <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      ga('create', '', 'terraform-tutorial.schoolofdevops.com');
+      ga('create', 'UA-36802546-19', 'terraform-tutorial.schoolofdevops.com');
       ga('send', 'pageview');
   </script>
   
@@ -45,95 +45,54 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href=".." class="icon icon-home"> Terraform Tutorial</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="..">Home</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Getting Started with Terraform</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../00-environment-setup/">Setting up the environment</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../02-terraform-important-commands/">Important Commands</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../03-providers/">Terraform Providers</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../04-resources/">Resources</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Resource Dependencies</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#resource-dependency">Resource Dependency</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#explicit-dependency">Explicit Dependency</a></li>
-        
-            <li><a class="toctree-l4" href="#idempotency">Idempotency</a></li>
-        
-        </ul>
-    
-
-    <li class="toctree-l3"><a href="#reference">Reference</a></li>
-    
-
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started with Terraform</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../00-environment-setup/">Setting up the environment</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-terraform-important-commands/">Important Commands</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-providers/">Terraform Providers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-resources/">Resources</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Resource Dependencies</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#explicit-dependency">Explicit Dependency</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#idempotency">Idempotency</a>
+    </li>
     </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../07-provisioners/">Provisioners in detail</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../08-datasources/">Data Sources</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../09-terraform-state/">State Management in Terraform</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../10-backends/">Backend and Statelocking</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../XX-course-outline/">Course Outline</a>
-                </li>
-    </ul>
-	    </li>
-          
-        </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-variables-and-outputs/">Input and Output Variables</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-provisioners/">Provisioners in detail</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-datasources/">Data Sources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-terraform-state/">State Management in Terraform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-backends/">Backend and Statelocking</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../XX-course-outline/">Course Outline</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -160,13 +119,15 @@
     <li>Resource Dependencies</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/edit/labs/chapters/manuscript/05-resource-dependencies.md"
+        <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/edit/tree/chapters/05-resource-dependencies.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
   </ul>
+  
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -197,7 +158,6 @@ resource &quot;aws_security_group&quot; &quot;frontend&quot; {
     }
 }
 </code></pre>
-
 <p>Here,
   Resource type = aws_security_group,
   Resource name = frontend</p>
@@ -229,14 +189,12 @@ The key's randomart image is:
 |   +O*==.o o.    |
 +----[SHA256]-----+
 </code></pre>
-
 <p>Copy the content of your public key</p>
 <pre><code>cat ~/.ssh/id_rsa.pub
 
 [output]
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local
 </code></pre>
-
 <p>Paste the content of public key in the public_key</p>
 <p><code>file: main.tf</code></p>
 <pre><code>[...]
@@ -259,7 +217,6 @@ resource &quot;aws_key_pair&quot; &quot;terraform&quot; {
   public_key = &quot;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local
 }
 </code></pre>
-
 <p>We need to make sure our instance uses this key. To do that, we should add one more attribute to our <code>aws_instance</code> module. We will also tag the instace with a name.</p>
 <p><code>file: main.tf</code></p>
 <pre><code>provider &quot;aws&quot; {
@@ -281,7 +238,6 @@ resource &quot;aws_instance&quot; &quot;frontend&quot; {
 
 [...]
 </code></pre>
-
 <p>The final file should look like the following.</p>
 <pre><code>provider &quot;aws&quot; {
   region = &quot;us-east-1&quot;
@@ -318,7 +274,6 @@ resource &quot;aws_key_pair&quot; &quot;terraform&quot; {
   public_key = &quot;ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC4Q2TBuAD7ijkPjp+/Hl/QnrNo4hoZEz/l+UBsfvlDuJk8zfh0ivnQLtoYyXNuJ3/BjTVVIchrGo8CLZdTco//n+YBvMqgW4Wg5F92JNNkR5L5x04ELRUmC3ed1ZqbwrLmujzB33nMJ8Ld5dJjtS55KJa5MwkCaP7lqGicU2NgXe+if2DhCKW/lZyCpkkvRgmB7oEqj6aBWNjp+FMY4v6BtcmmB/+1Ry+GMvmZJO1EjSeUHAWCec3snX7TxJKHf4opwTHxknmhRKkz8+pS8rxyjiBeyncxP9jL9Tx/Zh6qmExCUfuhAWk87sjbb3j0enVs2LtzJOG9eBZ726wD83TJ vibe@vibes-MacBook-Air.local&quot;
 }
 </code></pre>
-
 <h3 id="explicit-dependency">Explicit Dependency</h3>
 <p>We can control the order of execution in two ways.<br />
   * Implicit Dependecy (Automatic Dependency)<br />
@@ -339,7 +294,6 @@ resource &quot;aws_instance&quot; &quot;frontend&quot; {
 }
 [...]
 </code></pre>
-
 <p>Syntax: <code>depends_on = ["resource_type.resource_name"]</code></p>
 <p><code>Exercise: Create an explicit dependency on security group in ec2 instance block just like key pair dependecy</code></p>
 <h3 id="idempotency">Idempotency</h3>
@@ -400,7 +354,6 @@ aws_instance.webserver: Creation complete after 37s (ID: i-0a7d259b3126e16b8)
 
 Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 </code></pre>
-
 <p>If you have noticed, Terraform did not create the security group this time around. The reason for this behaviour is, it had created the security group resource in the first run itself. So it did not create the same resource again when we applied the second time. This behaviour is called <code>Idempotency</code>.</p>
 <h2 id="reference">Reference</h2>
 <p>If you want to know more about, resource dependencies then please refer <a href="https://www.terraform.io/intro/getting-started/dependencies.html">this link</a>.</p>
@@ -428,7 +381,7 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -438,22 +391,30 @@ Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../04-resources/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../06-variables-and-outputs/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../04-resources/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../06-variables-and-outputs/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>

@@ -7,13 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Gourav Shah">
+  <link rel="canonical" href="https://terraform-tutorial.schoolofdevops.com/07-provisioners/">
   <link rel="shortcut icon" href="../img/favicon.ico">
   <title>Provisioners in detail - Terraform Tutorial</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   
   <script>
     // Current page data
@@ -24,16 +25,15 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
   <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      ga('create', '', 'terraform-tutorial.schoolofdevops.com');
+      ga('create', 'UA-36802546-19', 'terraform-tutorial.schoolofdevops.com');
       ga('send', 'pageview');
   </script>
   
@@ -45,98 +45,54 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href=".." class="icon icon-home"> Terraform Tutorial</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="..">Home</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Getting Started with Terraform</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../00-environment-setup/">Setting up the environment</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../02-terraform-important-commands/">Important Commands</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../03-providers/">Terraform Providers</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../04-resources/">Resources</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../05-resource-dependencies/">Resource Dependencies</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Provisioners in detail</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#provisioners">Provisioners</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#devops-demo-application">Devops Demo Application</a></li>
-        
-            <li><a class="toctree-l4" href="#file-provisioner">File Provisioner</a></li>
-        
-        </ul>
-    
-
-    <li class="toctree-l3"><a href="#remote-exec-provisioner">Remote-Exec Provisioner</a></li>
-    
-
-    <li class="toctree-l3"><a href="#reference">Reference</a></li>
-    
-
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started with Terraform</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../00-environment-setup/">Setting up the environment</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../02-terraform-important-commands/">Important Commands</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-providers/">Terraform Providers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-resources/">Resources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-resource-dependencies/">Resource Dependencies</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-variables-and-outputs/">Input and Output Variables</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Provisioners in detail</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#devops-demo-application">Devops Demo Application</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#file-provisioner">File Provisioner</a>
+    </li>
     </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../08-datasources/">Data Sources</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../09-terraform-state/">State Management in Terraform</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../10-backends/">Backend and Statelocking</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../XX-course-outline/">Course Outline</a>
-                </li>
-    </ul>
-	    </li>
-          
-        </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-datasources/">Data Sources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-terraform-state/">State Management in Terraform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-backends/">Backend and Statelocking</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../XX-course-outline/">Course Outline</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -163,13 +119,15 @@
     <li>Provisioners in detail</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/edit/labs/chapters/manuscript/07-provisioners.md"
+        <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/edit/tree/chapters/07-provisioners.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
   </ul>
+  
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -188,7 +146,6 @@ Provisioners will run at either
 <p>Create a new file with the name <code>user-data.sh</code></p>
 <pre><code>touch user-data.sh
 </code></pre>
-
 <p><code>file: user-data.sh</code></p>
 <pre><code>#!/bin/bash
 sudo apt update
@@ -204,7 +161,6 @@ sudo tar -xvzf devops-demo.tar.gz -C /var/www/html/
 sudo wget https://raw.githubusercontent.com/devopsdemoapps/devops-demo/master/devops-demo.sql
 sudo service apache2 restart
 </code></pre>
-
 <p><code>file: main.tf</code></p>
 <pre><code>[...]
 resource &quot;aws_instance&quot; &quot;frontend&quot; {
@@ -231,14 +187,12 @@ resource &quot;aws_instance&quot; &quot;frontend&quot; {
 }
 [...]
 </code></pre>
-
 <p>We will need to destroy and recreate the resources to apply this provisioner</p>
 <pre><code>terraform destroy
 
 [output]
 Destroy complete! Resources: 2 destroyed.
 </code></pre>
-
 <pre><code>terraform apply
 
 [output]
@@ -258,7 +212,6 @@ Outputs:
 
 webserver_ip = 35.173.254.26
 </code></pre>
-
 <h2 id="remote-exec-provisioner">Remote-Exec Provisioner</h2>
 <p>Now we will execute the script that we have just copied over.</p>
 <p><code>file: main.tf</code></p>
@@ -297,7 +250,6 @@ webserver_ip = 35.173.254.26
   }
 }
 </code></pre>
-
 <p>We will also add the ingress policy port <code>80</code> and egress policy for allo traffic in our security group.</p>
 <p><code>file: main.tf</code></p>
 <pre><code>[...]
@@ -330,7 +282,6 @@ resource &quot;aws_security_group&quot; &quot;front-end&quot; {
 }
 [...]
 </code></pre>
-
 <p>For this <code>remote-exec</code> provisioner to take effect, we need to recreate the resources(since these are creation-time provisoners).</p>
 <pre><code>terraform destroy
 
@@ -345,7 +296,6 @@ aws_security_group.webserver_sg: Destruction complete after 3s
 
 Destroy complete! Resources: 3 destroyed.
 </code></pre>
-
 <pre><code>terrform apply
 
 [output]
@@ -366,7 +316,6 @@ Outputs:
 
 webserver_ip = 35.173.130.100
 </code></pre>
-
 <p>Once the creation is complete, you should be able to access the application by visiting the instance's public IP.</p>
 <p><img alt="demoapp" src="../images/07-demoapp.png" /></p>
 <p>We shall discuss about <code>local-exec</code> provisioner in the next chapter.</p>
@@ -396,7 +345,7 @@ webserver_ip = 35.173.130.100
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -406,22 +355,30 @@ webserver_ip = 35.173.130.100
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../06-variables-and-outputs/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../08-datasources/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../06-variables-and-outputs/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../08-datasources/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>

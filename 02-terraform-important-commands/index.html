@@ -7,13 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <meta name="author" content="Gourav Shah">
+  <link rel="canonical" href="https://terraform-tutorial.schoolofdevops.com/02-terraform-important-commands/">
   <link rel="shortcut icon" href="../img/favicon.ico">
   <title>Important Commands - Terraform Tutorial</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/styles/github.min.css" />
   
   <script>
     // Current page data
@@ -24,16 +25,15 @@
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
   <script src="../js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
-  
   <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
-      ga('create', '', 'terraform-tutorial.schoolofdevops.com');
+      ga('create', 'UA-36802546-19', 'terraform-tutorial.schoolofdevops.com');
       ga('send', 'pageview');
   </script>
   
@@ -45,98 +45,60 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href=".." class="icon icon-home"> Terraform Tutorial</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1">
-		
-    <a class="" href="..">Home</a>
-	    </li>
-          
-            <li class="toctree-l1">
-		
-    <span class="caption-text">Getting Started with Terraform</span>
-    <ul class="subnav">
-                <li class="">
-                    
-    <a class="" href="../00-environment-setup/">Setting up the environment</a>
-                </li>
-                <li class=" current">
-                    
-    <a class="current" href="./">Important Commands</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l3"><a href="#important-terraform-commands">Important Terraform Commands</a></li>
-    
-        <ul>
-        
-            <li><a class="toctree-l4" href="#terraform-plan">Terraform Plan</a></li>
-        
-            <li><a class="toctree-l4" href="#terraform-apply">Terraform Apply</a></li>
-        
-            <li><a class="toctree-l4" href="#terraform-destroy">Terraform Destroy</a></li>
-        
-            <li><a class="toctree-l4" href="#terraform-init">Terraform init</a></li>
-        
-            <li><a class="toctree-l4" href="#terraform-fmt">Terraform fmt</a></li>
-        
-        </ul>
-    
-
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Getting Started with Terraform</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../00-environment-setup/">Setting up the environment</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Important Commands</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#terraform-plan">Terraform Plan</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#terraform-apply">Terraform Apply</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#terraform-destroy">Terraform Destroy</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#terraform-init">Terraform init</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#terraform-fmt">Terraform fmt</a>
+    </li>
     </ul>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../03-providers/">Terraform Providers</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../04-resources/">Resources</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../05-resource-dependencies/">Resource Dependencies</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../06-variables-and-outputs/">Input and Output Variables</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../07-provisioners/">Provisioners in detail</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../08-datasources/">Data Sources</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../09-terraform-state/">State Management in Terraform</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../10-backends/">Backend and Statelocking</a>
-                </li>
-                <li class="">
-                    
-    <a class="" href="../XX-course-outline/">Course Outline</a>
-                </li>
-    </ul>
-	    </li>
-          
-        </ul>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../03-providers/">Terraform Providers</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../04-resources/">Resources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../05-resource-dependencies/">Resource Dependencies</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../06-variables-and-outputs/">Input and Output Variables</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../07-provisioners/">Provisioners in detail</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../08-datasources/">Data Sources</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../09-terraform-state/">State Management in Terraform</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../10-backends/">Backend and Statelocking</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../XX-course-outline/">Course Outline</a>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -163,13 +125,15 @@
     <li>Important Commands</li>
     <li class="wy-breadcrumbs-aside">
       
-        <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/edit/labs/chapters/manuscript/02-terraform-important-commands.md"
+        <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/edit/tree/chapters/02-terraform-important-commands.md"
           class="icon icon-github"> Edit on GitHub</a>
       
     </li>
   </ul>
+  
   <hr/>
 </div>
+
           <div role="main">
             <div class="section">
               
@@ -245,7 +209,6 @@ can't guarantee that exactly these actions will be performed if
 Releasing state lock. This may take a few moments...
 
 </code></pre>
-
 <h2 id="terraform-apply">Terraform Apply</h2>
 <p>Terraform apply is command which creates the resources for us. The output will look similar to <code>terraform plan</code> but this time you will be prompted for permisson on your console. The output is truncated from the original.</p>
 <p><code>Example</code></p>
@@ -281,7 +244,6 @@ aws_instance.webserver: Destroying... (ID: i-00ddea272445bd4ec)
 aws_instance.webserver: Destruction complete after 49s
 [...]
 </code></pre>
-
 <h2 id="terraform-destroy">Terraform Destroy</h2>
 <p>This command will delete everything that terraform manages for you. So we need to be really careful when we run this command and only run it when you know what you are doing. </p>
 <p><code>Example</code></p>
@@ -315,7 +277,6 @@ Do you really want to destroy?
   Enter a value: yes
   [...]
 </code></pre>
-
 <h2 id="terraform-init">Terraform init</h2>
 <p>The terraform init command is used to initialize a working directory containing Terraform configuration files. This is the first command that should be run after writing a new Terraform configuration or cloning an existing one from version control. It is safe to run this command multiple times.</p>
 <p><code>Example</code></p>
@@ -347,7 +308,6 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary.
 
 </code></pre>
-
 <h2 id="terraform-fmt">Terraform fmt</h2>
 <p>The terraform fmt command is used to rewrite Terraform configuration files to a canonical format and style.</p>
               
@@ -374,7 +334,7 @@ commands will detect it and remind you to do so if necessary.
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -384,22 +344,30 @@ commands will detect it and remind you to do so if necessary.
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-        <span><a href="../00-environment-setup/" style="color: #fcfcfc;">&laquo; Previous</a></span>
-      
-      
-        <span style="margin-left: 15px"><a href="../03-providers/" style="color: #fcfcfc">Next &raquo;</a></span>
-      
-    </span>
+  <div class="rst-versions" role="note" aria-label="versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/schoolofdevops/ultimate-terraform-bootcamp/" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../00-environment-setup/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../03-providers/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
 </div>
     <script>var base_url = '..';</script>
+    <script src="../js/theme_extra.js" defer></script>
     <script src="../js/theme.js" defer></script>
       <script src="../search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>
